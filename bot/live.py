@@ -28,7 +28,7 @@ REACTIONS = re.compile(
     r"dios|madre mía|no manches|qué es esto|corre|cuidado|vamos|oh no|ay|what|omg|bro|hermano)\b",
     re.I)
 
-SYSTEM_LIVE = """Eres editor de un canal de YouTube Shorts en español sobre GTA 6.
+SYSTEM_LIVE = """Eres editor de un canal de YouTube Shorts en español sobre {topic}.
 Te paso fragmentos de la transcripción de un directo (con su id). Elige los mejores para Shorts:
 momentos graciosos, sorpresas, reacciones fuertes, descubrimientos o datos interesantes del juego.
 Evita fragmentos aburridos, de charla con el chat sin contexto, o que no se entiendan solos.
@@ -39,7 +39,17 @@ No inventes nada que no esté en la transcripción.
 Responde SOLO JSON:
 {"clips": [{"id": 3, "start": 2.0, "end": 41.5, "headline": "MÁX 6 PALABRAS EN MAYÚSCULAS",
             "title": "título de YouTube (máx 70 caracteres)", "description": "1-2 frases",
-            "hashtags": ["#GTA6", "..."]}]}"""
+            "hashtags": ["{tag}", "..."]}]}"""
+
+TOPIC = "GTA 6"  # se cambia con --topic (ej. "Fortnite", "Minecraft", "Just Chatting")
+
+
+def topic_tag() -> str:
+    return "#" + (re.sub(r"[^0-9A-Za-zÁÉÍÓÚáéíóúÑñ]", "", TOPIC) or "Clips")
+
+
+def is_gta() -> bool:
+    return bool(re.search(r"gta|grand theft", TOPIC, re.I))
 
 
 def sh(cmd: list[str], **kw) -> subprocess.CompletedProcess:
@@ -158,7 +168,7 @@ def pick_with_ai(cands: list[dict], info: dict, cfg: dict) -> list[dict]:
             fn = script._github if provider == "github" else script._gemini
             model = scfg["github_model"] if provider == "github" else scfg["gemini_model"]
             # _parse_json exige script/headline/...: usamos la llamada cruda
-            data = _raw_llm(fn, SYSTEM_LIVE, user, model)
+            data = _raw_llm(fn, SYSTEM_LIVE.replace("{topic}", TOPIC).replace("{tag}", topic_tag()), user, model)
             out = []
             by_id = {c["id"]: c for c in cands}
             for clip in data.get("clips", [])[:n]:
@@ -176,9 +186,9 @@ def pick_with_ai(cands: list[dict], info: dict, cfg: dict) -> list[dict]:
         except Exception as exc:
             print(f"[live] IA '{provider}' falló: {exc}")
     print("[live] sin IA: uso los momentos con más volumen/reacciones")
-    return [{"abs_start": c["start"], "abs_end": c["end"], "headline": "MOMENTAZO EN GTA 6",
-             "title": f"Momentazo en GTA 6 ({info.get('uploader', 'directo')})"[:70],
-             "description": "Uno de los mejores momentos del directo.", "hashtags": ["#GTA6", "#Shorts"]}
+    return [{"abs_start": c["start"], "abs_end": c["end"], "headline": f"MOMENTAZO EN {TOPIC.upper()}"[:40],
+             "title": f"Momentazo en {TOPIC} ({info.get('uploader', 'directo')})"[:70],
+             "description": "Uno de los mejores momentos del directo.", "hashtags": [topic_tag(), "#Shorts"]}
             for c in sorted(cands, key=lambda c: -c["score"])[:n]]
 
 
@@ -200,11 +210,11 @@ def render_clip(cfg: dict, src: Path, clip: dict, words: list[dict], credit: str
     ccfg = copy.deepcopy(cfg)
     ccfg["video"]["caption_y"] = cfg["live"].get("caption_y", 0.74)
     ccfg["channel"]["handle"] = credit
-    ccfg["video"]["tag"] = "GTA VI  •  DIRECTO"
+    ccfg["video"]["tag"] = ("GTA VI" if is_gta() else TOPIC.upper()[:16]) + "  •  DIRECTO"
     clip_words = [{"word": w["word"], "start": w["start"] - s, "end": w["end"] - s}
                   for w in words if s <= w["start"] < e]
     ass = render.build_ass(clip_words, ccfg, work / f"clip{idx}.ass")
-    head = visuals.header_card(ccfg, clip.get("headline", "GTA 6"), work / f"clip{idx}_head.png")
+    head = visuals.header_card(ccfg, clip.get("headline", TOPIC), work / f"clip{idx}_head.png")
     ass_path = str(ass.resolve()).replace(":", r"\:")
     fonts_dir = str(Path(v["font"]).parent.resolve())
     accent = v["accent_color"].lstrip("#")
@@ -229,11 +239,14 @@ def render_clip(cfg: dict, src: Path, clip: dict, words: list[dict], credit: str
 
 
 # ------------------------------------------------------------------ principal
-def run(url: str, start: str | None, minutes: float | None, mine: bool, dry_run: bool,
+def run(url: str, start: str | None, minutes: float | None, mine: bool, dry_run: bool, topic: str | None = None,
         words_override: list[dict] | None = None, source_override: Path | None = None,
         info_override: dict | None = None) -> list[dict]:
+    global TOPIC
     cfg = yaml.safe_load(Path("config.yaml").read_text(encoding="utf-8"))
     lcfg = cfg["live"]
+    TOPIC = (topic or lcfg.get("default_topic") or "GTA 6").strip()[:40]
+    print(f"[live] tema de los clips: {TOPIC}")
     minutes = minutes or lcfg["max_minutes"]
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
     info = info_override or get_info(url)
@@ -259,13 +272,13 @@ def run(url: str, start: str | None, minutes: float | None, mine: bool, dry_run:
         video = render_clip(cfg, src, clip, words, credit, i, work)
         print(f"[live] clip {i}: {clip['title']} ({clip['abs_end'] - clip['abs_start']:.0f}s)")
         meta = {"title": clip["title"], "description": clip.get("description", ""),
-                "hashtags": clip.get("hashtags", ["#GTA6", "#Shorts"]), "headline": clip.get("headline", "")}
+                "hashtags": clip.get("hashtags", [topic_tag(), "#Shorts"]), "headline": clip.get("headline", "")}
         tags = [t if t.startswith("#") else f"#{t}" for t in meta["hashtags"]]
-        meta["hashtags"] = tags + [t for t in ("#GTA6", "#Shorts") if t not in tags]
+        meta["hashtags"] = tags + [t for t in (topic_tag(), "#Shorts") if t not in tags]
         description = "\n".join([
             meta["description"], "",
             f"🎥 Clip del directo de {uploader}: {info.get('webpage_url', url)}",
-            f"Suscríbete a {cfg['channel']['name']} para más de GTA 6.", "",
+            f"Suscríbete a {cfg['channel']['name']} para más {'de GTA 6' if is_gta() else 'clips'}.", "",
             " ".join(meta["hashtags"]),
         ])
         txt = work / f"clip{i}_publicar.txt"
@@ -276,7 +289,9 @@ def run(url: str, start: str | None, minutes: float | None, mine: bool, dry_run:
         if not dry_run:
             if mine and lcfg.get("auto_upload_if_mine", True):
                 try:
-                    res["youtube"] = publish.upload_youtube(video, meta, description, cfg)
+                    ycfg = cfg if is_gta() else {**cfg, "publish": {**cfg["publish"], "youtube": {
+                        **cfg["publish"]["youtube"], "default_tags": [TOPIC, "clips", "stream", "directo", "shorts"]}}}
+                    res["youtube"] = publish.upload_youtube(video, meta, description, ycfg)
                 except Exception as exc:
                     print(f"[youtube] ERROR: {exc}")
             if cfg["publish"].get("telegram"):
@@ -305,8 +320,9 @@ def main() -> None:
     ap.add_argument("--minutes", type=float, default=None, help="cuántos minutos analizar (o grabar si es en vivo)")
     ap.add_argument("--mine", action="store_true", help="el directo es mío o tengo permiso: subir a YouTube")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--topic", default=None, help="juego o tema del directo (por defecto GTA 6)")
     a = ap.parse_args()
-    res = run(a.url, a.start, a.minutes, a.mine, a.dry_run)
+    res = run(a.url, a.start, a.minutes, a.mine, a.dry_run, a.topic)
     summary = Path("out/live_summary.md")
     lines = [f"**{len(res)} clip(s)** listos del directo."]
     for r in res:
