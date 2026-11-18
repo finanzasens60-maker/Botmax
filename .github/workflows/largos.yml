@@ -25,6 +25,8 @@ concurrency:
 jobs:
   make-long:
     runs-on: ubuntu-24.04
+    env:
+      PYTHONUNBUFFERED: "1"   # ver el progreso en vivo en los registros
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
