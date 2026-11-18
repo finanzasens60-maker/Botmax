@@ -1,0 +1,89 @@
+name: GTA 6 Shorts automáticos
+
+on:
+  schedule:
+    # Horas en UTC. Colombia = UTC-5  ->  8:17, 13:17 y 19:17 hora Colombia
+    - cron: "17 13 * * *"
+    - cron: "17 18 * * *"
+    - cron: "17 0 * * *"
+  workflow_dispatch:          # botón "Run workflow" para lanzarlo a mano
+    inputs:
+      dry_run:
+        description: "Solo generar (no publicar)"
+        type: boolean
+        default: false
+      count:
+        description: "Cuántos videos generar"
+        default: "1"
+
+permissions:
+  contents: write   # guardar historial y crear Releases con los MP4
+  models: read      # IA gratis de GitHub Models para los guiones
+
+concurrency:
+  group: gta6-bot
+  cancel-in-progress: false
+
+jobs:
+  make-short:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar ffmpeg y voz de respaldo
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg espeak-ng
+
+      - name: Fuente Poppins (si falta)
+        run: |
+          if [ ! -f assets/fonts/Poppins-Bold.ttf ]; then
+            mkdir -p assets/fonts
+            curl -sSL -o assets/fonts/Poppins-Bold.ttf https://github.com/google/fonts/raw/main/ofl/poppins/Poppins-Bold.ttf
+          fi
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Crear video(s) y publicar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          COUNT: ${{ github.event.inputs.count }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: |
+          DRY=""
+          if [ "$DRY_RUN" = "true" ]; then DRY="--dry-run"; fi
+          python -m bot.main --count "${COUNT:-1}" $DRY
+
+      - name: Guardar historial (para no repetir noticias)
+        if: always()
+        run: |
+          git config user.name "gta6-bot"
+          git config user.email "gta6-bot@users.noreply.github.com"
+          git add data/published.json
+          git diff --cached --quiet || (git commit -m "Historial: nuevo Short publicado" && (git pull --rebase && git push))
+
+      - name: Subir videos como artefacto (respaldo, 7 días)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shorts-${{ github.run_number }}
+          path: |
+            out/**/video.mp4
+            out/**/publicar.txt
+          retention-days: 7
+          if-no-files-found: ignore
