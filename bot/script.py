@@ -1,4 +1,8 @@
-"""Escribe el guion del Short con IA gratuita (GitHub Models o Gemini) y una plantilla de respaldo."""
+"""Escribe el guion del Short con IA gratuita (Google Gemini, o Groq de respaldo) y una plantilla de emergencia.
+
+Nota: GitHub Models fue retirado por GitHub en julio de 2026, por eso ahora se usa Gemini (gratis con
+una clave de aistudio.google.com/apikey guardada en el secreto GEMINI_API_KEY).
+"""
 from __future__ import annotations
 
 import json
@@ -10,18 +14,26 @@ import requests
 
 from .news import NewsItem
 
-SYSTEM = """Eres el guionista de un canal de YouTube Shorts en español latino sobre GTA 6 (Grand Theft Auto VI).
-Escribes guiones hablados, cortos, con energía y que enganchan en los primeros 2 segundos.
+SYSTEM = """Eres el guionista y la voz de un canal de YouTube Shorts en español latino sobre GTA 6.
+Escribes como habla un creador de contenido real: cercano, con energía y ritmo, como si se lo contaras a un amigo.
 
-REGLAS DE ORO:
-- Usa SOLO los datos de la noticia que te doy. No inventes cifras, fechas, nombres ni detalles.
-- Si la noticia es rumor, filtración o viene de Reddit/redes, dilo claramente ("según rumores", "un usuario asegura").
-- Nada de groserías, ni contenido para niños, ni piratería/mods/trampas.
-- Aporta algo propio: contexto, por qué importa o una opinión corta. No te limites a leer el titular.
-- Varía el estilo de gancho: pregunta, dato impactante, "nadie está hablando de esto", comparación, etc.
-- Termina con una pregunta para comentarios o un llamado a seguir el canal (varía la frase).
-- Escribe los números como se dicen ("diecinueve de noviembre", "setenta dólares") para que la voz los lea bien.
-- Di "GTA seis" en el guion hablado (no "GTA 6").
+ESTILO HABLADO (muy importante, el texto lo lee una voz sintética y debe sonar humano):
+- Frases cortas y variadas. Mezcla frases de 3-6 palabras con otras más largas.
+- Usa comas y puntos para marcar pausas naturales. Usa signos ¿? y ¡! cuando aporten emoción.
+- Habla en segunda persona ("mira esto", "imagínate", "¿te diste cuenta?").
+- Nada de listas, viñetas, emojis, paréntesis, comillas ni mayúsculas sostenidas.
+- NUNCA repitas el titular ni la misma idea dos veces. Cada frase debe aportar algo nuevo.
+- Gancho brutal en la primera frase (máximo 10 palabras): dato sorprendente, pregunta o contradicción.
+  Varía el tipo de gancho; no empieces con "Atención" ni con "Hola".
+- Luego: qué pasó, por qué importa y un detalle curioso o una opinión corta.
+- Cierra con una pregunta concreta para comentarios o una invitación a seguir el canal (varía la frase).
+- Escribe los números como se dicen ("diecinueve de noviembre", "setenta dólares").
+- Di "GTA seis" (no "GTA 6" ni "GTA VI").
+
+REGLAS DE CONTENIDO:
+- Usa SOLO los datos de la noticia. No inventes cifras, fechas, nombres ni detalles.
+- Si es rumor, filtración o viene de redes, dilo ("según rumores", "un usuario asegura").
+- Nada de groserías, piratería, mods ni trampas.
 
 Responde SOLO con JSON válido con estas claves:
 {"script": "texto que se leerá en voz alta",
@@ -55,55 +67,78 @@ def _parse_json(text: str) -> dict:
     return data
 
 
-def _github(system: str, user: str, model: str) -> dict:
-    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_MODELS_TOKEN")
-    if not token:
-        raise RuntimeError("no hay GITHUB_TOKEN")
-    r = requests.post(
-        "https://models.github.ai/inference/chat/completions",
-        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json",
-                 "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"},
-        json={
-            "model": model,
-            "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
-            "temperature": 0.9,
-            "response_format": {"type": "json_object"},
-        },
-        timeout=90,
-    )
-    try:
-        r.raise_for_status()
-        return _parse_json(r.json()["choices"][0]["message"]["content"])
-    except Exception as exc:
-        raise RuntimeError(f"{exc} | HTTP {r.status_code}: {r.text[:300]!r}") from exc
-
-
-def _gemini(system: str, user: str, model: str) -> dict:
-    key = os.environ.get("GEMINI_API_KEY")
-    if not key:
-        raise RuntimeError("no hay GEMINI_API_KEY")
+def _gemini_call(system: str, user: str, model: str, key: str) -> str:
     r = requests.post(
         f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
         headers={"x-goog-api-key": key, "Content-Type": "application/json"},
         json={
             "systemInstruction": {"parts": [{"text": system}]},
             "contents": [{"role": "user", "parts": [{"text": user}]}],
-            "generationConfig": {"temperature": 0.9, "responseMimeType": "application/json"},
+            "generationConfig": {"temperature": 0.95, "responseMimeType": "application/json"},
         },
-        timeout=90,
+        timeout=120,
     )
-    r.raise_for_status()
-    return _parse_json(r.json()["candidates"][0]["content"]["parts"][0]["text"])
+    if r.status_code >= 400:
+        raise RuntimeError(f"Gemini {model} HTTP {r.status_code}: {r.text[:200]}")
+    return r.json()["candidates"][0]["content"]["parts"][0]["text"]
+
+
+def _groq_call(system: str, user: str, key: str) -> str:
+    r = requests.post(
+        "https://api.groq.com/openai/v1/chat/completions",
+        headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+        json={"model": os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile"),
+              "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
+              "temperature": 0.95, "response_format": {"type": "json_object"}},
+        timeout=120,
+    )
+    if r.status_code >= 400:
+        raise RuntimeError(f"Groq HTTP {r.status_code}: {r.text[:200]}")
+    return r.json()["choices"][0]["message"]["content"]
+
+
+def _gemini(system: str, user: str, model: str, parse=None) -> dict:
+    """IA gratis: prueba Gemini (varios modelos) y, si hay clave, Groq de respaldo."""
+    parse = parse or _parse_json
+    errors = []
+    key = os.environ.get("GEMINI_API_KEY")
+    if key:
+        for m in dict.fromkeys([model, "gemini-2.5-flash", "gemini-flash-latest", "gemini-2.0-flash"]):
+            try:
+                return parse(_gemini_call(system, user, m, key))
+            except Exception as exc:
+                errors.append(str(exc)[:160])
+    else:
+        errors.append("no hay GEMINI_API_KEY")
+    gkey = os.environ.get("GROQ_API_KEY")
+    if gkey:
+        try:
+            return parse(_groq_call(system, user, gkey))
+        except Exception as exc:
+            errors.append(str(exc)[:160])
+    raise RuntimeError(" | ".join(errors))
+
+
+_github = _gemini  # compatibilidad: GitHub Models fue retirado
 
 
 def _template(story: NewsItem, channel: str) -> dict:
-    title = re.sub(r"\s+-\s+[^-]+$", "", story.title)
-    hooks = ["Atención fans de GTA seis.", "Esto acaba de pasar con GTA seis.", "Nueva noticia de GTA seis."]
-    closers = ["¿Tú qué opinas? Te leo en los comentarios.", "Sígueme para más noticias de GTA seis."]
-    summary = story.summary if story.summary and story.summary.lower() not in title.lower() else ""
-    text = f"{random.choice(hooks)} {title}. {summary[:350]} Según {story.source or 'medios especializados'}. {random.choice(closers)}"
+    """Plantilla de emergencia (sin IA). Evita repetir el titular."""
+    title = re.sub(r"\s+-\s+[^-]+$", "", story.title).strip()
+    tw = set(re.findall(r"\w{4,}", title.lower()))
+    summary = re.sub(r"\s+-\s+[^-]+$", "", story.summary or "").strip()
+    sw = set(re.findall(r"\w{4,}", summary.lower()))
+    if not summary or (sw and len(sw & tw) / len(sw) > 0.5):
+        summary = ""
+    hooks = ["Esto no te lo esperabas.", "Ojo con lo que acaba de salir.", "Hay novedades, y son importantes."]
+    closers = ["¿Tú qué opinas? Te leo en los comentarios.", "Sígueme para no perderte nada."]
+    parts = [random.choice(hooks), f"{title}."]
+    if summary:
+        parts.append(summary[:300].rstrip(".") + ".")
+    parts += [f"Lo informó {story.source or 'la prensa especializada'}.", random.choice(closers)]
+    text = " ".join(parts)
     return {
-        "script": text.replace("GTA 6", "GTA seis").replace("GTA VI", "GTA seis"),
+        "script": re.sub(r"\bGTA ?(6|VI)\b", "GTA seis", text),
         "headline": "ÚLTIMA HORA GTA 6",
         "title": title[:70],
         "description": f"{title}. Fuente: {story.source}.",
@@ -111,17 +146,28 @@ def _template(story: NewsItem, channel: str) -> dict:
     }
 
 
+def _dedupe(text: str) -> str:
+    """Quita frases repetidas (o casi iguales) para que la voz no repita la misma idea."""
+    sents = re.split(r"(?<=[.!?¡¿])\s+", text.strip())
+    out, seen = [], []
+    for s in sents:
+        w = set(re.findall(r"\w{4,}", s.lower()))
+        if w and any(len(w & p) / max(1, min(len(w), len(p))) > 0.7 for p in seen):
+            continue
+        seen.append(w)
+        out.append(s)
+    return " ".join(out)
+
+
 def write_script(story: NewsItem, cfg: dict) -> dict:
     scfg = cfg["script"]
     user = _user_prompt(story, scfg.get("target_words", 120), cfg["channel"]["name"])
     for provider in scfg["providers"]:
         try:
-            if provider == "github":
-                data = _github(SYSTEM, user, scfg["github_model"])
-            elif provider == "gemini":
-                data = _gemini(SYSTEM, user, scfg["gemini_model"])
-            else:
+            if provider == "template":
                 data = _template(story, cfg["channel"]["name"])
+            else:
+                data = _gemini(SYSTEM, user, scfg.get("gemini_model", "gemini-2.5-flash"))
             data["provider"] = provider
             print(f"[script] guion generado con '{provider}' ({len(data['script'].split())} palabras)")
             return _finish(data, cfg)
@@ -131,6 +177,7 @@ def write_script(story: NewsItem, cfg: dict) -> dict:
 
 
 def _finish(data: dict, cfg: dict) -> dict:
+    data["script"] = _dedupe(re.sub(r"\bGTA ?(6|VI)\b", "GTA seis", data["script"]))
     tags = [t if t.startswith("#") else f"#{t}" for t in data.get("hashtags", [])]
     for must in ("#GTA6", "#Shorts"):
         if must.lower() not in [t.lower() for t in tags]:
