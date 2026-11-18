@@ -84,12 +84,18 @@ def make_one(cfg: dict, story: news.NewsItem, dry_run: bool) -> dict:
         raise RuntimeError("El guion quedó demasiado largo para un Short (>170 s)")
 
     bg = visuals.build_background(cfg, dur + 1.0, work)
-    head = visuals.header_card(cfg, meta["headline"], work / "header.png")
+    from . import broll
+    creditos = list(broll.CREDITS)
+    streamers = [c for c in creditos if "Rockstar" not in c]
+    hcfg = cfg if not streamers else {**cfg, "channel": {**cfg["channel"], "handle": f"Imágenes: {streamers[0]}"}}
+    head = visuals.header_card(hcfg, meta["headline"], work / "header.png")
     ass = render.build_ass(words, cfg, work / "captions.ass")
     video = render.render(cfg, bg, head, voice, ass, dur, work / "video.mp4")
     print(f"[render] listo: {video} ({video.stat().st_size / 1e6:.1f} MB)")
 
     description = publish.build_description(meta, story, cfg)
+    if creditos:
+        description += "\n\nImágenes: " + ", ".join(creditos)
     caption_file = work / "publicar.txt"
     caption_file.write_text(
         f"TÍTULO:\n{meta['title']}\n\nDESCRIPCIÓN / CAPTION (TikTok, Reels):\n{description}\n\n"
