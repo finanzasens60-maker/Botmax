@@ -10,6 +10,11 @@ body:
     validations:
       required: true
   - type: input
+    id: tema
+    attributes:
+      label: Juego o tema (vacío = GTA 6)
+      placeholder: "Fortnite, Minecraft, Just Chatting…"
+  - type: input
     id: start
     attributes:
       label: Desde qué minuto analizar (opcional)
