@@ -79,13 +79,17 @@ def _procedural(cfg: dict, duration: float, out: Path) -> Path:
 def build_background(cfg: dict, duration: float, work: Path) -> Path:
     w, h, fps = cfg["video"]["width"], cfg["video"]["height"], cfg["video"]["fps"]
     local = [p for p in Path("assets/backgrounds").glob("*") if p.suffix.lower() in VIDEO_EXT]
-    sources = local or _pexels(cfg, work)
+    if local:
+        sources = local
+    else:  # sin clips propios: directos de GTA 6 + capturas oficiales de Rockstar, y si no, Pexels
+        from . import broll
+        sources = broll.collect(cfg, work, duration) or _pexels(cfg, work)
     out = work / "background.mp4"
     if not sources:
         print("[visuals] sin clips: usando fondo animado generado")
         return _procedural(cfg, min(duration, 45.0), out)  # se repite en bucle si el video es más largo
 
-    print(f"[visuals] usando {len(sources)} clip(s) de {'assets/backgrounds' if local else 'Pexels'}")
+    print(f"[visuals] usando {len(sources)} clip(s) de fondo ({'tus clips' if local else 'directos/Rockstar/Pexels'})")
     random.shuffle(sources)
     segs: list[Path] = []
     total, i = 0.0, 0
