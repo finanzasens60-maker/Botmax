@@ -8,6 +8,7 @@ url = (os.environ.get("IN_URL") or "").strip()
 start = (os.environ.get("IN_START") or "").strip()
 minutes = (os.environ.get("IN_MINUTES") or "").strip()
 mine = (os.environ.get("IN_MINE") or "").strip().lower() == "true"
+topic = (os.environ.get("IN_TOPIC") or "").strip()
 
 if body:
     m = re.search(r"https?://\S+", body)
@@ -16,6 +17,9 @@ if body:
     s = sec(r"Desde qué minuto")
     if s and re.fullmatch(r"[\d:]+", s.group(1).strip()):
         start = s.group(1).strip()
+    tt = sec(r"Juego o tema")
+    if tt and tt.group(1).strip() and "No response" not in tt.group(1):
+        topic = tt.group(1).strip()
     mm = sec(r"Cuántos minutos")
     if mm and mm.group(1).strip().isdigit():
         minutes = mm.group(1).strip()
@@ -28,3 +32,4 @@ print(f"url={safe(url)}")
 print(f"start={safe(start)}")
 print(f"minutes={safe(minutes)}")
 print(f"mine={'true' if mine else 'false'}")
+print(f"topic={safe(topic)[:40]}")
