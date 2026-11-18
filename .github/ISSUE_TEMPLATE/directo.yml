@@ -1,0 +1,27 @@
+name: 🎥 Sacar clips de un directo
+description: Pega el link de un directo o VOD (Twitch, Kick, YouTube) y el bot saca los mejores momentos.
+title: "directo"
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Link del directo
+      placeholder: https://www.twitch.tv/videos/123456789
+    validations:
+      required: true
+  - type: input
+    id: start
+    attributes:
+      label: Desde qué minuto analizar (opcional)
+      placeholder: "1:20:00"
+  - type: input
+    id: minutes
+    attributes:
+      label: Cuántos minutos analizar (opcional, por defecto 120)
+      placeholder: "90"
+  - type: checkboxes
+    id: mine
+    attributes:
+      label: Permiso
+      options:
+        - label: "#mio — El directo es mío o tengo permiso del streamer (se suben solos a YouTube)"
