@@ -246,14 +246,31 @@ def render_clip(cfg: dict, src: Path, clip: dict, words: list[dict], credit: str
 
 
 # ------------------------------------------------------------------ principal
+def _uploads_last_24h() -> int:
+    """Cuántos clips de directos se subieron a YouTube en las últimas 24 h (para no saturar el canal)."""
+    limite = datetime.now(timezone.utc).timestamp() - 86400
+    n = 0
+    for it in load_state()["items"]:
+        if it.get("type") == "live" and it.get("youtube"):
+            try:
+                ts = datetime.strptime(it["date"], "%Y%m%d-%H%M%S").replace(tzinfo=timezone.utc).timestamp()
+            except Exception:
+                continue
+            n += ts >= limite
+    return n
+
+
 def run(url: str, start: str | None, minutes: float | None, mine: bool, dry_run: bool, topic: str | None = None,
         words_override: list[dict] | None = None, source_override: Path | None = None,
-        info_override: dict | None = None) -> list[dict]:
+        info_override: dict | None = None, clips: int | None = None) -> list[dict]:
     global TOPIC
     cfg = yaml.safe_load(Path("config.yaml").read_text(encoding="utf-8"))
     lcfg = cfg["live"]
     TOPIC = (topic or lcfg.get("default_topic") or "GTA 6").strip()[:40]
     print(f"[live] tema de los clips: {TOPIC}")
+    if clips:  # modo maratón: más clips por bloque
+        lcfg["clips_per_stream"] = clips
+        lcfg["candidates"] = max(int(lcfg["candidates"]), clips * 2)
     minutes = minutes or lcfg["max_minutes"]
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
     info = info_override or get_info(url)
@@ -294,7 +311,8 @@ def run(url: str, start: str | None, minutes: float | None, mine: bool, dry_run:
         res = {"type": "live", "key": f"live-{stamp}-{i}", "title": meta["title"], "video_title": meta["title"],
                "date": stamp, "source": url, "youtube": None, "release": None, "file": str(video)}
         if not dry_run:
-            if mine and lcfg.get("auto_upload_if_mine", True):
+            subidos = _uploads_last_24h() + sum(1 for r in results if r.get("youtube"))
+            if mine and lcfg.get("auto_upload_if_mine", True) and subidos < int(lcfg.get("max_youtube_uploads_per_day", 10)):
                 try:
                     ycfg = cfg if is_gta() else {**cfg, "publish": {**cfg["publish"], "youtube": {
                         **cfg["publish"]["youtube"], "default_tags": [TOPIC, "clips", "stream", "directo", "shorts"]}}}
