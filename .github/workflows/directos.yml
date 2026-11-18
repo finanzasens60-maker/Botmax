@@ -128,7 +128,19 @@ jobs:
           git config user.name "gta6-bot"
           git config user.email "gta6-bot@users.noreply.github.com"
           git add data/published.json
-          git diff --cached --quiet || (git commit -m "Historial: clips de directo" && (git pull --rebase && git push))
+          if ! git diff --cached --quiet; then
+            cp data/published.json /tmp/mio.json
+            git commit -q -m "Historial: clips de directo"
+            # Mientras se grababa, otros jobs pudieron cambiar el historial: se unen ambos sin conflicto
+            for i in 1 2 3 4; do
+              git fetch -q origin main && git reset -q --hard origin/main
+              python scripts/unir_historial.py /tmp/mio.json data/published.json
+              git add data/published.json
+              git diff --cached --quiet && break
+              git commit -q -m "Historial: clips de directo" && git push -q && break
+              sleep 7
+            done
+          fi
 
       - name: Responder en el Issue
         if: always() && env.ISSUE_NUM != ''
