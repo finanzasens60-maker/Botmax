@@ -143,3 +143,9 @@ live:
   default_topic: "GTA 6"          # tema si no indicas otro (puede ser cualquier juego o stream)
   caption_y: 0.74
   auto_upload_if_mine: true       # solo sube a YouTube si marcas que el directo es tuyo (#mio)
+  max_youtube_uploads_per_day: 10 # tope de clips de directos subidos a YouTube por día (el resto queda para descargar)
+  # Modo maratón (directos largos o de 24 horas)
+  max_hours: 24                   # horas a cubrir si el link está EN VIVO
+  chunk_minutes: 60               # graba en bloques de esta duración
+  clips_per_hour: 8               # clips que saca de cada hora de directo
+  job_minutes: 330                # GitHub corta a las 6 h: antes de eso lanza otra ejecución que sigue grabando
