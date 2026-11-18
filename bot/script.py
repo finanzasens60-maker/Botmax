@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import os
 import random
+import time
 import re
 
 import requests
@@ -76,7 +77,7 @@ def _gemini_call(system: str, user: str, model: str, key: str) -> str:
             "contents": [{"role": "user", "parts": [{"text": user}]}],
             "generationConfig": {"temperature": 0.95, "responseMimeType": "application/json"},
         },
-        timeout=120,
+        timeout=60,
     )
     if r.status_code >= 400:
         raise RuntimeError(f"Gemini {model} HTTP {r.status_code}: {r.text[:200]}")
@@ -92,12 +93,14 @@ def _gemini_models(key: str) -> list[str]:
                  if "generateContent" in m.get("supportedGenerationMethods", [])]
     except Exception:
         return []
-    bad = ("image", "tts", "audio", "embedding", "vision", "live", "robotics", "nano", "lite")
+    bad = ("image", "tts", "audio", "embedding", "vision", "live", "robotics", "nano")
     ok = [n for n in names if "gemini" in n and not any(b in n for b in bad)]
     ver = lambda n: float((re.findall(r"\d+(?:\.\d+)?", n) or ["0"])[0])
     # primero los "flash" estables más nuevos, luego previews y "pro"
-    rank = lambda n: ("flash" in n, "preview" not in n and "exp" not in n, ver(n))
-    return sorted(ok, key=rank, reverse=True)[:4]
+    rank = lambda n: ("flash" in n, "lite" not in n, "preview" not in n and "exp" not in n, ver(n))
+    full = sorted(ok, key=rank, reverse=True)
+    lite = [n for n in full if "lite" in n][:2]   # los "lite" suelen estar menos saturados
+    return [n for n in full if "lite" not in n][:4] + lite
 
 
 def _groq_call(system: str, user: str, key: str) -> str:
@@ -120,13 +123,24 @@ def _gemini(system: str, user: str, model: str, parse=None) -> dict:
     errors = []
     key = os.environ.get("GEMINI_API_KEY")
     if key:
-        for m in dict.fromkeys([model, "gemini-flash-latest", *_gemini_models(key)]):
-            try:
-                out = parse(_gemini_call(system, user, m, key))
-                print(f"[script] modelo de IA: {m}")
-                return out
-            except Exception as exc:
-                errors.append(str(exc).replace("\n", " ")[:160])
+        models = list(dict.fromkeys([model, "gemini-flash-latest", *_gemini_models(key)]))
+        # Si Google está saturado (503/429), espera y reintenta: varias rondas
+        for ronda, espera in enumerate([0, 30, 90]):
+            if espera:
+                print(f"[script] Gemini saturado; reintento en {espera}s (ronda {ronda + 1})")
+                time.sleep(espera)
+            for m in list(models):
+                try:
+                    out = parse(_gemini_call(system, user, m, key))
+                    print(f"[script] modelo de IA: {m}")
+                    return out
+                except Exception as exc:
+                    msg = str(exc).replace("\n", " ")
+                    errors.append(msg[:160])
+                    if " 404" in msg or " 400" in msg or " 403" in msg:
+                        models.remove(m)  # ese modelo no existe para esta clave
+            if not models:
+                break
     else:
         errors.append("no hay GEMINI_API_KEY")
     gkey = os.environ.get("GROQ_API_KEY")
@@ -165,6 +179,13 @@ def _template(story: NewsItem, channel: str) -> dict:
     }
 
 
+def _es_espanol(text: str) -> bool:
+    w = re.findall(r"[a-záéíóúñ]+", text.lower())
+    es = sum(x in {"el", "la", "los", "las", "de", "del", "que", "y", "en", "un", "una", "por", "para", "con", "ya", "su", "es", "se"} for x in w)
+    en = sum(x in {"the", "of", "and", "to", "in", "is", "its", "it", "for", "with", "could", "will", "should", "be", "on"} for x in w)
+    return es > en
+
+
 def _dedupe(text: str) -> str:
     """Quita frases repetidas (o casi iguales) para que la voz no repita la misma idea."""
     sents = re.split(r"(?<=[.!?¡¿])\s+", text.strip())
@@ -184,6 +205,8 @@ def write_script(story: NewsItem, cfg: dict) -> dict:
     for provider in scfg["providers"]:
         try:
             if provider == "template":
+                if not _es_espanol(story.title):
+                    raise RuntimeError("sin IA y la noticia está en inglés: no publico un Short a medias")
                 data = _template(story, cfg["channel"]["name"])
             else:
                 data = _gemini(SYSTEM, user, scfg.get("gemini_model", "gemini-2.5-flash"))
