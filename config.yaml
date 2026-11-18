@@ -90,7 +90,7 @@ publish:
   videos_per_run: 1
   youtube:
     enabled: true
-    privacy: "public"             # Si tu proyecto de Google no está auditado, YouTube lo forzará a privado
+    privacy: "private"            # Cámbialo a "public" cuando Google apruebe la revisión de tu proyecto
     category_id: "20"             # 20 = Gaming
     default_tags: ["GTA 6", "GTA VI", "Grand Theft Auto VI", "Rockstar Games", "Vice City", "Leonida", "noticias GTA 6", "shorts"]
   github_release: true            # Guarda cada MP4 en "Releases" para bajarlo a TikTok/Reels
