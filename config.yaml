@@ -145,7 +145,11 @@ live:
   auto_upload_if_mine: true       # solo sube a YouTube si marcas que el directo es tuyo (#mio)
   max_youtube_uploads_per_day: 10 # tope de clips de directos subidos a YouTube por día (el resto queda para descargar)
   # Modo maratón (directos largos o de 24 horas)
-  max_hours: 24                   # horas a cubrir si el link está EN VIVO
+  max_hours: 3                    # horas a grabar si el link está EN VIVO (cada hora gasta ~70 min de GitHub)
+  # Videos ya grabados muy largos (ej. el VOD de un directo de 24 h)
+  long_vod_minutes: 150           # si el video dura más que esto, usa el modo "mejores momentos"
+  vod_best_clips: 15              # cuántos clips sacar en total de ese video
+  min_spacing_seconds: 240        # separación mínima entre clips (para que no salgan todos del mismo momento)
   chunk_minutes: 60               # graba en bloques de esta duración
   clips_per_hour: 8               # clips que saca de cada hora de directo
   job_minutes: 330                # GitHub corta a las 6 h: antes de eso lanza otra ejecución que sigue grabando
