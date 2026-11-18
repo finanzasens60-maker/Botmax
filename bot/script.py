@@ -61,7 +61,8 @@ def _github(system: str, user: str, model: str) -> dict:
         raise RuntimeError("no hay GITHUB_TOKEN")
     r = requests.post(
         "https://models.github.ai/inference/chat/completions",
-        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json",
+                 "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"},
         json={
             "model": model,
             "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
@@ -70,8 +71,11 @@ def _github(system: str, user: str, model: str) -> dict:
         },
         timeout=90,
     )
-    r.raise_for_status()
-    return _parse_json(r.json()["choices"][0]["message"]["content"])
+    try:
+        r.raise_for_status()
+        return _parse_json(r.json()["choices"][0]["message"]["content"])
+    except Exception as exc:
+        raise RuntimeError(f"{exc} | HTTP {r.status_code}: {r.text[:300]!r}") from exc
 
 
 def _gemini(system: str, user: str, model: str) -> dict:
