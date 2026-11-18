@@ -56,7 +56,9 @@ jobs:
           cache: pip
 
       - name: Instalar ffmpeg
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg espeak-ng
+        run: |
+          which ffmpeg || (timeout 600 sudo apt-get -o Acquire::Retries=3 update -qq && timeout 600 sudo apt-get install -y -qq ffmpeg)
+          which espeak-ng || timeout 300 sudo apt-get install -y -qq --no-install-recommends espeak-ng || echo "sin espeak (no es obligatorio)"
 
       - name: Fuente Poppins (si falta)
         run: |
