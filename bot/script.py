@@ -83,6 +83,23 @@ def _gemini_call(system: str, user: str, model: str, key: str) -> str:
     return r.json()["candidates"][0]["content"]["parts"][0]["text"]
 
 
+def _gemini_models(key: str) -> list[str]:
+    """Pregunta a Google qué modelos de texto hay disponibles (los nombres cambian con el tiempo)."""
+    try:
+        r = requests.get("https://generativelanguage.googleapis.com/v1beta/models?pageSize=200",
+                         headers={"x-goog-api-key": key}, timeout=30)
+        names = [m["name"].split("/", 1)[-1] for m in r.json().get("models", [])
+                 if "generateContent" in m.get("supportedGenerationMethods", [])]
+    except Exception:
+        return []
+    bad = ("image", "tts", "audio", "embedding", "vision", "live", "robotics", "nano", "lite")
+    ok = [n for n in names if "gemini" in n and not any(b in n for b in bad)]
+    ver = lambda n: float((re.findall(r"\d+(?:\.\d+)?", n) or ["0"])[0])
+    # primero los "flash" estables más nuevos, luego previews y "pro"
+    rank = lambda n: ("flash" in n, "preview" not in n and "exp" not in n, ver(n))
+    return sorted(ok, key=rank, reverse=True)[:4]
+
+
 def _groq_call(system: str, user: str, key: str) -> str:
     r = requests.post(
         "https://api.groq.com/openai/v1/chat/completions",
@@ -103,11 +120,13 @@ def _gemini(system: str, user: str, model: str, parse=None) -> dict:
     errors = []
     key = os.environ.get("GEMINI_API_KEY")
     if key:
-        for m in dict.fromkeys([model, "gemini-2.5-flash", "gemini-flash-latest", "gemini-2.0-flash"]):
+        for m in dict.fromkeys([model, "gemini-flash-latest", *_gemini_models(key)]):
             try:
-                return parse(_gemini_call(system, user, m, key))
+                out = parse(_gemini_call(system, user, m, key))
+                print(f"[script] modelo de IA: {m}")
+                return out
             except Exception as exc:
-                errors.append(str(exc)[:160])
+                errors.append(str(exc).replace("\n", " ")[:160])
     else:
         errors.append("no hay GEMINI_API_KEY")
     gkey = os.environ.get("GROQ_API_KEY")
