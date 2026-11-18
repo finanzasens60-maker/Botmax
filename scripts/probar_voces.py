@@ -89,11 +89,12 @@ def main() -> None:
         path, _, dur = tts.synthesize(TEXTO, c, out_dir / f"{name}.mp3")
         acc = 0.0
         heard = ""
+        x = load_wav(path)
         if model:
-            segs, _ = model.transcribe(str(path), language="es", beam_size=5)
+            segs, _ = model.transcribe(x, language="es", beam_size=5)
             heard = " ".join(s.text.strip() for s in segs)
             acc = word_accuracy(TEXTO, heard)
-        p = prosody(load_wav(path))
+        p = prosody(x)
         wps = len(TEXTO.split()) / dur
         # Puntaje "llamativo": que se entienda perfecto, que tenga variación de tono y buen ritmo
         ritmo = 1 - min(1, abs(wps - 3.1) / 1.2)          # ~3.1 palabras/s es el ritmo de los Shorts virales
