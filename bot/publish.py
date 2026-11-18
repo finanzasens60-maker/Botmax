@@ -59,7 +59,8 @@ def upload_youtube(video: Path, meta: dict, description: str, cfg: dict, short: 
     vid = resp["id"]
     status = resp.get("status", {}).get("privacyStatus")
     url = f"https://youtube.com/shorts/{vid}" if short else f"https://youtu.be/{vid}"
-    print(f"[youtube] subido: {url} (estado: {status})")
+    canal = resp.get("snippet", {}).get("channelTitle", "?")
+    print(f"[youtube] subido al canal '{canal}': {url} (estado: {status})")
     if thumbnail and thumbnail.exists():
         try:  # requiere canal verificado por teléfono
             yt.thumbnails().set(videoId=vid, media_body=MediaFileUpload(str(thumbnail), mimetype="image/jpeg")).execute()
