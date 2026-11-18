@@ -1,0 +1,144 @@
+# ============================================================
+#  Configuración del bot de Shorts de GTA 6
+#  Cambia lo que quieras aquí; no necesitas tocar el código.
+# ============================================================
+
+channel:
+  name: "GTA VI al Día"          # Aparece en el video y en la descripción
+  handle: "@gtavialdia"          # Tu @ de YouTube (opcional)
+  language: "es"
+
+# --- Noticias -------------------------------------------------
+news:
+  # Feeds RSS de donde salen los temas. Puedes añadir más.
+  feeds:
+    - "https://news.google.com/rss/search?q=%22GTA+6%22+OR+%22GTA+VI%22+when:2d&hl=es-419&gl=US&ceid=US:es-419"
+    - "https://news.google.com/rss/search?q=%22GTA+6%22+OR+%22GTA+VI%22+when:2d&hl=en-US&gl=US&ceid=US:en"
+    - "https://www.bing.com/news/search?q=%22GTA+6%22&format=rss"
+    - "https://www.reddit.com/r/GTA6/top/.rss?t=day"
+  # Debe contener al menos una de estas palabras para considerarse
+  must_match: ["gta 6", "gta vi", "grand theft auto vi", "grand theft auto 6", "rockstar", "leonida", "vice city"]
+  # Ignorar titulares con estas palabras (spam, ofertas, etc.)
+  blocklist: ["giveaway", "sorteo", "free download", "descarga gratis", "apk", "mod menu", "crack", "torrent"]
+  max_age_hours: 48
+
+# --- Guion con IA ----------------------------------------------
+script:
+  # Proveedores en orden de preferencia. Todos tienen plan gratis.
+  #  github  -> GitHub Models (gratis, usa el token automático de Actions)
+  #  gemini  -> Google Gemini (gratis, necesita GEMINI_API_KEY)
+  #  template-> sin IA, plantilla básica (último recurso)
+  providers: ["github", "gemini", "template"]
+  github_model: "openai/gpt-4.1-mini"
+  gemini_model: "gemini-2.5-flash"
+  target_words: 120               # ~45 segundos de voz
+
+# --- Voz -------------------------------------------------------
+voice:
+  engine: "edge"                  # edge (gratis, voz neural) | espeak (offline, robótica)
+  # Cambia SOLO esta línea para cambiar la voz de los Shorts:
+  preset: "trailer"
+  # Presets listos. Puedes crear los tuyos copiando uno.
+  #   voice : voz de Microsoft Edge (es-CO-GonzaloNeural, es-MX-JorgeNeural, es-US-AlonsoNeural, ...)
+  #   rate  : velocidad  ("+0%" normal, "+15%" más rápido)
+  #   pitch : tono       ("-10Hz" más grave, "+5Hz" más agudo)
+  #   fx    : efecto de sonido: trailer | hype | misterio | radio | ninguno
+  presets:
+    trailer:                      # Narrador grave tipo tráiler de cine (recomendado para clips del juego)
+      voice: "es-MX-JorgeNeural"
+      rate: "+8%"
+      pitch: "-8Hz"
+      fx: "trailer"
+    hype:                         # YouTuber gamer con energía, rápido y al frente
+      voice: "es-US-AlonsoNeural"
+      rate: "+15%"
+      pitch: "+0Hz"
+      fx: "hype"
+    parcero:                      # Acento colombiano con energía
+      voice: "es-CO-GonzaloNeural"
+      rate: "+12%"
+      pitch: "-3Hz"
+      fx: "hype"
+    misterio:                     # Grave con eco: secretos y easter eggs
+      voice: "es-ES-AlvaroNeural"
+      rate: "+0%"
+      pitch: "-12Hz"
+      fx: "misterio"
+    locutora:                     # Voz femenina enérgica
+      voice: "es-MX-DaliaNeural"
+      rate: "+12%"
+      pitch: "+0Hz"
+      fx: "hype"
+
+# --- Video -----------------------------------------------------
+video:
+  width: 1080
+  height: 1920
+  fps: 30
+  font: "assets/fonts/Poppins-Bold.ttf"
+  # Fondos: 1) clips tuyos en assets/backgrounds  2) Pexels (gratis, PEXELS_API_KEY)
+  #         3) fondo animado generado (siempre funciona)
+  pexels_queries: ["miami night", "neon city night", "sports car night", "palm trees sunset", "miami beach drone", "city traffic night"]
+  music_volume: 0.12              # Música de assets/music (si hay)
+  game_audio_volume: 0.35         # Sonido de TUS clips del juego (0 = apagado). Baja solo cuando habla la voz
+  words_per_caption: 3
+  accent_color: "#FF3EA5"         # Rosa estilo Vice City
+  highlight_color: "#FFE600"
+
+# --- Publicación ----------------------------------------------
+publish:
+  videos_per_run: 1
+  youtube:
+    enabled: true
+    privacy: "public"             # Si tu proyecto de Google no está auditado, YouTube lo forzará a privado
+    category_id: "20"             # 20 = Gaming
+    default_tags: ["GTA 6", "GTA VI", "Grand Theft Auto VI", "Rockstar Games", "Vice City", "Leonida", "noticias GTA 6", "shorts"]
+  github_release: true            # Guarda cada MP4 en "Releases" para bajarlo a TikTok/Reels
+  telegram: true                  # Te manda el video al celular (si configuras el bot)
+
+# --- Videos largos (horizontales, 6-10 min) --------------------
+long:
+  sections: 7                     # puntos por video (trucos, secretos…)
+  min_sources: 3                  # si hay menos fuentes, prueba otro tema
+  video:
+    width: 1920
+    height: 1080
+    caption_y: 0.84               # subtítulos abajo
+    caption_size: 64
+    words_per_caption: 5
+    pexels_queries: ["miami aerial", "neon city night", "sports car highway", "miami beach", "nightclub lights", "palm trees sunset", "speedboat ocean", "city timelapse night"]
+  # Temas que rotan automáticamente (el que hace más tiempo no se usa va primero)
+  themes:
+    - name: "Trucos"
+      kicker: "TRUCO"
+      voice_preset: "hype"
+      angle: "Los mejores trucos, códigos y atajos confirmados para jugar mejor"
+      queries: ["GTA 6 trucos", "GTA 6 cheats", "GTA 6 cheat codes"]
+    - name: "Secretos"
+      kicker: "SECRETO"
+      voice_preset: "misterio"
+      angle: "Easter eggs, secretos y detalles ocultos que casi nadie notó"
+      queries: ["GTA 6 secretos", "GTA 6 easter eggs", "GTA 6 hidden details"]
+    - name: "Consejos"
+      kicker: "CONSEJO"
+      voice_preset: "hype"
+      angle: "Consejos para principiantes: dinero, armas, vehículos y misiones"
+      queries: ["GTA 6 guía consejos", "GTA 6 tips beginners", "GTA 6 how to make money"]
+    - name: "Resumen semanal"
+      kicker: "NOTICIA"
+      voice_preset: "trailer"
+      angle: "Las noticias más importantes de GTA 6 de la semana, ordenadas de menor a mayor impacto"
+      queries: ["GTA 6", "GTA VI Rockstar"]
+      extra_feeds: ["https://www.reddit.com/r/GTA6/top/.rss?t=week"]
+
+# --- Clips desde directos (links que tú compartes) -------------
+live:
+  max_minutes: 120                # cuánto analizar de un VOD (o grabar si está en vivo: ver live_record_minutes)
+  live_record_minutes: 45         # si el link está EN VIVO, cuántos minutos grabar
+  whisper_model: "base"           # tiny (rápido) | base | small (más preciso, más lento)
+  language: "es"                  # vacío = detectar idioma
+  window_seconds: 45              # tamaño de cada momento candidato
+  candidates: 14                  # cuántos candidatos revisa la IA
+  clips_per_stream: 4             # cuántos clips salen por directo
+  caption_y: 0.74
+  auto_upload_if_mine: true       # solo sube a YouTube si marcas que el directo es tuyo (#mio)
