@@ -3,6 +3,7 @@ import os
 import re
 
 body = os.environ.get("ISSUE_BODY") or ""
+title = os.environ.get("ISSUE_TITLE") or ""
 url = (os.environ.get("IN_URL") or "").strip()
 start = (os.environ.get("IN_START") or "").strip()
 minutes = (os.environ.get("IN_MINUTES") or "").strip()
@@ -18,7 +19,7 @@ if body:
     mm = sec(r"Cuántos minutos")
     if mm and mm.group(1).strip().isdigit():
         minutes = mm.group(1).strip()
-    mine = mine or bool(re.search(r"- \[x\][^\n]*#mio|#mio\b(?![^\n]*—)", body, re.I))
+    mine = mine or bool(re.search(r"- \[x\][^\n]*#mio|#mio\b(?![^\n]*—)", body, re.I)) or "#mio" in title.lower()
 
 if not re.match(r"https?://", url or ""):
     raise SystemExit("No encontré un link válido (debe empezar por http)")
