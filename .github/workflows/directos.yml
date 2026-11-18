@@ -36,6 +36,8 @@ jobs:
     # Solo el dueño del repo puede mandar links
     if: github.event_name == 'workflow_dispatch' || (github.event.issue.user.login == github.repository_owner && contains(github.event.issue.body, 'http'))
     runs-on: ubuntu-24.04
+    env:
+      PYTHONUNBUFFERED: "1"   # ver el progreso en vivo en los registros
     timeout-minutes: 300
     steps:
       - uses: actions/checkout@v4
