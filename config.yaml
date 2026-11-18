@@ -140,5 +140,6 @@ live:
   window_seconds: 45              # tamaño de cada momento candidato
   candidates: 14                  # cuántos candidatos revisa la IA
   clips_per_stream: 4             # cuántos clips salen por directo
+  default_topic: "GTA 6"          # tema si no indicas otro (puede ser cualquier juego o stream)
   caption_y: 0.74
   auto_upload_if_mine: true       # solo sube a YouTube si marcas que el directo es tuyo (#mio)
