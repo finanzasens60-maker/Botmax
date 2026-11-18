@@ -9,6 +9,7 @@ start = (os.environ.get("IN_START") or "").strip()
 minutes = (os.environ.get("IN_MINUTES") or "").strip()
 mine = (os.environ.get("IN_MINE") or "").strip().lower() == "true"
 topic = (os.environ.get("IN_TOPIC") or "").strip()
+hours = (os.environ.get("IN_HOURS") or "").strip()
 
 if body:
     m = re.search(r"https?://\S+", body)
@@ -20,6 +21,9 @@ if body:
     tt = sec(r"Juego o tema")
     if tt and tt.group(1).strip() and "No response" not in tt.group(1):
         topic = tt.group(1).strip()
+    hh = sec(r"Horas a cubrir")
+    if hh and re.fullmatch(r"\d+(\.\d+)?", hh.group(1).strip()):
+        hours = hh.group(1).strip()
     mm = sec(r"Cuántos minutos")
     if mm and mm.group(1).strip().isdigit():
         minutes = mm.group(1).strip()
@@ -33,3 +37,4 @@ print(f"start={safe(start)}")
 print(f"minutes={safe(minutes)}")
 print(f"mine={'true' if mine else 'false'}")
 print(f"topic={safe(topic)[:40]}")
+print(f"hours={hours if re.fullmatch(r'\d+(\.\d+)?', hours) else ''}")
