@@ -1,0 +1,96 @@
+name: Corregir títulos y subir clips (privados)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: "Releases con los clips (separados por espacio)"
+        required: true
+      streamer:
+        description: "Nombre del streamer"
+        default: "Westcol"
+      stream_title:
+        description: "Título del directo (contexto para la IA)"
+        default: ""
+      url:
+        description: "Link del canal o directo (para el crédito)"
+        default: "https://kick.com/westcol"
+      tag_label:
+        description: "Etiqueta rosada arriba del titular"
+        default: "WESTCOL  •  DIRECTO"
+      issue:
+        description: "Issue donde responder (opcional)"
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: directos
+  cancel-in-progress: false
+
+jobs:
+  retitular:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Instalar ffmpeg
+        run: which ffmpeg || (timeout 600 sudo apt-get -o Acquire::Retries=3 update -qq && timeout 600 sudo apt-get install -y -qq ffmpeg)
+      - name: Fuente Poppins (si falta)
+        run: |
+          if [ ! -f assets/fonts/Poppins-Bold.ttf ]; then
+            mkdir -p assets/fonts
+            curl -sSL -o assets/fonts/Poppins-Bold.ttf https://github.com/google/fonts/raw/main/ofl/poppins/Poppins-Bold.ttf
+          fi
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Cache del modelo Whisper
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: whisper-models-v1
+      - name: Corregir y subir
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          IN_TAGS: ${{ github.event.inputs.tags }}
+          IN_STREAMER: ${{ github.event.inputs.streamer }}
+          IN_TITLE: ${{ github.event.inputs.stream_title }}
+          IN_URL: ${{ github.event.inputs.url }}
+          IN_LABEL: ${{ github.event.inputs.tag_label }}
+        run: python scripts/retitular.py $IN_TAGS --streamer "$IN_STREAMER" --stream-title "$IN_TITLE" --url "$IN_URL" --tag-label "$IN_LABEL"
+      - name: Guardar historial
+        if: always()
+        run: |
+          git config user.name "gta6-bot"
+          git config user.email "gta6-bot@users.noreply.github.com"
+          git add data/published.json
+          if ! git diff --cached --quiet; then
+            cp data/published.json /tmp/mio.json
+            git commit -q -m "Historial: clips corregidos"
+            for i in 1 2 3 4; do
+              git fetch -q origin main && git reset -q --hard origin/main
+              python scripts/unir_historial.py /tmp/mio.json data/published.json
+              git add data/published.json
+              git diff --cached --quiet && break
+              git commit -q -m "Historial: clips corregidos" && git push -q && break
+              sleep 7
+            done
+          fi
+      - name: Responder en el Issue
+        if: always() && github.event.inputs.issue != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          [ -f out/retitular_summary.md ] && gh issue comment "${{ github.event.inputs.issue }}" --body-file out/retitular_summary.md || true
