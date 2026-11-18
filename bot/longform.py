@@ -8,7 +8,7 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
-from . import news, publish, render, script, tts, visuals
+from . import broll, news, publish, render, script, tts, visuals
 
 SYSTEM_LONG = """Eres el guionista de un canal de YouTube en español latino sobre GTA 6 (Grand Theft Auto VI).
 Vas a escribir el guion de un VIDEO LARGO (formato horizontal) a partir de varias fuentes.
@@ -180,7 +180,8 @@ def make_long(cfg: dict, state: dict, dry_run: bool, theme_name: str | None = No
         data["description"], "", "CAPÍTULOS", *chapters, "",
         *(["FUENTES", *src_lines, ""] if src_lines else []),
         f"Suscríbete a {cfg['channel']['name']} para más de GTA 6.",
-        "Narración con voz sintética. Canal de fans, no afiliado a Rockstar Games ni Take-Two.", "",
+        "Narración con voz sintética. Canal de fans, no afiliado a Rockstar Games ni Take-Two.",
+        *([f"Imágenes: {', '.join(broll.CREDITS)}"] if broll.CREDITS else []), "",
         " ".join(data.get("hashtags", ["#GTA6"])),
     ])
     meta = {"title": data["title"], "description": data["description"],
