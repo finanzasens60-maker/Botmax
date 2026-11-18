@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import json
 import random
+import re
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
@@ -74,6 +75,16 @@ def _material(sources: list[news.NewsItem]) -> str:
     return "\n\n".join(out)
 
 
+def _parse_long(text: str) -> dict:
+    """Valida la respuesta del guion largo (no usa las reglas de los Shorts)."""
+    text = re.sub(r"^```(?:json)?|```$", "", text.strip(), flags=re.M).strip()
+    m = re.search(r"\{.*\}", text, re.S)
+    data = json.loads(m.group(0) if m else text)
+    if not str(data.get("title", "")).strip() or len(data.get("sections", [])) < 3:
+        raise ValueError("respuesta sin título o con menos de 3 secciones")
+    return data
+
+
 def write_long_script(cfg: dict, theme: dict, sources: list[news.NewsItem]) -> dict:
     user = (f"Canal: {cfg['channel']['name']}\nTEMA DEL VIDEO: {theme['name']} — {theme['angle']}\n"
             f"Número de secciones deseado: {cfg['long']['sections']}\n\nFUENTES:\n{_material(sources)}")
@@ -82,7 +93,7 @@ def write_long_script(cfg: dict, theme: dict, sources: list[news.NewsItem]) -> d
         try:
             fn = script._github if provider == "github" else script._gemini
             model = scfg["github_model"] if provider == "github" else scfg["gemini_model"]
-            data = fn(SYSTEM_LONG, user, model)
+            data = fn(SYSTEM_LONG, user, model, parse=_parse_long)
             if len(data.get("sections", [])) < 3:
                 raise ValueError("menos de 3 secciones")
             data["provider"] = provider
