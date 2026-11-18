@@ -14,6 +14,9 @@ on:
       minutes:
         description: "Cuántos minutos analizar"
         default: "120"
+      topic:
+        description: "Juego o tema del directo (vacío = GTA 6)"
+        default: ""
       mine:
         description: "El directo es mío o tengo permiso (subir a YouTube)"
         type: boolean
@@ -70,6 +73,7 @@ jobs:
           IN_START: ${{ github.event.inputs.start }}
           IN_MINUTES: ${{ github.event.inputs.minutes }}
           IN_MINE: ${{ github.event.inputs.mine }}
+          IN_TOPIC: ${{ github.event.inputs.topic }}
         run: python scripts/leer_issue.py >> "$GITHUB_OUTPUT"
 
       - name: Avisar en el Issue que empezó
@@ -92,10 +96,11 @@ jobs:
           START: ${{ steps.args.outputs.start }}
           MINUTES: ${{ steps.args.outputs.minutes }}
           MINE: ${{ steps.args.outputs.mine }}
+          TOPIC: ${{ steps.args.outputs.topic }}
         run: |
           EXTRA=""
           if [ "$MINE" = "true" ]; then EXTRA="--mine"; fi
-          python -m bot.live "$URL" ${START:+--start "$START"} ${MINUTES:+--minutes "$MINUTES"} $EXTRA
+          python -m bot.live "$URL" ${START:+--start "$START"} ${MINUTES:+--minutes "$MINUTES"} ${TOPIC:+--topic "$TOPIC"} $EXTRA
 
       - name: Guardar historial
         if: always()
