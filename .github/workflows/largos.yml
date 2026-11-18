@@ -51,6 +51,12 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r requirements.txt
 
+      - name: Cache de capturas de Rockstar
+        uses: actions/cache@v4
+        with:
+          path: assets/rockstar
+          key: rockstar-imgs-v1
+
       - name: Crear video(s) y publicar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
