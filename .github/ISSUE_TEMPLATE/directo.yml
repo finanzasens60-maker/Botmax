@@ -17,8 +17,8 @@ body:
   - type: input
     id: horas
     attributes:
-      label: Horas a cubrir si está EN VIVO (por defecto 24)
-      placeholder: "24"
+      label: Horas a grabar si está EN VIVO (por defecto 3). Para un directo de 24 h, mejor pega el link del video cuando termine
+      placeholder: "3"
   - type: input
     id: start
     attributes:
