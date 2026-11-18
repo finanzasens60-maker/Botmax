@@ -95,7 +95,7 @@ Los videos largos usan su propia voz por tema (`voice_preset` en cada tema): tru
 ## 🎥 Clips desde directos (tú mandas el link)
 
 1. En el repo ve a **Issues → New issue → "🎥 Sacar clips de un directo"** (funciona igual desde la app de GitHub en el celular).
-2. Pega el link (Twitch, Kick, YouTube…). Opcional: desde qué minuto y cuántos minutos analizar.
+2. Pega el link (Twitch, Kick, YouTube…). Opcional: el **juego o tema** (sirve para cualquier stream, no solo GTA 6: Fortnite, Minecraft, Just Chatting…), desde qué minuto y cuántos minutos analizar.
 3. Marca **#mio** solo si el directo es tuyo o tienes permiso del streamer.
 4. Crea el Issue. El bot responde "Recibido ✅" y, cuando termina (20-60 min), te deja ahí mismo los clips y cierra el Issue.
 
