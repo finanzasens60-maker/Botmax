@@ -36,7 +36,7 @@ script:
 voice:
   engine: "edge"                  # edge (gratis, voz neural) | espeak (offline, robótica)
   # Cambia SOLO esta línea para cambiar la voz de los Shorts:
-  preset: "natural"
+  preset: "fluida"
   # Presets listos. Puedes crear los tuyos copiando uno.
   #   voice : voz de Microsoft Edge (es-CO-GonzaloNeural, es-MX-JorgeNeural, es-US-AlonsoNeural, ...)
   #   rate  : velocidad  ("+0%" normal, "+15%" más rápido)
@@ -60,7 +60,7 @@ voice:
       fx: "natural"
     fluida:                       # Voz multilingüe femenina muy natural
       voice: "en-US-AvaMultilingualNeural"
-      rate: "+5%"
+      rate: "+8%"
       pitch: "+0Hz"
       fx: "natural"
     trailer:                      # Narrador grave tipo tráiler de cine (recomendado para clips del juego)
@@ -140,22 +140,22 @@ long:
   themes:
     - name: "Trucos"
       kicker: "TRUCO"
-      voice_preset: "natural"
+      voice_preset: "fluida"
       angle: "Los mejores trucos, códigos y atajos confirmados para jugar mejor"
       queries: ["GTA 6 trucos", "GTA 6 cheats", "GTA 6 cheat codes"]
     - name: "Secretos"
       kicker: "SECRETO"
-      voice_preset: "natural"
+      voice_preset: "fluida"
       angle: "Easter eggs, secretos y detalles ocultos que casi nadie notó"
       queries: ["GTA 6 secretos", "GTA 6 easter eggs", "GTA 6 hidden details"]
     - name: "Consejos"
       kicker: "CONSEJO"
-      voice_preset: "natural"
+      voice_preset: "fluida"
       angle: "Consejos para principiantes: dinero, armas, vehículos y misiones"
       queries: ["GTA 6 guía consejos", "GTA 6 tips beginners", "GTA 6 how to make money"]
     - name: "Resumen semanal"
       kicker: "NOTICIA"
-      voice_preset: "natural"
+      voice_preset: "fluida"
       angle: "Las noticias más importantes de GTA 6 de la semana, ordenadas de menor a mayor impacto"
       queries: ["GTA 6", "GTA VI Rockstar"]
       extra_feeds: ["https://www.reddit.com/r/GTA6/top/.rss?t=week"]
