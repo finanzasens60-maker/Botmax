@@ -67,9 +67,15 @@ def maraton(url: str, hours: float, topic: str | None, mine: bool, issue: str | 
     lcfg = cfg["live"]
     info = live.get_info(url)
     if not info.get("is_live"):
-        print("[maratón] el link no está en vivo: lo proceso como video grabado")
-        res = live.run(url, None, None, mine, dry_run, topic, info_override=info)
-        return {"clips": res, "continues": False, "chunks": 1}
+        dur_min = (info.get("duration") or 0) / 60
+        if dur_min > float(lcfg.get("long_vod_minutes", 150)):
+            # VOD muy largo (ej. directo de 24 h ya terminado): solo los N mejores momentos, gastando poco
+            from .mejores import best_of_vod
+            res = best_of_vod(url, info, int(lcfg.get("vod_best_clips", 15)), topic, mine, dry_run)
+        else:
+            print("[maratón] el link no está en vivo: lo proceso como video grabado")
+            res = live.run(url, None, None, mine, dry_run, topic, info_override=info)
+        return {"clips": res, "continues": False, "chunks": 0}
 
     chunk_min = float(lcfg.get("chunk_minutes", 60))
     per_chunk = max(2, round(float(lcfg.get("clips_per_hour", 8)) * chunk_min / 60))
