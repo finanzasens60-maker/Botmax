@@ -85,6 +85,16 @@ video:
   accent_color: "#FF3EA5"         # Rosa estilo Vice City
   highlight_color: "#FFE600"
 
+# --- Imágenes del juego (sin tener el juego) -------------------
+broll:
+  rockstar_images: true           # capturas oficiales de rockstargames.com/VI con movimiento suave
+  # Canales que el bot revisa: si están EN VIVO jugando GTA 6, graba unos segundos SIN su audio
+  # (la narración siempre es la voz del canal) y les da crédito en pantalla y en la descripción.
+  streamers: []                   # ej. ["https://www.twitch.tv/canal1", "https://kick.com/canal2"]
+  stream_seconds: 90
+  max_streams: 2
+  keywords: ["gta 6", "gta vi", "gta6", "gtavi", "grand theft auto vi"]
+
 # --- Publicación ----------------------------------------------
 publish:
   videos_per_run: 1
