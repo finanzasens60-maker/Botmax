@@ -17,6 +17,9 @@ def _duration(path: Path) -> float:
 # Efectos de sonido para la voz (ffmpeg). Hacen que suene a narrador de tráiler / YouTuber gamer.
 FX = {
     "ninguno": "",
+    # Limpia y cálida, como micrófono de YouTuber: sin eco ni cambios de tono (suena más humano)
+    "natural": ("highpass=f=75,equalizer=f=150:t=q:w=1:g=1.5,equalizer=f=3500:t=q:w=1.5:g=2,"
+                "acompressor=threshold=-21dB:ratio=2.5:attack=10:release=120:makeup=3,alimiter=limit=0.95"),
     # Voz grave, con cuerpo y un eco corto tipo tráiler de cine
     "trailer": ("highpass=f=60,equalizer=f=110:t=q:w=1:g=5,equalizer=f=350:t=q:w=1.2:g=-3,"
                 "equalizer=f=3200:t=q:w=1.5:g=4,acompressor=threshold=-22dB:ratio=4:attack=5:release=90:makeup=5,"
