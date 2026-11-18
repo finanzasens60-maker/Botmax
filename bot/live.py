@@ -101,7 +101,14 @@ def transcribe(audio: Path, cfg: dict) -> list[dict]:
     lcfg = cfg["live"]
     print(f"[live] transcribiendo con Whisper '{lcfg['whisper_model']}' (puede tardar)…")
     model = WhisperModel(lcfg["whisper_model"], device="cpu", compute_type="int8")
-    segments, _ = model.transcribe(str(audio), language=lcfg.get("language") or None, word_timestamps=True,
+    # Leemos el WAV nosotros (16 kHz mono) para no depender de la versión de PyAV
+    import wave
+
+    import numpy as np
+
+    with wave.open(str(audio), "rb") as w:
+        pcm = np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16).astype(np.float32) / 32768.0
+    segments, _ = model.transcribe(pcm, language=lcfg.get("language") or None, word_timestamps=True,
                                    vad_filter=True, beam_size=1)
     words = []
     for seg in segments:
