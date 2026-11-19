@@ -67,9 +67,51 @@ def _secs(t: str | None) -> float:
 
 
 # ------------------------------------------------------------------ descarga
+def _hls_info(src: str, title: str = "", uploader: str = "", page: str = "") -> dict:
+    """Info mínima de un VOD en HLS (.m3u8): la duración sale de ffprobe."""
+    dur = None
+    try:
+        out = sh(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", src],
+                 capture_output=True, timeout=120).stdout.strip()
+        dur = float(out) if out and out != "N/A" else None
+    except Exception as exc:
+        print(f"[live] ffprobe no pudo medir el VOD: {exc}")
+    who = uploader or os.environ.get("STREAMER") or os.environ.get("TOPIC") or "directo"
+    return {"title": title or f"Directo de {who}", "uploader": who, "duration": dur, "is_live": False,
+            "webpage_url": page or src, "extractor_key": "Kick" if "kick" in src else "", "_src": src}
+
+
+def _kick_vod(url: str) -> dict | None:
+    """Kick bloquea a veces a yt-dlp: uso su API pública para sacar el .m3u8 del VOD."""
+    m = re.search(r"kick\.com/([^/]+)/videos/([0-9a-f-]{36})", url)
+    if not m:
+        return None
+    import requests
+    r = requests.get(f"https://kick.com/api/v1/video/{m.group(2)}", timeout=30,
+                     headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/131.0 Safari/537.36",
+                              "Accept": "application/json"})
+    r.raise_for_status()
+    d = r.json()
+    ls = d.get("livestream") or {}
+    info = _hls_info(d["source"], ls.get("session_title", ""), m.group(1).capitalize(), url)
+    if ls.get("duration"):
+        info["duration"] = ls["duration"] / 1000
+    return info
+
+
 def get_info(url: str) -> dict:
-    out = sh(["yt-dlp", "-J", "--no-warnings", "--no-playlist", url], capture_output=True)
-    return json.loads(out.stdout)
+    if ".m3u8" in url:
+        return _hls_info(url)
+    try:
+        out = sh(["yt-dlp", "-J", "--no-warnings", "--no-playlist", url], capture_output=True)
+        return json.loads(out.stdout)
+    except subprocess.CalledProcessError as exc:
+        print(f"[live] yt-dlp falló: {(exc.stderr or '').strip()[-300:]}")
+        info = _kick_vod(url)
+        if info:
+            print(f"[live] uso el VOD de Kick por su API ({info['duration'] or 0:.0f} s)")
+            return info
+        raise
 
 
 def download(url: str, info: dict, start: float, minutes: float, work: Path, live_minutes: float = 45) -> Path:
@@ -90,7 +132,7 @@ def download(url: str, info: dict, start: float, minutes: float, work: Path, liv
     print(f"[live] descargando {start / 60:.0f}–{end / 60:.0f} min de '{info.get('title', '')[:60]}'")
     sh(["yt-dlp", "-f", fmt, "--merge-output-format", "mp4", "--no-warnings", "--no-playlist",
         "--download-sections", f"*{int(start)}-{int(end)}", "--force-keyframes-at-cuts",
-        "-o", str(dst), url])
+        "-o", str(dst), info.get("_src", url)])
     return dst
 
 
