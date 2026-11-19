@@ -70,7 +70,7 @@ def best_of_vod(url: str, info: dict, n: int, topic: str | None, mine: bool, dry
     print(f"[mejores] video de {horas:.1f} h · buscando los {n} mejores momentos (tema: {live.TOPIC})")
 
     # 1) audio barato (o el video en la calidad más baja si no hay audio separado)
-    _sh(["yt-dlp", "-f", "ba/wa/w", "--no-playlist", "--no-warnings", "-o", str(work / "barato.%(ext)s"), url])
+    _sh(["yt-dlp", "-f", "ba/wa/w", "--no-playlist", "--no-warnings", "-o", str(work / "barato.%(ext)s"), info.get("_src", url)])
     cheap = next(p for p in work.glob("barato.*") if p.suffix != ".part")
     print(f"[mejores] descargado ({cheap.stat().st_size / 1e6:.0f} MB)")
 
@@ -118,7 +118,7 @@ def best_of_vod(url: str, info: dict, n: int, topic: str | None, mine: bool, dry
         try:
             _sh(["yt-dlp", "-f", "bv*[height<=720]+ba/b[height<=720]/b", "--merge-output-format", "mp4",
                  "--no-playlist", "--no-warnings", "--download-sections", f"*{int(s)}-{int(e) + 1}",
-                 "--force-keyframes-at-cuts", "-o", str(seg), url])
+                 "--force-keyframes-at-cuts", "-o", str(seg), info.get("_src", url)])
         except subprocess.CalledProcessError:
             print(f"[mejores] no pude bajar el tramo {i} en buena calidad; uso la copia barata")
             _sh(["ffmpeg", "-y", "-loglevel", "error", "-ss", str(s), "-t", str(e - s), "-i", str(cheap),
