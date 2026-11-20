@@ -115,6 +115,10 @@ broll:
   # (la narración siempre es la voz del canal) y les da crédito en pantalla y en la descripción.
   streamers: []                   # ej. ["https://www.twitch.tv/canal1", "https://kick.com/canal2"]
   stream_seconds: 90
+  # Canales de Kick cuyos VODs de GTA 6 se usan como gameplay de fondo (sin audio, cámara difuminada)
+  kick_vods: ["garydavid"]
+  vod_seconds: 45                 # duración de cada tramo
+  vod_clips: 3                    # tramos por video
   max_streams: 2
   keywords: ["gta 6", "gta vi", "gta6", "gtavi", "grand theft auto vi"]
 
