@@ -4,7 +4,8 @@ on:
   schedule:
     # Horas en UTC. Colombia = UTC-5  ->  8:17, 13:17 y 19:17 hora Colombia
     - cron: "17 13 * * *"
-    - cron: "17 18 * * *"
+    - cron: "47 16 * * *"
+    - cron: "17 20 * * *"
     - cron: "17 0 * * *"
   workflow_dispatch:          # botón "Run workflow" para lanzarlo a mano
     inputs:
