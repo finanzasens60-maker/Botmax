@@ -49,7 +49,15 @@ def sh(cmd: list[str], **kw) -> subprocess.CompletedProcess:
     return subprocess.run(cmd, check=True, text=True, **kw)
 
 
-def livestream_id(vod: str) -> tuple[str, str]:
+def livestream_id(vod: str, channel: str = "") -> tuple[str, str]:
+    if vod == "live":  # el directo de ahora (o el último si ya terminó)
+        r = requests.get(f"https://kick.com/api/v2/channels/{channel}/livestream", headers=UA, timeout=30)
+        d = (r.json() or {}).get("data") if r.status_code == 200 else None
+        if d:
+            return str(d["id"]), d.get("session_title", "")
+        vids = requests.get(f"https://kick.com/api/v2/channels/{channel}/videos", headers=UA, timeout=30).json()
+        vids = vids if isinstance(vids, list) else vids.get("data", [])
+        return (str(vids[0]["id"]), vids[0].get("session_title", "")) if vids else ("", "")
     m = re.search(r"videos/([0-9a-f-]{36})", vod)
     if not m:
         return vod, ""  # ya es un id de directo
@@ -59,8 +67,9 @@ def livestream_id(vod: str) -> tuple[str, str]:
 
 
 def fetch_clips(channel: str, stream_id: str, pages: int = 150) -> list[dict]:
-    """Clips del directo, de la última semana (si hay pocos, del último mes)."""
-    out = _fetch(channel, stream_id, "week", pages)
+    """Clips del directo: los de hoy, luego de la semana (y si hay pocos, del último mes)."""
+    out = _fetch(channel, stream_id, "day", 60)
+    out += _fetch(channel, stream_id, "week", pages)
     if len(out) < 40:
         out += _fetch(channel, stream_id, "month", pages)
     return _uniq(out)
@@ -128,10 +137,15 @@ def main() -> None:
     work = Path("out") / f"{stamp}-kickclips-{a.channel}"
     work.mkdir(parents=True, exist_ok=True)
 
-    sid, stitle = livestream_id(a.vod)
+    sid, stitle = livestream_id(a.vod, a.channel)
     clips = fetch_clips(a.channel, sid)
     print(f"[kick] directo {sid} '{stitle}': {len(clips)} clips del público")
-    clips = [c for c in clips if not VETO.search(c.get("title") or "")]
+    usados = {it.get("key") for it in load_state()["items"]}
+    clips = [c for c in clips if not VETO.search(c.get("title") or "") and f"kick-{c['id']}" not in usados]
+    print(f"[kick] {len(clips)} sin usar todavía")
+    if not clips:
+        Path("out/live_summary.md").write_text("Todavía no hay clips nuevos del público en este directo.", encoding="utf-8")
+        return
     pool = clips[a.skip:a.skip + a.pool]
     print(f"[kick] reviso los {len(pool)} más vistos (sin temas vetados)")
 
