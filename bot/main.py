@@ -70,13 +70,13 @@ def github_release(video: Path, caption_file: Path, meta: dict, tag: str, extra:
         return None
 
 
-def make_one(cfg: dict, story: news.NewsItem, dry_run: bool) -> dict:
+def make_one(cfg: dict, story: news.NewsItem, dry_run: bool, meta_override: dict | None = None) -> dict:
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
     work = Path("out") / f"{stamp}-{slugify(story.title)}"
     work.mkdir(parents=True, exist_ok=True)
     print(f"\n=== Noticia: {story.title}\n    Fuente: {story.source}")
 
-    meta = script.write_script(story, cfg)
+    meta = meta_override or script.write_script(story, cfg)
     print(f"[script] título: {meta['title']}")
     voice, words, dur = tts.synthesize(meta["script"], cfg, work / "voice.mp3")
     print(f"[tts] duración de la voz: {dur:.1f}s")
@@ -110,6 +110,13 @@ def make_one(cfg: dict, story: news.NewsItem, dry_run: bool) -> dict:
             result["youtube"] = publish.upload_youtube(video, meta, description, cfg)
         except Exception as exc:
             print(f"[youtube] ERROR al subir: {exc}")
+        if cfg["publish"].get("instagram", {}).get("enabled"):
+            hechos = sum(1 for it in load_state()["items"] if it.get("instagram") and it.get("date", "")[:8] == stamp[:8])
+            if hechos < int(cfg["publish"]["instagram"].get("max_per_day", 6)):
+                try:
+                    result["instagram"] = publish.upload_instagram(video, f"{meta['title']}\n\n{description}", cfg)
+                except Exception as exc:
+                    print(f"[instagram] ERROR al subir: {exc}")
         if cfg["publish"].get("github_release"):
             result["release"] = github_release(video, caption_file, meta, f"video-{stamp}")
         if cfg["publish"].get("telegram"):
