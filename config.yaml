@@ -194,3 +194,10 @@ live:
   chunk_minutes: 60               # graba en bloques de esta duración
   clips_per_hour: 8               # clips que saca de cada hora de directo
   job_minutes: 330                # GitHub corta a las 6 h: antes de eso lanza otra ejecución que sigue grabando
+
+# --- Directo largo en curso (clips automáticos del público en Kick cada 4 horas) ----
+kick_auto:
+  channel: "westcol"              # canal de Kick
+  until: "2026-11-24"             # hasta qué día revisar (el directo de 72 h arrancó el 20 de nov)
+  count: 10                       # clips por revisión (solo los nuevos, nunca repite)
+  issue: 3                        # dónde te aviso
