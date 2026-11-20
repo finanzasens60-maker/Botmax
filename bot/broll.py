@@ -161,8 +161,8 @@ def _facecam_box(video: Path, samples: int = 14) -> tuple[int, int, int, int, in
     cx = sum(o[0] for o in same) / len(same)
     cy = sum(o[1] for o in same) / len(same)
     fw = max(o[2] for o in same)
-    # la cámara suele ser un recuadro bastante más grande que la cara: tapamos ~3.2x la cara
-    bw, bh = int(fw * 3.2), int(fw * 3.2 * 0.9)
+    # la cámara suele ser un recuadro bastante más grande que la cara: tapamos ~4x la cara (con margen)
+    bw, bh = int(fw * 4.0), int(fw * 4.0 * 0.9)
     x0, y0 = max(0, int(cx - bw / 2)), max(0, int(cy - bh / 2.4))
     bw, bh = min(bw, W - x0), min(bh, H - y0)
     return (x0 - x0 % 2, y0 - y0 % 2, bw - bw % 2, bh - bh % 2, W, H)
