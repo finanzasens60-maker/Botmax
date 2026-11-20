@@ -16,6 +16,15 @@ on:
       count:
         description: "Cuántos videos generar"
         default: "1"
+      mode:
+        description: "news = noticias · tips = trucos y curiosidades"
+        type: choice
+        options: ["news", "tips"]
+        default: "news"
+      solo_descargar:
+        description: "Solo dejarlos para descargar (no subir a YouTube)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write   # guardar historial y crear Releases con los MP4
@@ -65,6 +74,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
@@ -73,10 +84,21 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           COUNT: ${{ github.event.inputs.count }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
+          MODE: ${{ github.event.inputs.mode }}
+          SOLO_DESCARGAR: ${{ github.event.inputs.solo_descargar }}
+          SCHEDULE: ${{ github.event.schedule }}
         run: |
           DRY=""
           if [ "$DRY_RUN" = "true" ]; then DRY="--dry-run"; fi
-          python -m bot.main --count "${COUNT:-1}" $DRY
+          # Programados: 8:17 am y 3:17 pm = noticias · 11:47 am y 7:17 pm = trucos y curiosidades
+          if [ "$SCHEDULE" = "47 16 * * *" ] || [ "$SCHEDULE" = "17 0 * * *" ]; then MODE="tips"; fi
+          if [ "$MODE" = "tips" ]; then
+            EXTRA=""
+            if [ "$SOLO_DESCARGAR" = "true" ]; then EXTRA="--no-youtube"; fi
+            python -m bot.tips --count "${COUNT:-1}" $DRY $EXTRA || { [ -n "$SCHEDULE" ] && python -m bot.main --count 1 $DRY; }
+          else
+            python -m bot.main --count "${COUNT:-1}" $DRY
+          fi
 
       - name: Guardar historial (para no repetir noticias)
         if: always()
