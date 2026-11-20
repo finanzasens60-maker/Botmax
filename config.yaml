@@ -201,3 +201,5 @@ kick_auto:
   until: "2026-11-24"             # hasta qué día revisar (el directo de 72 h arrancó el 20 de nov)
   count: 10                       # clips por revisión (solo los nuevos, nunca repite)
   issue: 3                        # dónde te aviso
+  youtube: true                   # subirlos a YouTube como PRIVADOS (tú los revisas y los publicas)
+  youtube_per_day: 6              # tope diario de estos clips en YouTube (para dejar cupo a los Shorts propios)
