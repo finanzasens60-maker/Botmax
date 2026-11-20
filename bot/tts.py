@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import asyncio
+import re
 import subprocess
 from pathlib import Path
 
@@ -110,5 +111,64 @@ def synthesize(text: str, cfg: dict, out: Path) -> tuple[Path, list[dict], float
             words = []
     if not words:
         words = _espeak(text, out)
+    max_pause = float(vcfg.get("max_pause", 0))
+    if max_pause > 0:
+        words = _tighten(out, words, max_pause)
     apply_fx(out, sel["fx"])
     return out, words, _duration(out)
+
+
+def _tighten(audio: Path, words: list[dict], max_pause: float) -> list[dict]:
+    """Acorta las pausas largas entre frases (más ritmo, voz más fluida) y corrige los tiempos de los subtítulos."""
+    try:
+        log = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(audio), "-af",
+                              "silencedetect=noise=-38dB:d=0.12", "-f", "null", "-"],
+                             capture_output=True, text=True, timeout=120).stderr
+    except Exception:
+        return words
+    starts = [float(x) for x in re.findall(r"silence_start: ([\d.]+)", log)]
+    ends = [float(x) for x in re.findall(r"silence_end: ([\d.]+)", log)]
+    total = _duration(audio)
+    cuts = []  # tramos de silencio que se quitan
+    for s0, e0 in zip(starts, ends):
+        lead = s0 <= 0.01
+        keep = 0.04 if lead else max_pause
+        if e0 - s0 > keep + 0.03:
+            a = s0 if lead else s0 + keep / 2
+            b = e0 - (keep if lead else keep / 2)
+            cuts.append((a, b))
+    if len(starts) > len(ends):  # silencio al final: déjalo corto
+        cuts.append((starts[-1] + 0.15, total))
+    cuts = [(a, b) for a, b in cuts if b - a > 0.02]
+    if not cuts:
+        return words
+    keepers, t = [], 0.0
+    for a, b in cuts:
+        if a > t:
+            keepers.append((t, a))
+        t = b
+    if t < total:
+        keepers.append((t, total))
+    expr = "+".join(f"between(t,{a:.3f},{b:.3f})" for a, b in keepers)
+    tmp = audio.with_name(audio.stem + "_tight" + audio.suffix)
+    try:
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(audio), "-af",
+                        f"aselect='{expr}',asetpts=N/SR/TB", str(tmp)], check=True, timeout=120)
+        tmp.replace(audio)
+    except Exception as exc:
+        print(f"[tts] no pude acortar las pausas: {exc}")
+        tmp.unlink(missing_ok=True)
+        return words
+
+    def shift(x: float) -> float:
+        removed = 0.0
+        for a, b in cuts:
+            if x >= b:
+                removed += b - a
+            elif x > a:
+                return a - removed
+        return x - removed
+
+    quitado = sum(b - a for a, b in cuts)
+    print(f"[tts] pausas acortadas: {quitado:.1f}s menos de silencio")
+    return [{**w, "start": shift(w["start"]), "end": max(shift(w["end"]), shift(w["start"]) + 0.05)} for w in words]
