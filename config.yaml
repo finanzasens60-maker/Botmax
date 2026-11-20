@@ -130,6 +130,9 @@ publish:
     privacy: "private"            # Cámbialo a "public" cuando Google apruebe la revisión de tu proyecto
     category_id: "20"             # 20 = Gaming
     default_tags: ["GTA 6", "GTA VI", "Grand Theft Auto VI", "Rockstar Games", "Vice City", "Leonida", "noticias GTA 6", "shorts"]
+  instagram:
+    enabled: true                 # se activa solo cuando existan los secretos IG_ACCESS_TOKEN (e IG_USER_ID)
+    max_per_day: 6                # Reels por día como máximo (Meta permite 50)
   github_release: true            # Guarda cada MP4 en "Releases" para bajarlo a TikTok/Reels
   telegram: true                  # Te manda el video al celular (si configuras el bot)
 
