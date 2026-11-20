@@ -58,12 +58,29 @@ def livestream_id(vod: str) -> tuple[str, str]:
     return str(ls.get("id")), ls.get("session_title", "")
 
 
-def fetch_clips(channel: str, stream_id: str, pages: int = 80) -> list[dict]:
+def fetch_clips(channel: str, stream_id: str, pages: int = 150) -> list[dict]:
+    """Clips del directo, de la última semana (si hay pocos, del último mes)."""
+    out = _fetch(channel, stream_id, "week", pages)
+    if len(out) < 40:
+        out += _fetch(channel, stream_id, "month", pages)
+    return _uniq(out)
+
+
+def _uniq(out: list[dict]) -> list[dict]:
+    seen, uniq = set(), []
+    for c in sorted(out, key=lambda c: -int(c.get("view_count") or c.get("views") or 0)):
+        if c["id"] not in seen:
+            seen.add(c["id"])
+            uniq.append(c)
+    return uniq
+
+
+def _fetch(channel: str, stream_id: str, time_range: str, pages: int) -> list[dict]:
     out, cursor = [], None
     for _ in range(pages):
-        url = f"https://kick.com/api/v2/channels/{channel}/clips?sort=view&time=all"
+        url = f"https://kick.com/api/v2/channels/{channel}/clips?sort=view&time={time_range}"
         if cursor:
-            url += f"&cursor={requests.utils.quote(cursor)}"
+            url += f"&cursor={requests.utils.quote(cursor, safe='')}"
         r = requests.get(url, headers=UA, timeout=30)
         if r.status_code != 200:
             print(f"[kick] la API respondió {r.status_code}; sigo con lo que tengo")
@@ -73,12 +90,7 @@ def fetch_clips(channel: str, stream_id: str, pages: int = 80) -> list[dict]:
         cursor = d.get("nextCursor")
         if not cursor or not d.get("clips"):
             break
-    seen, uniq = set(), []
-    for c in sorted(out, key=lambda c: -int(c.get("view_count") or c.get("views") or 0)):
-        if c["id"] not in seen:
-            seen.add(c["id"])
-            uniq.append(c)
-    return uniq
+    return out
 
 
 def transcribe_words(model, wav: Path) -> list[dict]:
