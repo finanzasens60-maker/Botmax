@@ -24,7 +24,7 @@ permissions:
   issues: write
 
 concurrency:
-  group: directos
+  group: kick-clips
   cancel-in-progress: false
 
 jobs:
