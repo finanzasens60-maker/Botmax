@@ -1,0 +1,90 @@
+name: Clips virales de Kick (clips del público)
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: "Canal de Kick (ej. westcol)"
+        default: "westcol"
+      vod:
+        description: "Link del VOD de Kick (kick.com/canal/videos/...) o id del directo"
+        required: true
+      count:
+        description: "Cuántos clips sacar"
+        default: "25"
+      skip:
+        description: "Saltar los N más vistos (si ya se usaron en otra tanda)"
+        default: "0"
+      issue:
+        description: "Issue donde responder (opcional)"
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: directos
+  cancel-in-progress: false
+
+jobs:
+  clips:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Instalar ffmpeg
+        run: which ffmpeg || (timeout 600 sudo apt-get -o Acquire::Retries=3 update -qq && timeout 600 sudo apt-get install -y -qq ffmpeg)
+      - name: Fuente Poppins (si falta)
+        run: |
+          if [ ! -f assets/fonts/Poppins-Bold.ttf ]; then
+            mkdir -p assets/fonts
+            curl -sSL -o assets/fonts/Poppins-Bold.ttf https://github.com/google/fonts/raw/main/ofl/poppins/Poppins-Bold.ttf
+          fi
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Cache del modelo Whisper
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: whisper-models-v1
+      - name: Sacar clips virales
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          IN_CHANNEL: ${{ github.event.inputs.channel }}
+          IN_VOD: ${{ github.event.inputs.vod }}
+          IN_COUNT: ${{ github.event.inputs.count }}
+          IN_SKIP: ${{ github.event.inputs.skip }}
+        run: python -m bot.kickclips "$IN_CHANNEL" --vod "$IN_VOD" --count "$IN_COUNT" --skip "$IN_SKIP" --pool $(( IN_COUNT * 2 ))
+      - name: Guardar historial
+        if: always()
+        run: |
+          git config user.name "gta6-bot"
+          git config user.email "gta6-bot@users.noreply.github.com"
+          git add data/published.json
+          if ! git diff --cached --quiet; then
+            cp data/published.json /tmp/mio.json
+            git commit -q -m "Historial: clips virales de Kick"
+            for i in 1 2 3 4; do
+              git fetch -q origin main && git reset -q --hard origin/main
+              python scripts/unir_historial.py /tmp/mio.json data/published.json
+              git add data/published.json
+              git diff --cached --quiet && break
+              git commit -q -m "Historial: clips virales de Kick" && git push -q && break
+              sleep 7
+            done
+          fi
+      - name: Responder en el Issue
+        if: always() && github.event.inputs.issue != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          [ -f out/live_summary.md ] && gh issue comment "${{ github.event.inputs.issue }}" --body-file out/live_summary.md || true
