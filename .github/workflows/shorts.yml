@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       PYTHONUNBUFFERED: "1"   # ver el progreso en vivo en los registros
-    timeout-minutes: 30
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
 
