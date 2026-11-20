@@ -72,13 +72,16 @@ def _parse_json(text: str) -> dict:
     return data
 
 
+EXTRA_PARTS: list[dict] = []  # partes extra (por ejemplo fotogramas de un clip) para la próxima llamada a Gemini
+
+
 def _gemini_call(system: str, user: str, model: str, key: str) -> str:
     r = requests.post(
         f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
         headers={"x-goog-api-key": key, "Content-Type": "application/json"},
         json={
             "systemInstruction": {"parts": [{"text": system}]},
-            "contents": [{"role": "user", "parts": [{"text": user}]}],
+            "contents": [{"role": "user", "parts": [{"text": user}, *EXTRA_PARTS]}],
             "generationConfig": {"temperature": 0.95, "responseMimeType": "application/json"},
         },
         timeout=60,
