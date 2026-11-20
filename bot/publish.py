@@ -107,3 +107,71 @@ def send_telegram_text(text: str, photo: Path | None, link: str | None) -> None:
         print("[telegram] aviso enviado")
     except Exception as exc:
         print(f"[telegram] falló: {exc}")
+
+
+# ------------------------------------------------------------------ Instagram (Reels)
+IG_API = "https://graph.instagram.com/v23.0"
+
+
+def _ig_user(token: str) -> str:
+    uid = os.environ.get("IG_USER_ID")
+    if uid:
+        return uid
+    r = requests.get(f"{IG_API}/me", params={"fields": "user_id,username", "access_token": token}, timeout=30)
+    r.raise_for_status()
+    d = r.json()
+    print(f"[instagram] cuenta: @{d.get('username')}")
+    return str(d.get("user_id") or d["id"])
+
+
+def upload_instagram(video: Path, caption: str, cfg: dict) -> str | None:
+    """Publica el video como Reel (API de Instagram con inicio de sesión de Instagram, subida directa del archivo)."""
+    icfg = cfg["publish"].get("instagram", {})
+    token = os.environ.get("IG_ACCESS_TOKEN")
+    if not icfg.get("enabled") or not token:
+        print("[instagram] sin token: no se sube")
+        return None
+    import time
+
+    uid = _ig_user(token)
+    caption = caption[:2150]
+    r = requests.post(f"{IG_API}/{uid}/media", timeout=60, data={
+        "media_type": "REELS", "upload_type": "resumable", "caption": caption,
+        "share_to_feed": "true", "access_token": token})
+    if r.status_code >= 400:
+        raise RuntimeError(f"Instagram (crear) HTTP {r.status_code}: {r.text[:300]}")
+    cid = r.json()["id"]
+    data = video.read_bytes()
+    up = requests.post(f"https://rupload.facebook.com/ig-api-upload/v23.0/{cid}", data=data, timeout=600,
+                       headers={"Authorization": f"OAuth {token}", "offset": "0", "file_size": str(len(data))})
+    if up.status_code >= 400:
+        raise RuntimeError(f"Instagram (subir) HTTP {up.status_code}: {up.text[:300]}")
+    for _ in range(60):  # Instagram procesa el video (hasta ~5 min)
+        st = requests.get(f"{IG_API}/{cid}", params={"fields": "status_code,status", "access_token": token},
+                          timeout=30).json()
+        if st.get("status_code") == "FINISHED":
+            break
+        if st.get("status_code") in ("ERROR", "EXPIRED"):
+            raise RuntimeError(f"Instagram no pudo procesar el video: {st}")
+        time.sleep(5)
+    pub = requests.post(f"{IG_API}/{uid}/media_publish", data={"creation_id": cid, "access_token": token}, timeout=60)
+    if pub.status_code >= 400:
+        raise RuntimeError(f"Instagram (publicar) HTTP {pub.status_code}: {pub.text[:300]}")
+    mid = pub.json()["id"]
+    link = requests.get(f"{IG_API}/{mid}", params={"fields": "permalink", "access_token": token},
+                        timeout=30).json().get("permalink") or f"https://www.instagram.com/ (id {mid})"
+    print(f"[instagram] Reel publicado: {link}")
+    return link
+
+
+def refresh_instagram_token() -> str | None:
+    """Renueva el token de Instagram (dura 60 días). Devuelve el nuevo token o None."""
+    token = os.environ.get("IG_ACCESS_TOKEN")
+    if not token:
+        return None
+    r = requests.get("https://graph.instagram.com/refresh_access_token",
+                     params={"grant_type": "ig_refresh_token", "access_token": token}, timeout=30)
+    if r.status_code >= 400:
+        print(f"[instagram] no pude renovar el token: {r.text[:200]}")
+        return None
+    return r.json().get("access_token")
