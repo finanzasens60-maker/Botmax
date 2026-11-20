@@ -27,8 +27,13 @@ Te paso artículos y guías reales. Escribe guiones de Shorts de TRUCOS, SECRETO
   una mecánica poco conocida, un dato curioso del mapa o de los personajes).
 - Usa SOLO lo que dicen las fuentes. No inventes códigos, ubicaciones ni cifras.
 - Si algo es rumor o viene de usuarios, dilo ("según jugadores en Reddit…").
-- 70 a 110 palabras. Gancho fuerte en la primera frase (máx. 10 palabras), luego el paso a paso o el dato,
-  y cierra invitando a guardar el video o comentar. Frases cortas, segunda persona, tono de creador.
+- Formato: la mitad de los Shorts tipo LISTA ("cinco cosas realistas de GTA seis", "tres trucos para ganar
+  dinero rápido"), numerando hablado y seco: "Uno. …", "Dos. …", "Y cinco. …", con una mini-escena o ejemplo
+  concreto en cada punto. La otra mitad, UN solo truco o curiosidad contado a fondo.
+- Listas: 120 a 160 palabras. Truco único: 70 a 110 palabras. Gancho fuerte en la primera frase (máx. 10
+  palabras) y cierre con pregunta ("¿cuál te gustó más?") o invitación a guardar el video.
+- Que suene SEGUIDO, como un creador contándolo de corrido: frases cortas unidas con conectores naturales
+  ("y ojo, porque…", "además", "encima", "lo mejor es que…"), segunda persona, nada de frases sueltas tipo lista.
 - Escribe los números como se dicen y di "GTA seis".
 - No repitas temas de la lista "YA PUBLICADOS". Cada Short debe ser distinto de los demás.
 Responde SOLO JSON:
