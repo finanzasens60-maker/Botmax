@@ -22,7 +22,7 @@ from pathlib import Path
 import requests
 import yaml
 
-from . import live, script
+from . import live, publish, script
 from .main import github_release, load_state, save_state
 
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/131.0 Safari/537.36",
@@ -152,6 +152,8 @@ def main() -> None:
     ap.add_argument("--pool", type=int, default=45, help="cuántos de los más vistos revisar")
     ap.add_argument("--min-score", type=int, default=6)
     ap.add_argument("--skip", type=int, default=0, help="saltar los N más vistos (si ya se usaron)")
+    ap.add_argument("--youtube", action="store_true", help="subirlos a YouTube como PRIVADOS (los revisas y publicas tú)")
+    ap.add_argument("--max-youtube", type=int, default=6, help="tope de clips de Kick subidos a YouTube por día")
     a = ap.parse_args()
 
     cfg = yaml.safe_load(Path("config.yaml").read_text(encoding="utf-8"))
@@ -247,8 +249,36 @@ def main() -> None:
         files += [out, txt]
         results.append({"type": "live", "key": f"kick-{it['clip']['id']}", "title": m["title"], "date": stamp,
                         "source": it["clip"]["clip_url"], "score": m.get("score"),
-                        "views": it["clip"].get("view_count"), "youtube": None})
+                        "views": it["clip"].get("view_count"), "youtube": None,
+                        "_up": (out, {"title": m["title"], "hashtags": tags}, description)})
         print(f"[kick] {n:02d}. ({m.get('score')}/10, {it['clip'].get('view_count')} vistas) {m['title']}")
+
+    # Subida a YouTube SIEMPRE privada, los mejores primero; si YouTube corta por el límite diario,
+    # los que falten no se marcan como usados y se intentan en la próxima revisión.
+    limite = False
+    if a.youtube:
+        ycfg = json.loads(json.dumps(cfg))
+        ycfg["publish"]["youtube"]["privacy"] = "private"
+        ycfg["publish"]["youtube"]["default_tags"] = [streamer, "clips", "directo", "kick", "shorts"]
+        hoy = stamp[:8]
+        ya = sum(1 for it in load_state()["items"]
+                 if str(it.get("key", "")).startswith("kick-") and it.get("youtube") and str(it.get("date", ""))[:8] == hoy)
+        for r in results:
+            if ya >= a.max_youtube:
+                limite = True
+            if limite:
+                r["pendiente"] = True
+                continue
+            try:
+                r["youtube"] = publish.upload_youtube(*r["_up"][:3], ycfg)
+                ya += 1 if r["youtube"] else 0
+            except Exception as exc:
+                print(f"[youtube] ERROR: {exc}")
+                if "uploadLimitExceeded" in str(exc) or "exceeded the number of videos" in str(exc) or "quota" in str(exc).lower():
+                    limite = True
+                    r["pendiente"] = True
+    for r in results:
+        r.pop("_up", None)
 
     rel_url = None
     if files:
@@ -257,14 +287,21 @@ def main() -> None:
         for r in results:
             r["release"] = rel_url
         state = load_state()
-        state["items"] += results
+        state["items"] += [r for r in results if not r.get("pendiente")]
         save_state(state)
     lines = [f"**{len(results)} clips virales** sacados de los clips más vistos por el público en Kick "
              f"(de {len(clips)} clips del directo).", ""]
-    lines += [f"{i}. {r['title']} — {r['score']}/10 · {r['views']} vistas en Kick" for i, r in enumerate(results, 1)]
+    lines += [f"{i}. {r['title']} — {r['score']}/10 · {r['views']} vistas en Kick"
+              + (f" — {r['youtube']}" if r.get("youtube") else (" — (pendiente: se sube en la próxima revisión)" if r.get("pendiente") else ""))
+              for i, r in enumerate(results, 1)]
     if rel_url:
         lines += ["", f"Descárgalos aquí: {rel_url}"]
-    lines += ["", "No se suben solos a YouTube porque el directo no es tuyo. Revísalos antes de publicarlos."]
+    if a.youtube:
+        lines += ["", "Subidos a YouTube como **privados**: revísalos en YouTube Studio y publica los que quieras."]
+        if limite:
+            lines += ["Se llegó al tope de subidas de hoy; los pendientes se suben en la próxima revisión."]
+    else:
+        lines += ["", "No se subieron a YouTube. Revísalos antes de publicarlos."]
     Path("out/live_summary.md").write_text("\n".join(lines), encoding="utf-8")
     print("\n".join(lines))
 
