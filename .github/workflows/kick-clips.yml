@@ -1,6 +1,9 @@
 name: Clips virales de Kick (clips del público)
 
 on:
+  schedule:
+    # Mientras dure un directo largo (ver kick_auto en config.yaml): cada 4 horas saca los clips nuevos del público
+    - cron: "23 */4 * * *"
   workflow_dispatch:
     inputs:
       channel:
@@ -63,7 +66,16 @@ jobs:
           IN_VOD: ${{ github.event.inputs.vod }}
           IN_COUNT: ${{ github.event.inputs.count }}
           IN_SKIP: ${{ github.event.inputs.skip }}
-        run: python -m bot.kickclips "$IN_CHANNEL" --vod "$IN_VOD" --count "$IN_COUNT" --skip "$IN_SKIP" --pool $(( IN_COUNT * 2 ))
+          IN_ISSUE: ${{ github.event.inputs.issue }}
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # Programado: solo si hay un directo activo en kick_auto (config.yaml) y no ha pasado su fecha límite
+            eval "$(python scripts/kick_auto.py)"
+            if [ "$ACTIVO" != "1" ]; then echo "No hay directo largo activo en kick_auto: nada que hacer."; exit 0; fi
+            IN_VOD=live; IN_SKIP=0
+          fi
+          echo "$IN_ISSUE" > /tmp/issue_num
+          python -m bot.kickclips "$IN_CHANNEL" --vod "$IN_VOD" --count "$IN_COUNT" --skip "$IN_SKIP" --pool $(( IN_COUNT * 2 ))
       - name: Guardar historial
         if: always()
         run: |
@@ -83,8 +95,9 @@ jobs:
             done
           fi
       - name: Responder en el Issue
-        if: always() && github.event.inputs.issue != ''
+        if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          [ -f out/live_summary.md ] && gh issue comment "${{ github.event.inputs.issue }}" --body-file out/live_summary.md || true
+          N=$(cat /tmp/issue_num 2>/dev/null || true)
+          [ -n "$N" ] && [ -f out/live_summary.md ] && gh issue comment "$N" --body-file out/live_summary.md || true
