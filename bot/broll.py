@@ -186,7 +186,7 @@ def _crop_without(box: tuple[int, int, int, int, int, int]) -> tuple[int, int, i
     return best if best and best[2] >= W * 0.5 else None
 
 
-def hide_facecam(video: Path) -> Path | None:
+def hide_facecam(video: Path, keep_audio: bool = False) -> Path | None:
     """Quita la cámara del streamer RECORTANDO la imagen (solo queda el juego).
     Si la cámara está en un sitio donde el recorte dejaría muy poca imagen, se descarta ese tramo."""
     box = _facecam_box(video)
@@ -203,7 +203,8 @@ def hide_facecam(video: Path) -> Path | None:
     try:
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(video),
                         "-vf", f"crop={cw}:{ch}:{cx}:{cy},scale={W}:{H}:flags=lanczos,setsar=1",
-                        "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", str(out)], check=True, timeout=300)
+                        *(["-c:a", "aac", "-ar", "48000"] if keep_audio else ["-an"]),
+                        "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", str(out)], check=True, timeout=300)
         print(f"[broll] cámara del streamer recortada en {video.name} (queda {cw}x{ch} desde {cx},{cy})")
         video.unlink(missing_ok=True)
         return out
