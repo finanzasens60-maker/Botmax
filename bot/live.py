@@ -183,7 +183,7 @@ def candidates(words: list[dict], rms: list[float], cfg: dict) -> list[dict]:
     mean = statistics.fmean(rms) if rms else -30
     sd = statistics.pstdev(rms) if len(rms) > 1 else 1
     cands = []
-    for s in range(0, max(1, total - win), step):
+    for s in range(4, max(5, total - win), step):  # los primeros segundos de un bloque grabado pueden salir congelados
         e = s + win
         ws = [w for w in words if s <= w["start"] < e]
         text = " ".join(w["word"] for w in ws)
@@ -256,6 +256,8 @@ def render_clip(cfg: dict, src: Path, clip: dict, words: list[dict], credit: str
     W, H = v["width"], v["height"]
     s, e = clip["abs_start"], clip["abs_end"]
     dur = e - s
+    pre = max(0.0, s - 6.0)
+    off = s - pre
     ccfg = copy.deepcopy(cfg)
     ccfg["video"]["caption_y"] = cfg["live"].get("caption_y", 0.74)
     ccfg["channel"]["handle"] = credit
@@ -269,16 +271,19 @@ def render_clip(cfg: dict, src: Path, clip: dict, words: list[dict], credit: str
     accent = v["accent_color"].lstrip("#")
     out = work / f"clip{idx}.mp4"
     fc = (
-        f"[0:v]split[a][b];"
+        f"[0:v]trim=start={off:.2f},setpts=PTS-STARTPTS,split[a][b];"
         f"[a]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=25:4,eq=brightness=-0.18[bg];"
         f"[b]scale={W}:-2[fg];"
         f"[bg][fg]overlay=(W-w)/2:(H-h)/2+80[base];"
         f"[base][1:v]overlay=0:0[hd];"
         f"[hd]subtitles='{ass_path}':fontsdir='{fonts_dir}'[sub];"
         f"[sub][2:v]overlay=x='-w+w*t/{dur:.2f}':y=0:shortest=1,format=yuv420p[v];"
-        f"[0:a]loudnorm=I=-14:TP=-1.5:LRA=11[a]"
+        f"[0:a]atrim=start={off:.2f},asetpts=PTS-STARTPTS,loudnorm=I=-14:TP=-1.5:LRA=11[a]"
     )
-    sh(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{s:.2f}", "-t", f"{dur:.2f}", "-i", str(src),
+    # Se arranca ~6 s antes y se recorta exacto dentro del filtro: evita que el clip empiece congelado
+    # (los .ts de los directos no tienen índice y el salto rápido cae antes de un fotograma clave)
+    sh(["ffmpeg", "-y", "-loglevel", "error", "-fflags", "+genpts+discardcorrupt", "-ss", f"{pre:.2f}",
+        "-t", f"{dur + off + 0.5:.2f}", "-i", str(src),
         "-loop", "1", "-i", str(head),
         "-f", "lavfi", "-i", f"color=c=0x{accent}:s={W}x14:r={v['fps']}",
         "-filter_complex", fc, "-map", "[v]", "-map", "[a]", "-t", f"{dur:.2f}", "-r", str(v["fps"]),
