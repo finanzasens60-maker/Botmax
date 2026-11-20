@@ -40,7 +40,13 @@ y la transcripción con tiempos en segundos). Para CADA clip:
 - "headline": titular corto en MAYÚSCULAS para la pantalla (máx. 6 palabras).
 - "description": 1-2 frases de contexto.
 - "hashtags": 3 a 5 hashtags.
-No inventes nada que no esté en la transcripción o en el título del clip.
+También te paso 3 fotogramas de cada clip (inicio, mitad y final): úsalos para entender qué pasa de verdad
+(quién aparece, dónde están, qué hacen). El título y el titular deben describir EXACTAMENTE lo que se ve y se oye
+en el tramo elegido: que quien lo vea sienta que el título le cumplió.
+En los directos largos participan el streamer, su grupo de amigos (la ganga) e invitados: NO atribuyas todo al
+streamer. Si no está claro quién lo dice o lo hace, usa "la ganga", "un invitado", "uno del parche" o descríbelo
+sin nombre. Solo nombra a alguien si su nombre aparece en la transcripción o en el título del clip.
+No inventes nada que no esté en la transcripción, los fotogramas o el título del clip.
 Responde SOLO JSON: {"clips": [{"id": 1, "score": 8, "start": 3.0, "end": 41.0, "title": "...", "headline": "...",
 "description": "...", "hashtags": ["#..."]}]}"""
 
@@ -110,6 +116,24 @@ def transcribe_words(model, wav: Path) -> list[dict]:
     return [{"word": x.word.strip(), "start": float(x.start), "end": float(x.end)} for s in segs for x in (s.words or [])]
 
 
+def frames(video: Path, dur: float, n: int = 3) -> list[dict]:
+    """Fotogramas pequeños (JPG en base64) para que la IA vea qué pasa en el clip."""
+    import base64
+    parts = []
+    for k in range(n):
+        t = dur * (0.15 + 0.7 * k / max(1, n - 1))
+        jpg = video.with_name(f"{video.stem}_f{k}.jpg")
+        try:
+            sh(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{t:.2f}", "-i", str(video), "-frames:v", "1",
+                "-vf", "scale=480:-2", "-q:v", "5", str(jpg)], timeout=60)
+            parts.append({"inline_data": {"mime_type": "image/jpeg",
+                                          "data": base64.b64encode(jpg.read_bytes()).decode()}})
+            jpg.unlink(missing_ok=True)
+        except Exception:
+            pass
+    return parts
+
+
 def timed_text(words: list[dict], limit: int = 1100) -> str:
     out, last = [], -99.0
     for w in words:
@@ -169,17 +193,23 @@ def main() -> None:
         print(f"[kick] {i:02d}. {c.get('view_count')} vistas · {dur:.0f}s · '{c.get('title')}'")
 
     meta: dict[int, dict] = {}
-    ctx = f"Streamer: {streamer}\nDirecto: {stitle}"
+    ctx = f"Streamer: {streamer} (en el directo también están su grupo, la ganga, e invitados)\nDirecto: {stitle}"
     for k in range(0, len(items), 8):
         batch = items[k:k + 8]
         listing = "\n\n".join(
             f"[id {it['id']}] {it['clip'].get('view_count')} vistas · {it['dur']:.0f}s · título del clip: "
             f"'{it['clip'].get('title')}'\n{timed_text(it['words'])}" for it in batch)
+        script.EXTRA_PARTS[:] = []
+        for it in batch:
+            script.EXTRA_PARTS.append({"text": f"Fotogramas del clip id {it['id']}:"})
+            script.EXTRA_PARTS += frames(it["file"], it["dur"])
         try:
             data = live._raw_llm(script._gemini, SYSTEM, f"{ctx}\n\nCLIPS:\n{listing}", "gemini-2.5-flash")
             meta.update({int(x["id"]): x for x in data.get("clips", []) if "id" in x})
         except Exception as exc:
             print(f"[kick] IA falló en la tanda {k // 8 + 1}: {exc}")
+        finally:
+            script.EXTRA_PARTS[:] = []
 
     ranked = []
     for it in items:
