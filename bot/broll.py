@@ -3,7 +3,9 @@
 Fuentes (en este orden):
 1. Directos EN VIVO de GTA 6 de los streamers de config.yaml (se graban unos segundos, sin su audio:
    la narración es siempre la voz del canal).
-2. Capturas oficiales de Rockstar (rockstargames.com/VI), con movimiento suave tipo documental.
+2. Gameplay de los VODs de Kick de los canales en broll.kick_vods (tramos al azar, SIN audio y con la
+   cámara del streamer difuminada: solo se ve el juego). Se le da crédito al canal.
+3. Capturas oficiales de Rockstar (rockstargames.com/VI), con movimiento suave tipo documental.
 """
 from __future__ import annotations
 
@@ -122,12 +124,127 @@ def stream_clips(cfg: dict, work: Path) -> list[Path]:
     return files
 
 
+def _facecam_box(video: Path, samples: int = 14) -> tuple[int, int, int, int, int, int] | None:
+    """Busca la cámara del streamer: una cara que aparece SIEMPRE en el mismo sitio (las del juego se mueven)."""
+    try:
+        import cv2
+    except ImportError:
+        print("[broll] sin OpenCV: no puedo buscar la cámara del streamer")
+        return None
+    cap = cv2.VideoCapture(str(video))
+    n = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+    W, H = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    if n <= 0 or W <= 0:
+        return None
+    det = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    if det.empty():
+        print("[broll] OpenCV sin detector de caras: no puedo buscar la cámara")
+        return None
+    boxes, seen = [], 0
+    for k in range(samples):
+        cap.set(cv2.CAP_PROP_POS_FRAMES, int(n * (k + 0.5) / samples))
+        ok, frame = cap.read()
+        if not ok:
+            continue
+        seen += 1
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        for (x, y, w, h) in det.detectMultiScale(gray, 1.1, 6, minSize=(max(24, W // 40), max(24, W // 40))):
+            boxes.append((x + w / 2, y + h / 2, w, h))
+    cap.release()
+    if not boxes or not seen:
+        return None
+    # agrupa por posición: la cámara es la caja que se repite en la mayoría de los cuadros
+    best = max(boxes, key=lambda b: sum(abs(b[0] - o[0]) < W * 0.06 and abs(b[1] - o[1]) < H * 0.06 for o in boxes))
+    same = [o for o in boxes if abs(best[0] - o[0]) < W * 0.06 and abs(best[1] - o[1]) < H * 0.06]
+    if len(same) < max(3, seen * 0.4):
+        return None
+    cx = sum(o[0] for o in same) / len(same)
+    cy = sum(o[1] for o in same) / len(same)
+    fw = max(o[2] for o in same)
+    # la cámara suele ser un recuadro bastante más grande que la cara: tapamos ~3.2x la cara
+    bw, bh = int(fw * 3.2), int(fw * 3.2 * 0.9)
+    x0, y0 = max(0, int(cx - bw / 2)), max(0, int(cy - bh / 2.4))
+    bw, bh = min(bw, W - x0), min(bh, H - y0)
+    return (x0 - x0 % 2, y0 - y0 % 2, bw - bw % 2, bh - bh % 2, W, H)
+
+
+def hide_facecam(video: Path) -> Path:
+    """Difumina fuerte la cámara del streamer si la encuentra (solo queda el juego)."""
+    box = _facecam_box(video)
+    if not box:
+        return video
+    x, y, w, h, W, H = box
+    out = video.with_name(video.stem + "_sincara.mp4")
+    fc = (f"[0:v]split[a][b];[b]crop={w}:{h}:{x}:{y},boxblur=40:6,eq=brightness=-0.25[f];"
+          f"[a][f]overlay={x}:{y}[v]")
+    try:
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(video), "-filter_complex", fc, "-map", "[v]",
+                        "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", str(out)], check=True, timeout=300)
+        print(f"[broll] cámara del streamer difuminada en {video.name} ({w}x{h} en {x},{y})")
+        video.unlink(missing_ok=True)
+        return out
+    except Exception as exc:
+        print(f"[broll] no pude difuminar la cámara: {exc}")
+        return video
+
+
+def kick_vod_clips(cfg: dict, work: Path) -> list[Path]:
+    """Tramos al azar (sin audio) de los VODs de GTA 6 de los canales de Kick en broll.kick_vods."""
+    bcfg = cfg.get("broll", {})
+    channels = list(bcfg.get("kick_vods") or [])
+    if not channels:
+        return []
+    keywords = [k.lower() for k in bcfg.get("keywords", ["gta 6", "gta vi", "gta6"])]
+    secs = int(bcfg.get("vod_seconds", 45))
+    per = int(bcfg.get("vod_clips", 3))
+    random.shuffle(channels)
+    files: list[Path] = []
+    for ch in channels[: int(bcfg.get("max_streams", 2))]:
+        try:
+            r = requests.get(f"https://kick.com/api/v2/channels/{ch}/videos", timeout=30,
+                             headers={"User-Agent": UA, "Accept": "application/json"})
+            vids = r.json()
+            vids = vids if isinstance(vids, list) else vids.get("data", [])
+        except Exception as exc:
+            print(f"[broll] no pude leer los videos de {ch}: {exc}")
+            continue
+        def _gta(v: dict) -> bool:
+            text = " ".join([v.get("session_title") or ""] + [c.get("name", "") for c in v.get("categories") or []]).lower()
+            return any(k in text for k in keywords + ["grand theft auto"])
+        vods = [v for v in vids if not v.get("is_live") and v.get("source") and (v.get("duration") or 0) > 1_800_000
+                and _gta(v)]
+        if not vods:
+            continue
+        vod = random.choice(vods[:4])
+        dur = vod["duration"] / 1000
+        got = 0
+        for k in range(per * 2):
+            if got >= per:
+                break
+            start = random.uniform(600, max(700, dur - secs - 60))
+            dst = work / f"vod_{ch}_{k}.mp4"
+            try:
+                subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{start:.0f}", "-i", vod["source"],
+                                "-t", str(secs), "-an", "-vf", "scale=1280:-2", "-c:v", "libx264", "-preset", "veryfast",
+                                "-crf", "22", str(dst)], check=True, timeout=240)
+            except Exception as exc:
+                print(f"[broll] no pude cortar el VOD de {ch}: {exc}")
+                continue
+            if dst.exists() and dst.stat().st_size > 300_000:
+                files.append(hide_facecam(dst))
+                got += 1
+        if got:
+            print(f"[broll] {got} tramo(s) de gameplay de {ch} ('{vod.get('session_title', '')[:50]}')")
+            CREDITS.append(f"{ch} (Kick)")
+    return files
+
+
 def collect(cfg: dict, work: Path, duration: float) -> list[Path]:
     """Devuelve clips de fondo listos (directos + capturas animadas). Vacío si no hay nada."""
     CREDITS.clear()
     v = cfg["video"]
     bcfg = cfg.get("broll", {})
-    sources = stream_clips(cfg, work)
+    sources = stream_clips(cfg, work) + kick_vod_clips(cfg, work)
     if bcfg.get("rockstar_images", True):
         imgs = rockstar_images()
         if imgs:
