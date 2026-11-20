@@ -8,4 +8,6 @@ activo = bool(c.get("channel")) and str(datetime.date.today()) <= str(c.get("unt
 print(f"IN_CHANNEL={c.get('channel', '')}")
 print(f"IN_COUNT={c.get('count', 10)}")
 print(f"IN_ISSUE={c.get('issue', '')}")
+print(f"IN_YOUTUBE={1 if c.get('youtube') else 0}")
+print(f"IN_MAXYT={c.get('youtube_per_day', 6)}")
 print(f"ACTIVO={1 if activo else 0}")
