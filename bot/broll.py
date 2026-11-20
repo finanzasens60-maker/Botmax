@@ -4,7 +4,7 @@ Fuentes (en este orden):
 1. Directos EN VIVO de GTA 6 de los streamers de config.yaml (se graban unos segundos, sin su audio:
    la narración es siempre la voz del canal).
 2. Gameplay de los VODs de Kick de los canales en broll.kick_vods (tramos al azar, SIN audio y con la
-   cámara del streamer difuminada: solo se ve el juego). Se le da crédito al canal.
+   cámara del streamer recortada: solo se ve el juego). Se le da crédito al canal.
 3. Capturas oficiales de Rockstar (rockstargames.com/VI), con movimiento suave tipo documental.
 """
 from __future__ import annotations
@@ -168,24 +168,49 @@ def _facecam_box(video: Path, samples: int = 14) -> tuple[int, int, int, int, in
     return (x0 - x0 % 2, y0 - y0 % 2, bw - bw % 2, bh - bh % 2, W, H)
 
 
-def hide_facecam(video: Path) -> Path:
-    """Difumina fuerte la cámara del streamer si la encuentra (solo queda el juego)."""
+def _crop_without(box: tuple[int, int, int, int, int, int]) -> tuple[int, int, int, int] | None:
+    """El recorte 16:9 más grande que deja la cámara del streamer por fuera (izquierda, derecha, arriba o abajo)."""
+    x, y, w, h, W, H = box
+    regions = [(0, 0, x, H), (x + w, 0, W - x - w, H), (0, 0, W, y), (0, y + h, W, H - y - h)]
+    best = None
+    for rx, ry, rw, rh in regions:
+        if rw <= 0 or rh <= 0:
+            continue
+        cw = min(rw, rh * 16 / 9)
+        ch = cw * 9 / 16
+        if best is None or cw > best[2]:
+            cx = rx + (rw - cw) / 2
+            cy = ry + (rh - ch) / 2
+            best = (int(cx) // 2 * 2, int(cy) // 2 * 2, int(cw) // 2 * 2, int(ch) // 2 * 2)
+    # si el recorte deja menos de la mitad del ancho, la imagen quedaría muy pixelada
+    return best if best and best[2] >= W * 0.5 else None
+
+
+def hide_facecam(video: Path) -> Path | None:
+    """Quita la cámara del streamer RECORTANDO la imagen (solo queda el juego).
+    Si la cámara está en un sitio donde el recorte dejaría muy poca imagen, se descarta ese tramo."""
     box = _facecam_box(video)
     if not box:
         return video
-    x, y, w, h, W, H = box
+    W, H = box[4], box[5]
+    crop = _crop_without(box)
+    if not crop:
+        print(f"[broll] la cámara está en el centro de {video.name}: descarto este tramo")
+        video.unlink(missing_ok=True)
+        return None
+    cx, cy, cw, ch = crop
     out = video.with_name(video.stem + "_sincara.mp4")
-    fc = (f"[0:v]split[a][b];[b]crop={w}:{h}:{x}:{y},boxblur=40:6,eq=brightness=-0.25[f];"
-          f"[a][f]overlay={x}:{y}[v]")
     try:
-        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(video), "-filter_complex", fc, "-map", "[v]",
-                        "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "22", str(out)], check=True, timeout=300)
-        print(f"[broll] cámara del streamer difuminada en {video.name} ({w}x{h} en {x},{y})")
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(video),
+                        "-vf", f"crop={cw}:{ch}:{cx}:{cy},scale={W}:{H}:flags=lanczos,setsar=1",
+                        "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", str(out)], check=True, timeout=300)
+        print(f"[broll] cámara del streamer recortada en {video.name} (queda {cw}x{ch} desde {cx},{cy})")
         video.unlink(missing_ok=True)
         return out
     except Exception as exc:
-        print(f"[broll] no pude difuminar la cámara: {exc}")
-        return video
+        print(f"[broll] no pude recortar la cámara: {exc}; descarto el tramo")
+        video.unlink(missing_ok=True)
+        return None
 
 
 def kick_vod_clips(cfg: dict, work: Path) -> list[Path]:
@@ -231,8 +256,10 @@ def kick_vod_clips(cfg: dict, work: Path) -> list[Path]:
                 print(f"[broll] no pude cortar el VOD de {ch}: {exc}")
                 continue
             if dst.exists() and dst.stat().st_size > 300_000:
-                files.append(hide_facecam(dst))
-                got += 1
+                clean = hide_facecam(dst)
+                if clean:
+                    files.append(clean)
+                    got += 1
         if got:
             print(f"[broll] {got} tramo(s) de gameplay de {ch} ('{vod.get('session_title', '')[:50]}')")
             CREDITS.append(f"{ch} (Kick)")
