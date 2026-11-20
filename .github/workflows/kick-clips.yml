@@ -21,6 +21,10 @@ on:
       issue:
         description: "Issue donde responder (opcional)"
         default: ""
+      subir_youtube:
+        description: "Subirlos a YouTube como PRIVADOS"
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -67,6 +71,11 @@ jobs:
           IN_COUNT: ${{ github.event.inputs.count }}
           IN_SKIP: ${{ github.event.inputs.skip }}
           IN_ISSUE: ${{ github.event.inputs.issue }}
+          IN_YOUTUBE: ${{ github.event.inputs.subir_youtube == 'true' && '1' || '0' }}
+          IN_MAXYT: "6"
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
             # Programado: solo si hay un directo activo en kick_auto (config.yaml) y no ha pasado su fecha límite
@@ -75,7 +84,9 @@ jobs:
             IN_VOD=live; IN_SKIP=0
           fi
           echo "$IN_ISSUE" > /tmp/issue_num
-          python -m bot.kickclips "$IN_CHANNEL" --vod "$IN_VOD" --count "$IN_COUNT" --skip "$IN_SKIP" --pool $(( IN_COUNT * 2 ))
+          YT=""
+          if [ "$IN_YOUTUBE" = "1" ]; then YT="--youtube --max-youtube $IN_MAXYT"; fi
+          python -m bot.kickclips "$IN_CHANNEL" --vod "$IN_VOD" --count "$IN_COUNT" --skip "$IN_SKIP" --pool $(( IN_COUNT * 2 )) $YT
       - name: Guardar historial
         if: always()
         run: |
