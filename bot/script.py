@@ -27,6 +27,10 @@ ESTILO HABLADO (muy importante, el texto lo lee una voz sintética y debe sonar 
 - Gancho brutal en la primera frase (máximo 10 palabras): dato sorprendente, pregunta o contradicción.
   Varía el tipo de gancho; no empieces con "Atención" ni con "Hola".
 - Luego: qué pasó, por qué importa y un detalle curioso o una opinión corta.
+- Que suene SEGUIDO, como un creador que cuenta algo sin parar: une las ideas con conectores naturales
+  ("y ojo, porque…", "además", "encima", "o sea", "lo mejor es que…") en vez de frases sueltas tipo lista.
+- Cuenta las cosas con una mini-escena concreta cuando puedas ("imagínate que sacas un arma en plena calle…").
+- Si la noticia trae varios puntos, numéralos hablado y seco: "Uno. …", "Dos. …", "Y tres. …".
 - Cierra con una pregunta concreta para comentarios o una invitación a seguir el canal (varía la frase).
 - Escribe los números como se dicen ("diecinueve de noviembre", "setenta dólares").
 - Di "GTA seis" (no "GTA 6" ni "GTA VI").
