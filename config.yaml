@@ -16,11 +16,15 @@ news:
     - "https://news.google.com/rss/search?q=%22GTA+6%22+OR+%22GTA+VI%22+when:2d&hl=en-US&gl=US&ceid=US:en"
     - "https://www.bing.com/news/search?q=%22GTA+6%22&format=rss"
     - "https://www.reddit.com/r/GTA6/top/.rss?t=day"
+    # Trucos, secretos y guías (desde el lanzamiento hay mucho de esto)
+    - "https://news.google.com/rss/search?q=%22GTA+6%22+trucos+OR+secretos+OR+gu%C3%ADa+OR+consejos+when:3d&hl=es-419&gl=US&ceid=US:es-419"
+    - "https://news.google.com/rss/search?q=%22GTA+6%22+cheats+OR+tips+OR+secrets+OR+%22easter+egg%22+OR+guide+when:3d&hl=en-US&gl=US&ceid=US:en"
+    - "https://www.bing.com/news/search?q=%22GTA+6%22+trucos&format=rss"
   # Debe contener al menos una de estas palabras para considerarse
   must_match: ["gta 6", "gta vi", "grand theft auto vi", "grand theft auto 6", "rockstar", "leonida", "vice city"]
   # Ignorar titulares con estas palabras (spam, ofertas, etc.)
   blocklist: ["giveaway", "sorteo", "free download", "descarga gratis", "apk", "mod menu", "crack", "torrent"]
-  max_age_hours: 48
+  max_age_hours: 72
 
 # --- Guion con IA ----------------------------------------------
 script:
