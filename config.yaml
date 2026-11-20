@@ -41,6 +41,7 @@ voice:
   engine: "edge"                  # edge (gratis, voz neural) | espeak (offline, robótica)
   # Cambia SOLO esta línea para cambiar la voz de los Shorts:
   preset: "fluida"
+  max_pause: 0.22                 # pausa máxima entre frases (s): voz más fluida y con ritmo. 0 = no tocar
   # Presets listos. Puedes crear los tuyos copiando uno.
   #   voice : voz de Microsoft Edge (es-CO-GonzaloNeural, es-MX-JorgeNeural, es-US-AlonsoNeural, ...)
   #   rate  : velocidad  ("+0%" normal, "+15%" más rápido)
