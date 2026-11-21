@@ -21,6 +21,13 @@ on:
         description: "Es mío o tengo permiso (subir a YouTube como privado)"
         type: boolean
         default: false
+      share:
+        description: "Crear link de descarga para compartir (72 h)"
+        type: boolean
+        default: false
+      intro:
+        description: "Link de tu intro (opcional)"
+        default: ""
       issue:
         description: "(interno) Issue donde responder"
         default: ""
@@ -72,6 +79,8 @@ jobs:
           IN_MINUTES: ${{ github.event.inputs.minutes }}
           IN_TOPIC: ${{ github.event.inputs.topic }}
           IN_MINE: ${{ github.event.inputs.mine }}
+          IN_SHARE: ${{ github.event.inputs.share }}
+          IN_INTRO: ${{ github.event.inputs.intro }}
         run: python scripts/leer_resumen.py >> "$GITHUB_OUTPUT"
       - name: Avisar en el Issue que empezó
         if: env.ISSUE_NUM != ''
@@ -91,9 +100,13 @@ jobs:
           MINUTES: ${{ steps.args.outputs.minutes }}
           TOPIC: ${{ steps.args.outputs.topic }}
           MINE: ${{ steps.args.outputs.mine }}
+          SHARE: ${{ steps.args.outputs.share }}
+          INTRO: ${{ steps.args.outputs.intro }}
         run: |
           EXTRA=""
           if [ "$MINE" = "true" ]; then EXTRA="--mine"; fi
+          if [ "$SHARE" = "true" ]; then EXTRA="$EXTRA --share"; fi
+          if [ -n "$INTRO" ]; then EXTRA="$EXTRA --intro $INTRO"; fi
           python -m bot.resumen "$URL" --parts "$PARTS" --minutes "$MINUTES" ${TOPIC:+--topic "$TOPIC"} $EXTRA
       - name: Guardar historial
         if: always()
