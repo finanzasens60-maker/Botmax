@@ -135,6 +135,80 @@ def render_card(card: Path, seconds: float, out: Path) -> Path:
     return out
 
 
+XF = 0.6  # duración de cada transición automática (s)
+
+
+def prepare_intro(cfg: dict, intro_url: str | None, work: Path) -> Path | None:
+    """Tu intro (link de Drive/Dropbox/YouTube, o assets/intro/), normalizada a 1920x1080 y máx. 20 s."""
+    src = None
+    if intro_url:
+        try:
+            sh(["yt-dlp", "-f", "bv*[height<=1080]+ba/b", "--merge-output-format", "mp4", "--no-playlist",
+                "--no-warnings", "-o", str(work / "intro_src.%(ext)s"), intro_url])
+            src = next((p for p in work.glob("intro_src.*") if p.suffix != ".part"), None)
+        except subprocess.CalledProcessError:
+            print("[resumen] no pude bajar tu intro; sigo sin ella")
+    if not src:
+        local = sorted(p for p in Path("assets/intro").glob("*") if p.suffix.lower() in {".mp4", ".mov", ".mkv", ".webm"})
+        src = local[0] if local else None
+    if not src:
+        return None
+    has_a = bool(sh(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0",
+                     str(src)], capture_output=True).stdout.strip())
+    out = work / "intro.mp4"
+    vf = f"scale={W}:{H}:force_original_aspect_ratio=decrease,pad={W}:{H}:(ow-iw)/2:(oh-ih)/2,setsar=1,fps={FPS},format=yuv420p"
+    extra_in, amap = ([], ["-map", "0:a"]) if has_a else (["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo"],
+                                                         ["-map", "1:a", "-shortest"])
+    sh(["ffmpeg", "-y", "-loglevel", "error", "-i", str(src), *extra_in, "-t", "20", "-filter:v", vf, "-map", "0:v",
+        *amap, "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+        "-ac", "2", str(out)])
+    print(f"[resumen] intro lista ({dur_of(out):.1f} s)")
+    return out
+
+
+def opening(parts: list[Path], out: Path) -> tuple[Path, float]:
+    """Une intro + portada + primer momento con transiciones automáticas (fundido cruzado de imagen y sonido).
+    Devuelve el video y el segundo en que arranca el último tramo."""
+    durs = [dur_of(x) for x in parts]
+    inputs, fc, prev_v, prev_a, off = [], [], "[0:v]", "[0:a]", 0.0
+    for x in parts:
+        inputs += ["-i", str(x)]
+    for i in range(1, len(parts)):
+        off += durs[i - 1] - XF
+        fc.append(f"{prev_v}[{i}:v]xfade=transition=fade:duration={XF}:offset={off:.2f}[v{i}]")
+        fc.append(f"{prev_a}[{i}:a]acrossfade=d={XF}[a{i}]")
+        prev_v, prev_a = f"[v{i}]", f"[a{i}]"
+    sh(["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", ";".join(fc), "-map", prev_v, "-map", prev_a,
+        "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p", "-r", str(FPS),
+        "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", str(out)])
+    return out, off
+
+
+def share_link(video: Path) -> str | None:
+    """Sube una copia a Litterbox (gratis, sin cuenta): cualquiera con el link la descarga durante 72 horas."""
+    if video.stat().st_size > 990_000_000:
+        print("[resumen] el video pesa más de 1 GB: no se puede compartir por Litterbox")
+        return None
+    try:
+        out = sh(["curl", "-sS", "--retry", "2", "-F", "reqtype=fileupload", "-F", "time=72h",
+                  "-F", f"fileToUpload=@{video}", "https://litterbox.catbox.moe/resources/internals/api.php"],
+                 capture_output=True, timeout=1800).stdout.strip()
+        if out.startswith("http"):
+            print(f"[resumen] link para compartir (72 h): {out}")
+            return out
+        print(f"[resumen] Litterbox respondió: {out[:200]}")
+    except Exception as exc:
+        print(f"[resumen] no pude crear el link para compartir: {exc}")
+    return None
+
+
+def _secs(t: str) -> float:
+    n = 0.0
+    for part in t.split(":"):
+        n = n * 60 + float(part)
+    return n
+
+
 def ts(sec: float) -> str:
     sec = int(sec)
     return f"{sec // 3600}:{sec % 3600 // 60:02d}:{sec % 60:02d}" if sec >= 3600 else f"{sec // 60:02d}:{sec % 60:02d}"
@@ -148,6 +222,8 @@ def main() -> None:
     ap.add_argument("--topic", default=None)
     ap.add_argument("--mine", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--intro", default=None, help="link de tu intro (Drive, Dropbox, YouTube…)")
+    ap.add_argument("--share", action="store_true", help="crear un link público de descarga (72 h)")
     a = ap.parse_args()
 
     cfg = yaml.safe_load(Path("config.yaml").read_text(encoding="utf-8"))
@@ -227,6 +303,7 @@ def main() -> None:
     while len(groups[-1]) > 1 and sum(m["abs_end"] - m["abs_start"] for m in groups[-1]) > target * 1.25:
         groups[-1].pop()
 
+    intro_vid = prepare_intro(cfg, a.intro or (cfg.get("resumen") or {}).get("intro_url"), work)
     results = []
     site = (info.get("extractor_key") or "").split(":")[0].capitalize()
     for p, group in enumerate(groups, 1):
@@ -253,14 +330,21 @@ def main() -> None:
             print(f"[resumen] parte {p}: momento {i}/{len(group)} listo ({m['label']})")
         still = work / f"p{p}_still.png"
         sh(["ffmpeg", "-y", "-loglevel", "error", "-ss", "2", "-i", str(segs[0]), "-frames:v", "1", str(still)])
-        intro = render_card(title_card(cfg, still, pmeta["title"], work / f"p{p}_card.png"), 4.0,
-                            work / f"p{p}_intro.mp4")
+        card = render_card(title_card(cfg, still, pmeta["title"], work / f"p{p}_card.png"), 4.0,
+                           work / f"p{p}_card.mp4")
+        # Apertura con transiciones automáticas: [tu intro] -> portada con el título -> primer momento
+        head, first_at = opening(([intro_vid] if intro_vid else []) + [card, segs[0]], work / f"p{p}_apertura.mp4")
+        shift = first_at - 4.0  # los capítulos se calcularon como si la portada (4 s) fuera lo primero
+        chapters = [f"{ts(_secs(c.split(' ', 1)[0]) + shift)} {c.split(' ', 1)[1]}" for c in chapters]
+        if intro_vid:
+            chapters.insert(0, f"{ts(first_at - (dur_of(card) - XF))} {pmeta['title'][:60]}")
+        intro = head
         lst = work / f"p{p}.txt"
-        lst.write_text("".join(f"file '{x.resolve()}'\n" for x in [intro, *segs]), encoding="utf-8")
+        lst.write_text("".join(f"file '{x.resolve()}'\n" for x in [head, *segs[1:]]), encoding="utf-8")
         video = work / f"resumen_parte{p}.mp4"
         sh(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy",
             "-movflags", "+faststart", str(video)])
-        for x in segs + [intro]:
+        for x in segs + [intro, card]:
             x.unlink(missing_ok=True)
         thumb = visuals.thumbnail(cfg, video, pmeta.get("thumbnail_text", "MEJORES MOMENTOS"), work / f"p{p}_thumb.jpg")
         tags = [x if x.startswith("#") else f"#{x}" for x in pmeta.get("hashtags", [])][:6]
@@ -284,6 +368,8 @@ def main() -> None:
                 except Exception as exc:
                     print(f"[youtube] ERROR: {exc}")
             res["release"] = github_release(video, caption, {"title": title}, f"resumen-{stamp}-p{p}", extra=[thumb])
+            if a.share:
+                res["share"] = share_link(video)
         results.append(res)
 
     if not a.dry_run:
@@ -293,7 +379,8 @@ def main() -> None:
     lines = [f"**{len(results)} video(s) de resumen** de ~{a.minutes:.0f} min listos:", ""]
     for r in results:
         lines.append(f"- **{r['title']}**" + (f" — YouTube (privado): {r['youtube']}" if r["youtube"] else "")
-                     + (f" — descargar: {r['release']}" if r["release"] else ""))
+                     + (f" — descargar: {r['release']}" if r["release"] else "")
+                     + (f"\n  🔗 **Link para compartir** (cualquiera lo descarga, dura 72 h): {r['share']}" if r.get("share") else ""))
     lines += ["", "Cada uno trae título, descripción con capítulos y miniatura (en el link de descarga)."]
     if not a.mine:
         lines.append("No se subieron a YouTube porque no marcaste el directo como tuyo (#mio).")
