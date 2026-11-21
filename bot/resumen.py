@@ -149,8 +149,11 @@ def prepare_intro(cfg: dict, intro_url: str | None, work: Path) -> Path | None:
         except subprocess.CalledProcessError:
             print("[resumen] no pude bajar tu intro; sigo sin ella")
     if not src:
-        local = sorted(p for p in Path("assets/intro").glob("*") if p.suffix.lower() in {".mp4", ".mov", ".mkv", ".webm"})
+        local = sorted((p for p in Path("assets/intro").glob("*") if p.suffix.lower() in {".mp4", ".mov", ".mkv", ".webm"}),
+                       key=lambda p: (p.stem.lower() != "intro", p.name.lower()))  # primero la que se llame "intro"
         src = local[0] if local else None
+        if src:
+            print(f"[resumen] uso tu intro guardada: {src.name}")
     if not src:
         return None
     has_a = bool(sh(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0",
