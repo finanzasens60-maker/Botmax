@@ -43,7 +43,7 @@ concurrency:
 jobs:
   aprobacion:
     # Pedido de otra persona: queda en espera hasta que el dueño le ponga la etiqueta "aprobado"
-    if: github.event_name == 'issues' && github.event.action == 'opened' && github.event.issue.user.login != github.repository_owner && startsWith(github.event.issue.title, '[resumen]')
+    if: github.event_name == 'issues' && github.event.action == 'opened' && (github.event.issue.user.login != github.repository_owner || contains(github.event.issue.title, '[externo]')) && startsWith(github.event.issue.title, '[resumen]')
     runs-on: ubuntu-24.04
     steps:
       - name: Avisar que espera aprobación
@@ -60,15 +60,15 @@ jobs:
   resumen:
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (github.event.action == 'opened' && github.event.issue.user.login == github.repository_owner && startsWith(github.event.issue.title, '[resumen]')) ||
+      (github.event.action == 'opened' && github.event.issue.user.login == github.repository_owner && !contains(github.event.issue.title, '[externo]') && startsWith(github.event.issue.title, '[resumen]')) ||
       (github.event.action == 'labeled' && github.event.label.name == 'aprobado' && github.event.sender.login == github.repository_owner &&
-       github.event.issue.user.login != github.repository_owner && startsWith(github.event.issue.title, '[resumen]'))
+       (github.event.issue.user.login != github.repository_owner || contains(github.event.issue.title, '[externo]')) && startsWith(github.event.issue.title, '[resumen]'))
     runs-on: ubuntu-24.04
     timeout-minutes: 350
     env:
       PYTHONUNBUFFERED: "1"
       ISSUE_NUM: ${{ github.event.issue.number || github.event.inputs.issue }}
-      BOT_EXTERNO: ${{ github.event_name == 'issues' && github.event.issue.user.login != github.repository_owner }}
+      BOT_EXTERNO: ${{ github.event_name == 'issues' && (github.event.issue.user.login != github.repository_owner || contains(github.event.issue.title, '[externo]')) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
