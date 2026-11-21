@@ -107,14 +107,3 @@ jobs:
           git config user.email "gta6-bot@users.noreply.github.com"
           git add data/published.json
           git diff --cached --quiet || (git commit -m "Historial: nuevo Short publicado" && (git pull --rebase && git push))
-
-      - name: Subir videos como artefacto (respaldo, 7 días)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: shorts-${{ github.run_number }}
-          path: |
-            out/**/video.mp4
-            out/**/publicar.txt
-          retention-days: 7
-          if-no-files-found: ignore
