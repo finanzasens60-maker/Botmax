@@ -1,4 +1,4 @@
-name: Cola de YouTube (subir pendientes en privado)
+name: Cola de YouTube y TikTok (subir pendientes)
 
 on:
   schedule:
@@ -43,6 +43,8 @@ jobs:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
           IN_SOLO: ${{ github.event.inputs.solo }}
           IN_MAX: ${{ github.event.inputs.max || '20' }}
         run: python scripts/subir_cola.py --max "$IN_MAX" --solo "$IN_SOLO"
@@ -51,13 +53,15 @@ jobs:
         run: |
           git config user.name "gta6-bot"
           git config user.email "gta6-bot@users.noreply.github.com"
-          git add data/published.json
+          git add data/published.json data/tiktok_token.enc 2>/dev/null || git add data/published.json
           if ! git diff --cached --quiet; then
             cp data/published.json /tmp/mio.json
+            [ -f data/tiktok_token.enc ] && cp data/tiktok_token.enc /tmp/tt.enc
             git commit -q -m "Historial: cola de YouTube"
             for i in 1 2 3 4; do
               git fetch -q origin main && git reset -q --hard origin/main
               python scripts/unir_historial.py /tmp/mio.json data/published.json
+              [ -f /tmp/tt.enc ] && cp /tmp/tt.enc data/tiktok_token.enc && git add data/tiktok_token.enc
               git add data/published.json
               git diff --cached --quiet && break
               git commit -q -m "Historial: cola de YouTube" && git push -q && break
