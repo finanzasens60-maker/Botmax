@@ -21,6 +21,7 @@ API = "https://open.tiktokapis.com"
 TOKEN_FILE = Path("data/tiktok_token.enc")
 REDIRECT_URI = "https://finanzasens60-maker.github.io/videos-10-minutos/tiktok.html"
 SCOPES = "user.info.basic,video.upload"
+CLIENT_KEY = os.environ.get("TIKTOK_CLIENT_KEY") or "sbawm331oqj13id63d"  # público (va en la URL de inicio de sesión)
 MB = 1024 * 1024
 
 
@@ -56,7 +57,7 @@ def load_token() -> dict | None:
 
 def exchange_code(code: str) -> dict:
     r = requests.post(f"{API}/v2/oauth/token/", timeout=30, data={
-        "client_key": os.environ["TIKTOK_CLIENT_KEY"], "client_secret": _secret(), "code": code,
+        "client_key": CLIENT_KEY, "client_secret": _secret(), "code": code,
         "grant_type": "authorization_code", "redirect_uri": REDIRECT_URI})
     tok = r.json()
     if "access_token" not in tok:
@@ -73,7 +74,7 @@ def access_token() -> str:
     if tok.get("access_expires_at", 0) > time.time():
         return tok["access_token"]
     r = requests.post(f"{API}/v2/oauth/token/", timeout=30, data={
-        "client_key": os.environ["TIKTOK_CLIENT_KEY"], "client_secret": _secret(),
+        "client_key": CLIENT_KEY, "client_secret": _secret(),
         "grant_type": "refresh_token", "refresh_token": tok["refresh_token"]})
     new = r.json()
     if "access_token" not in new:
