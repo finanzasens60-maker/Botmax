@@ -1,4 +1,4 @@
-name: Ocultar clips (Releases como borrador)
+name: Ocultar clips (Releases como borrador y sin respaldos públicos)
 
 on:
   workflow_dispatch:
@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   ocultar:
@@ -24,3 +25,13 @@ jobs:
           done
           echo "Releases pasados a borrador: $n"
           echo "Quedan públicos: $(gh release list -R "$REPO" --limit 500 --json isDraft -q '[.[] | select(.isDraft == false)] | length')"
+      - name: Borrar respaldos (artefactos), que en un repo público cualquiera puede descargar
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          n=0
+          for id in $(gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" -q '.artifacts[].id'); do
+            gh api -X DELETE "repos/$REPO/actions/artifacts/$id" && n=$((n+1))
+          done
+          echo "Respaldos borrados: $n"
