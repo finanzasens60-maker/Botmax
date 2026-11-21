@@ -23,9 +23,20 @@ body:
       options: ["10", "8", "12", "15"]
       default: 0
   - type: input
+    id: intro
+    attributes:
+      label: Link de tu intro (opcional)
+      description: "Un video corto tuyo (Drive, Dropbox o YouTube). Va al inicio con transición automática. Vacío = la intro guardada en el bot (si hay)."
+  - type: input
     id: tema
     attributes:
       label: Juego o tema (vacío = GTA 6)
+  - type: checkboxes
+    id: compartir
+    attributes:
+      label: Compartir
+      options:
+        - label: "#compartir — Crear un link de descarga para mandarle a otra persona (dura 72 horas)"
   - type: checkboxes
     id: permiso
     attributes:
