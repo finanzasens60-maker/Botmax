@@ -1,0 +1,127 @@
+name: Resumen para YouTube (videos de 10 min)
+
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Link del directo terminado o de la grabación (Kick, Twitch, YouTube, Google Drive, Dropbox)"
+        required: true
+      parts:
+        description: "Cuántos videos"
+        default: "1"
+      minutes:
+        description: "Minutos de cada video"
+        default: "10"
+      topic:
+        description: "Juego o tema (vacío = GTA 6)"
+        default: ""
+      mine:
+        description: "Es mío o tengo permiso (subir a YouTube como privado)"
+        type: boolean
+        default: false
+      issue:
+        description: "(interno) Issue donde responder"
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: resumen
+  cancel-in-progress: false
+
+jobs:
+  resumen:
+    if: github.event_name == 'workflow_dispatch' || (github.event.issue.user.login == github.repository_owner && startsWith(github.event.issue.title, '[resumen]'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    env:
+      PYTHONUNBUFFERED: "1"
+      ISSUE_NUM: ${{ github.event.issue.number || github.event.inputs.issue }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Instalar ffmpeg
+        run: which ffmpeg || (timeout 600 sudo apt-get -o Acquire::Retries=3 update -qq && timeout 600 sudo apt-get install -y -qq ffmpeg)
+      - name: Fuente Poppins (si falta)
+        run: |
+          if [ ! -f assets/fonts/Poppins-Bold.ttf ]; then
+            mkdir -p assets/fonts
+            curl -sSL -o assets/fonts/Poppins-Bold.ttf https://github.com/google/fonts/raw/main/ofl/poppins/Poppins-Bold.ttf
+          fi
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt && pip install -U yt-dlp
+      - name: Cache del modelo Whisper
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: whisper-models-v1
+      - name: Leer el link
+        id: args
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          IN_URL: ${{ github.event.inputs.url }}
+          IN_PARTS: ${{ github.event.inputs.parts }}
+          IN_MINUTES: ${{ github.event.inputs.minutes }}
+          IN_TOPIC: ${{ github.event.inputs.topic }}
+          IN_MINE: ${{ github.event.inputs.mine }}
+        run: python scripts/leer_resumen.py >> "$GITHUB_OUTPUT"
+      - name: Avisar en el Issue que empezó
+        if: env.ISSUE_NUM != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh issue comment "$ISSUE_NUM" --body "Recibido ✅ Estoy armando ${{ steps.args.outputs.parts }} video(s) de ~${{ steps.args.outputs.minutes }} min con los mejores momentos. Te aviso aquí cuando estén."
+      - name: Armar el resumen
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          URL: ${{ steps.args.outputs.url }}
+          PARTS: ${{ steps.args.outputs.parts }}
+          MINUTES: ${{ steps.args.outputs.minutes }}
+          TOPIC: ${{ steps.args.outputs.topic }}
+          MINE: ${{ steps.args.outputs.mine }}
+        run: |
+          EXTRA=""
+          if [ "$MINE" = "true" ]; then EXTRA="--mine"; fi
+          python -m bot.resumen "$URL" --parts "$PARTS" --minutes "$MINUTES" ${TOPIC:+--topic "$TOPIC"} $EXTRA
+      - name: Guardar historial
+        if: always()
+        run: |
+          git config user.name "gta6-bot"
+          git config user.email "gta6-bot@users.noreply.github.com"
+          git add data/published.json
+          if ! git diff --cached --quiet; then
+            cp data/published.json /tmp/mio.json
+            git commit -q -m "Historial: resumen"
+            for i in 1 2 3 4; do
+              git fetch -q origin main && git reset -q --hard origin/main
+              python scripts/unir_historial.py /tmp/mio.json data/published.json
+              git add data/published.json
+              git diff --cached --quiet && break
+              git commit -q -m "Historial: resumen" && git push -q && break
+              sleep 7
+            done
+          fi
+      - name: Responder en el Issue
+        if: always() && env.ISSUE_NUM != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -f out/live_summary.md ]; then
+            gh issue comment "$ISSUE_NUM" --body-file out/live_summary.md
+            gh issue close "$ISSUE_NUM" || true
+          else
+            gh issue comment "$ISSUE_NUM" --body "❌ No pude armar el resumen con ese link. Detalles: $RUN_URL"
+          fi
