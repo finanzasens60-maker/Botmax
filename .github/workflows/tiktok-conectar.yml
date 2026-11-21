@@ -1,0 +1,54 @@
+name: Conectar TikTok
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: tiktok-conectar
+  cancel-in-progress: false
+
+jobs:
+  conectar:
+    if: startsWith(github.event.issue.title, '[tiktok]') && github.event.issue.user.login == github.repository_owner
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install requests
+      - name: Cambiar el código por los tokens
+        env:
+          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+          BODY: ${{ github.event.issue.body }}
+        run: python scripts/tiktok_conectar.py "$BODY"
+      - name: Guardar token cifrado
+        run: |
+          git config user.name "gta6-bot"
+          git config user.email "gta6-bot@users.noreply.github.com"
+          cp data/tiktok_token.enc /tmp/tt.enc
+          for i in 1 2 3 4; do
+            git fetch -q origin main && git reset -q --hard origin/main
+            cp /tmp/tt.enc data/tiktok_token.enc
+            git add data/tiktok_token.enc
+            git diff --cached --quiet && break
+            git commit -q -m "TikTok conectado" && git push -q && break
+            sleep 7
+          done
+      - name: Responder y borrar el código del pedido
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          N: ${{ github.event.issue.number }}
+        run: |
+          gh issue edit "$N" --body "Conexión de TikTok (el código ya se usó y se borró de aquí)." || true
+          [ -f out/tiktok_conectar.md ] && gh issue comment "$N" --body-file out/tiktok_conectar.md || true
+          gh issue close "$N" || true
