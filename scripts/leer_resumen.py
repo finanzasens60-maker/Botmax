@@ -9,10 +9,15 @@ parts = (os.environ.get("IN_PARTS") or "").strip()
 minutes = (os.environ.get("IN_MINUTES") or "").strip()
 topic = (os.environ.get("IN_TOPIC") or "").strip()
 mine = (os.environ.get("IN_MINE") or "").strip().lower() == "true"
+share = (os.environ.get("IN_SHARE") or "").strip().lower() == "true"
+intro = (os.environ.get("IN_INTRO") or "").strip()
 
 if body:
-    m = re.search(r"https?://\S+", body)
-    url = url or (m.group(0).rstrip(").,>") if m else "")
+    sec0 = lambda label: re.search(label + r"[^\n]*\n+\s*(https?://\S+)", body)
+    m = sec0(r"Link del directo") or re.search(r"https?://\S+", body)
+    url = url or (m.group(m.lastindex or 0).rstrip(").,>") if m else "")
+    it = sec0(r"Link de tu intro")
+    intro = intro or (it.group(1).rstrip(").,>") if it else "")
     sec = lambda label: re.search(label + r"[^\n]*\n+\s*([^\n#]+)", body)
     p = sec(r"Cuántos videos")
     if p and p.group(1).strip().isdigit():
@@ -24,6 +29,7 @@ if body:
     if t and t.group(1).strip() and "No response" not in t.group(1):
         topic = t.group(1).strip()
     mine = mine or bool(re.search(r"- \[x\][^\n]*#mio", body, re.I)) or "#mio" in title.lower()
+    share = share or bool(re.search(r"- \[x\][^\n]*#compartir", body, re.I)) or "#compartir" in title.lower()
 
 if not re.match(r"https?://", url or ""):
     raise SystemExit("No encontré un link válido (debe empezar por http)")
@@ -33,3 +39,5 @@ print(f"parts={parts if parts.isdigit() else '1'}")
 print(f"minutes={minutes if minutes.isdigit() else '10'}")
 print(f"topic={clean(topic)[:40]}")
 print(f"mine={'true' if mine else 'false'}")
+print(f"share={'true' if share else 'false'}")
+print(f"intro={clean(intro) if re.match(r'https?://', intro) else ''}")
