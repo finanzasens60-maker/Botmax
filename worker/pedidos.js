@@ -53,7 +53,7 @@ export default {
       },
       body: JSON.stringify({ title, body, labels: ['pendiente'] }),
     });
-    if (!r.ok) return json({ error: 'No pude registrar el pedido, intenta en un rato', codigo: r.status, clave: { largo: String(env.GH_TOKEN || '').trim().length, empieza_bien: String(env.GH_TOKEN || '').trim().startsWith('github_pat_') } }, 502);
+    if (!r.ok) return json({ error: 'No pude registrar el pedido, intenta en un rato', codigo: r.status }, 502);
     const issue = await r.json();
     return json({ ok: true, numero: issue.number });
   },
