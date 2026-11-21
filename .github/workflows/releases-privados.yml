@@ -1,0 +1,26 @@
+name: Ocultar clips (Releases como borrador)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "41 */6 * * *"   # por si alguno quedó público
+
+permissions:
+  contents: write
+
+jobs:
+  ocultar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Pasar a borrador todos los Releases publicados
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          n=0
+          for tag in $(gh release list -R "$REPO" --limit 500 --json tagName,isDraft -q '.[] | select(.isDraft == false) | .tagName'); do
+            gh release edit "$tag" -R "$REPO" --draft=true >/dev/null && n=$((n+1))
+          done
+          echo "Releases pasados a borrador: $n"
+          echo "Quedan públicos: $(gh release list -R "$REPO" --limit 500 --json isDraft -q '[.[] | select(.isDraft == false)] | length')"
