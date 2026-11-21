@@ -287,19 +287,19 @@ def main() -> None:
         for r in results:
             r["release"] = rel_url
         state = load_state()
-        state["items"] += [r for r in results if not r.get("pendiente")]
+        state["items"] += results  # los pendientes también: la cola de YouTube (subir_cola.py) los sube
         save_state(state)
     lines = [f"**{len(results)} clips virales** sacados de los clips más vistos por el público en Kick "
              f"(de {len(clips)} clips del directo).", ""]
     lines += [f"{i}. {r['title']} — {r['score']}/10 · {r['views']} vistas en Kick"
-              + (f" — {r['youtube']}" if r.get("youtube") else (" — (pendiente: se sube en la próxima revisión)" if r.get("pendiente") else ""))
+              + (f" — {r['youtube']}" if r.get("youtube") else (" — (en cola: se sube solo, en privado, cuando YouTube libere el tope)" if r.get("pendiente") else ""))
               for i, r in enumerate(results, 1)]
     if rel_url:
         lines += ["", f"Descárgalos aquí: {rel_url}"]
     if a.youtube:
         lines += ["", "Subidos a YouTube como **privados**: revísalos en YouTube Studio y publica los que quieras."]
         if limite:
-            lines += ["Se llegó al tope de subidas de hoy; los pendientes se suben en la próxima revisión."]
+            lines += ["Se llegó al tope de subidas de hoy; la cola los sube solos (privados) en las próximas horas."]
     else:
         lines += ["", "No se subieron a YouTube. Revísalos antes de publicarlos."]
     Path("out/live_summary.md").write_text("\n".join(lines), encoding="utf-8")
