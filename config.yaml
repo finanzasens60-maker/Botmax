@@ -203,3 +203,8 @@ kick_auto:
   issue: 3                        # dónde te aviso
   youtube: true                   # subirlos a YouTube como PRIVADOS (tú los revisas y los publicas)
   youtube_per_day: 6              # tope diario de estos clips en YouTube (para dejar cupo a los Shorts propios)
+
+# --- Resúmenes para YouTube (videos de ~10 min) ----------------------------------
+resumen:
+  intro_url: ""                   # link de tu intro por defecto (Drive/Dropbox/YouTube). También puedes poner
+                                  # el archivo en assets/intro/ del repositorio. Vacío = solo la portada con el título.
