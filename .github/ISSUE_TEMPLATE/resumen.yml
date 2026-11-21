@@ -1,0 +1,34 @@
+name: 🎬 Resumen para YouTube (videos de 10 minutos)
+description: Pega el link de un directo ya terminado o de una grabación larga y el bot arma videos horizontales de ~10 min con los mejores momentos.
+title: "[resumen]"
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Link del directo o de la grabación
+      description: "Kick, Twitch o YouTube (directo ya terminado), o una grabación tuya subida a Google Drive o Dropbox con el link en 'cualquiera con el enlace'."
+      placeholder: https://kick.com/canal/videos/...
+    validations:
+      required: true
+  - type: dropdown
+    id: partes
+    attributes:
+      label: Cuántos videos de 10 minutos
+      options: ["1", "2", "3", "4"]
+      default: 0
+  - type: dropdown
+    id: minutos
+    attributes:
+      label: Duración de cada video (minutos)
+      options: ["10", "8", "12", "15"]
+      default: 0
+  - type: input
+    id: tema
+    attributes:
+      label: Juego o tema (vacío = GTA 6)
+  - type: checkboxes
+    id: permiso
+    attributes:
+      label: Permiso
+      options:
+        - label: "#mio — El directo o la grabación es mía o tengo permiso (se suben solos a YouTube como privados)"
