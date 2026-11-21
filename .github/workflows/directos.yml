@@ -2,7 +2,7 @@ name: Clips de directos
 
 on:
   issues:
-    types: [opened]
+    types: [opened, labeled]
   workflow_dispatch:
     inputs:
       url:
@@ -39,13 +39,34 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  aprobacion:
+    # Pedido de otra persona: queda en espera hasta que el dueño le ponga la etiqueta "aprobado"
+    if: github.event_name == 'issues' && github.event.action == 'opened' && github.event.issue.user.login != github.repository_owner && contains(github.event.issue.body, 'http') && !startsWith(github.event.issue.title, '[resumen]') && !startsWith(github.event.issue.title, '[tiktok]')
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Avisar que espera aprobación
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          N: ${{ github.event.issue.number }}
+        run: |
+          gh label create pendiente -R "$REPO" --color FBCA04 --description "Pedido externo esperando aprobación" 2>/dev/null || true
+          gh label create aprobado -R "$REPO" --color 0E8A16 --description "El dueño aprobó este pedido" 2>/dev/null || true
+          gh issue edit "$N" -R "$REPO" --add-label pendiente
+          gh issue comment "$N" -R "$REPO" --body "Recibido 🙌 Este bot es privado: tu pedido queda **en espera** hasta que el dueño lo apruebe. Cuando lo apruebe empiezo y te dejo aquí el link de descarga."
+
   clips:
     # Solo el dueño del repo puede mandar links
-    if: github.event_name == 'workflow_dispatch' || (github.event.issue.user.login == github.repository_owner && contains(github.event.issue.body, 'http') && !startsWith(github.event.issue.title, '[resumen]'))
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.action == 'opened' && github.event.issue.user.login == github.repository_owner && contains(github.event.issue.body, 'http') && !startsWith(github.event.issue.title, '[resumen]') && !startsWith(github.event.issue.title, '[tiktok]')) ||
+      (github.event.action == 'labeled' && github.event.label.name == 'aprobado' && github.event.sender.login == github.repository_owner &&
+       github.event.issue.user.login != github.repository_owner && contains(github.event.issue.body, 'http') && !startsWith(github.event.issue.title, '[resumen]') && !startsWith(github.event.issue.title, '[tiktok]'))
     runs-on: ubuntu-24.04
     env:
       PYTHONUNBUFFERED: "1"   # ver el progreso en vivo en los registros
       ISSUE_NUM: ${{ github.event.issue.number || github.event.inputs.issue }}
+      BOT_EXTERNO: ${{ github.event_name == 'issues' && github.event.issue.user.login != github.repository_owner }}
     timeout-minutes: 355
     steps:
       - uses: actions/checkout@v4
@@ -113,7 +134,8 @@ jobs:
           TOPIC: ${{ steps.args.outputs.topic }}
         run: |
           EXTRA=""
-          if [ "$MINE" = "true" ]; then EXTRA="--mine"; fi
+          if [ "$MINE" = "true" ] && [ "$BOT_EXTERNO" != "true" ]; then EXTRA="--mine"; fi
+          if [ "$BOT_EXTERNO" = "true" ] && [ -z "$START$MINUTES" ]; then MINUTES=120; fi  # externos: solo un tramo, sin grabar en vivo
           if [ -n "$START$MINUTES" ]; then
             # VOD con tramo específico
             python -m bot.live "$URL" ${START:+--start "$START"} ${MINUTES:+--minutes "$MINUTES"} ${TOPIC:+--topic "$TOPIC"} $EXTRA
@@ -148,20 +170,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          if [ -f out/live_summary.md ]; then
+          if [ "$BOT_EXTERNO" = "true" ] && [ -f out/live_summary.md ]; then
+            python scripts/compartir_externo.py
+            gh issue comment "$ISSUE_NUM" --body-file out/externo.md
+            gh issue edit "$ISSUE_NUM" --remove-label pendiente || true
+            gh issue close "$ISSUE_NUM"
+          elif [ -f out/live_summary.md ]; then
             gh issue comment "$ISSUE_NUM" --body-file out/live_summary.md
             if [ ! -f out/continua ]; then gh issue close "$ISSUE_NUM"; fi
           else
             gh issue comment "$ISSUE_NUM" --body "❌ No pude sacar clips de ese link. Detalles: $RUN_URL"
           fi
-
-      - name: Subir clips como artefacto (respaldo)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: clips-${{ github.run_number }}
-          path: |
-            out/**/clip*.mp4
-            out/**/clip*_publicar.txt
-          retention-days: 7
-          if-no-files-found: ignore
