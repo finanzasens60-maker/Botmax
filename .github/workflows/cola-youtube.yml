@@ -1,0 +1,72 @@
+name: Cola de YouTube (subir pendientes en privado)
+
+on:
+  schedule:
+    - cron: "17 */3 * * *"   # cada 3 horas
+  workflow_dispatch:
+    inputs:
+      solo:
+        description: "Solo Releases que empiecen así (ej. kick-westcol). Vacío = todos"
+        default: ""
+      max:
+        description: "Máximo de subidas en esta ejecución"
+        default: "20"
+      issue:
+        description: "Issue donde avisar (opcional)"
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: youtube-cola
+  cancel-in-progress: false
+
+jobs:
+  cola:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Subir pendientes (privados)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          IN_SOLO: ${{ github.event.inputs.solo }}
+          IN_MAX: ${{ github.event.inputs.max || '20' }}
+        run: python scripts/subir_cola.py --max "$IN_MAX" --solo "$IN_SOLO"
+      - name: Guardar historial
+        if: always()
+        run: |
+          git config user.name "gta6-bot"
+          git config user.email "gta6-bot@users.noreply.github.com"
+          git add data/published.json
+          if ! git diff --cached --quiet; then
+            cp data/published.json /tmp/mio.json
+            git commit -q -m "Historial: cola de YouTube"
+            for i in 1 2 3 4; do
+              git fetch -q origin main && git reset -q --hard origin/main
+              python scripts/unir_historial.py /tmp/mio.json data/published.json
+              git add data/published.json
+              git diff --cached --quiet && break
+              git commit -q -m "Historial: cola de YouTube" && git push -q && break
+              sleep 7
+            done
+          fi
+      - name: Avisar en el Issue
+        if: always() && github.event.inputs.issue != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          [ -f out/cola_summary.md ] && gh issue comment "${{ github.event.inputs.issue }}" --body-file out/cola_summary.md || true
