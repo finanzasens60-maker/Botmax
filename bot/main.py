@@ -60,7 +60,8 @@ def github_release(video: Path, caption_file: Path, meta: dict, tag: str, extra:
     try:
         out = subprocess.run(
             ["gh", "release", "create", tag, str(video), str(caption_file), *[str(e) for e in (extra or [])],
-             "--title", meta["title"][:100], "--notes", caption_file.read_text(encoding="utf-8")[:5000]],
+             "--title", meta["title"][:100], "--notes", caption_file.read_text(encoding="utf-8")[:5000],
+             "--draft"],  # borrador: el repo es público y los clips solo los ve el dueño
             capture_output=True, text=True, check=True)
         url = out.stdout.strip().splitlines()[-1]
         print(f"[release] {url}")
