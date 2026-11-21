@@ -1,0 +1,2 @@
+Pon aquí tu intro (un archivo .mp4 corto) si quieres que TODOS los resúmenes de 10 min empiecen con ella.
+También puedes pegar el link de tu intro en la app "Videos de 10 min" o en config.yaml (resumen -> intro_url).
