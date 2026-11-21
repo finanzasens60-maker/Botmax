@@ -1,2 +1,6 @@
-Pon aquí tu intro (un archivo .mp4 corto) si quieres que TODOS los resúmenes de 10 min empiecen con ella.
-También puedes pegar el link de tu intro en la app "Videos de 10 min" o en config.yaml (resumen -> intro_url).
+Sube aquí tu intro en .mp4 (desde el celular: botón "Subir mi intro" de la app "Videos de 10 min",
+o en GitHub: Add file -> Upload files). Todos los resúmenes de 10 min empezarán con ella.
+
+- Ponle de nombre intro.mp4. Para cambiarla, sube otra con el mismo nombre (reemplaza la anterior).
+- Máximo 25 MB (límite de GitHub al subir desde la web) y se usan hasta 20 segundos.
+- Si en la app pegas un link de intro, ese link tiene prioridad sobre este archivo.
