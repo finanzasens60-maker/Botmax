@@ -57,6 +57,8 @@ def sample_story() -> news.NewsItem:
 def github_release(video: Path, caption_file: Path, meta: dict, tag: str, extra: list[Path] | None = None) -> str | None:
     if not os.environ.get("GITHUB_ACTIONS") or not shutil.which("gh"):
         return None
+    if os.environ.get("BOT_EXTERNO") == "true":
+        tag = f"ext-{tag}"  # pedido de otra persona: la cola nunca lo sube a tus cuentas
     try:
         out = subprocess.run(
             ["gh", "release", "create", tag, str(video), str(caption_file), *[str(e) for e in (extra or [])],
