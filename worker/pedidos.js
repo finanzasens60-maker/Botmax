@@ -47,13 +47,13 @@ export default {
     const r = await fetch(`https://api.github.com/repos/${REPO}/issues`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${env.GH_TOKEN}`,
+        Authorization: `Bearer ${String(env.GH_TOKEN || '').trim()}`,
         Accept: 'application/vnd.github+json',
         'User-Agent': 'botmax-pedidos',
       },
       body: JSON.stringify({ title, body, labels: ['pendiente'] }),
     });
-    if (!r.ok) return json({ error: 'No pude registrar el pedido, intenta en un rato' }, 502);
+    if (!r.ok) return json({ error: 'No pude registrar el pedido, intenta en un rato', codigo: r.status }, 502);
     const issue = await r.json();
     return json({ ok: true, numero: issue.number });
   },
