@@ -1840,6 +1840,126 @@
       "youtube": null,
       "pendiente": true,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-f734a82e63bfe8e334e2"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7XQMMJC0DT57DKGBR9BV64E",
+      "title": "Westcol y la ganga debaten sobre las invitadas del show",
+      "date": "20261122-132201",
+      "source": "https://clips.kick.com/clips/10/clip_01M7XQMMJC0DT57DKGBR9BV64E/playlist.m3u8",
+      "score": 8,
+      "views": 18,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-0f47645bfab6c619a54a"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7ZWP6GK73T4ZJF11TN2TSRG",
+      "title": "La única mujer de la ganga habla de su papel en el grupo",
+      "date": "20261122-132201",
+      "source": "https://clips.kick.com/clips/a6/clip_01M7ZWP6GK73T4ZJF11TN2TSRG/playlist.m3u8",
+      "score": 8,
+      "views": 17,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-0f47645bfab6c619a54a"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7YRJ7VD264RW5N6SQ13WKKV",
+      "title": "Westcol prende la fiesta y defiende el ambiente en la chiva",
+      "date": "20261122-132201",
+      "source": "https://clips.kick.com/clips/43/clip_01M7YRJ7VD264RW5N6SQ13WKKV/playlist.m3u8",
+      "score": 7.5,
+      "views": 27,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-0f47645bfab6c619a54a"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M81GMW1GJ093PM59SV5MGA9W",
+      "title": "¡Samy descontrolado en la discoteca junto a Westcol!",
+      "date": "20261122-132201",
+      "source": "https://clips.kick.com/clips/28/clip_01M81GMW1GJ093PM59SV5MGA9W/playlist.m3u8",
+      "score": 7.0,
+      "views": 24,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-0f47645bfab6c619a54a"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7ZY00N8ZP4JSMTV7WH9261N",
+      "title": "¡Motos de agua a toda velocidad con la ganga!",
+      "date": "20261122-132201",
+      "source": "https://clips.kick.com/clips/8f/clip_01M7ZY00N8ZP4JSMTV7WH9261N/playlist.m3u8",
+      "score": 7.0,
+      "views": 22,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-0f47645bfab6c619a54a"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7Z6GQN6CZ15GPCX4GMNHBA4",
+      "title": "¡Intensa discusión entre una invitada y uno del parche!",
+      "date": "20261122-132201",
+      "source": "https://clips.kick.com/clips/d4/clip_01M7Z6GQN6CZ15GPCX4GMNHBA4/playlist.m3u8",
+      "score": 7.5,
+      "views": 22,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-0f47645bfab6c619a54a"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7ZHK672XWHD27H5TA8K2JZR",
+      "title": "Fiesta desenfrenada en la chiva con la ganga",
+      "date": "20261122-132201",
+      "source": "https://clips.kick.com/clips/df/clip_01M7ZHK672XWHD27H5TA8K2JZR/playlist.m3u8",
+      "score": 7,
+      "views": 21,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-0f47645bfab6c619a54a"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7ZX7S6B5W3894WNBE6Z69V7",
+      "title": "Uno del parche confiesa si ha rogado por amor",
+      "date": "20261122-132201",
+      "source": "https://clips.kick.com/clips/63/clip_01M7ZX7S6B5W3894WNBE6Z69V7/playlist.m3u8",
+      "score": 7,
+      "views": 17,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-0f47645bfab6c619a54a"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7ZM30D6ZPS75XJY77YEA12E",
+      "title": "¿Una mujer no puede ponerse la camisa de otro hombre?",
+      "date": "20261122-132201",
+      "source": "https://clips.kick.com/clips/ca/clip_01M7ZM30D6ZPS75XJY77YEA12E/playlist.m3u8",
+      "score": 7,
+      "views": 17,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-0f47645bfab6c619a54a"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7Z4406WXQTV3NKJJRE9C7CF",
+      "title": "Fiesta descontrolada a bordo de la chiva rumbera",
+      "date": "20261122-132201",
+      "source": "https://clips.kick.com/clips/63/clip_01M7Z4406WXQTV3NKJJRE9C7CF/playlist.m3u8",
+      "score": 6,
+      "views": 328,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-0f47645bfab6c619a54a"
     }
   ]
 }
