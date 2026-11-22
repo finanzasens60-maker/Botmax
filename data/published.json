@@ -1969,6 +1969,108 @@
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-a21613bdb2c5986795d6",
       "instagram": null
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M806WT8HTMM782WB4B4ASN4Y",
+      "title": "Leandro confiesa lo que le gusta de Katy Cardona",
+      "date": "20261122-170545",
+      "source": "https://clips.kick.com/clips/42/clip_01M806WT8HTMM782WB4B4ASN4Y/playlist.m3u8",
+      "score": 8,
+      "views": 26,
+      "youtube": "https://youtube.com/shorts/nn5lq90UFyg",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-1f1439b50e91eec80cfc"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M8153CE8ZK61TSM5XQV82WH1",
+      "title": "Momento caótico cuando un miembro de la ganga termina en el suelo",
+      "date": "20261122-170545",
+      "source": "https://clips.kick.com/clips/c6/clip_01M8153CE8ZK61TSM5XQV82WH1/playlist.m3u8",
+      "score": 8,
+      "views": 16,
+      "youtube": "https://youtube.com/shorts/HpuOOEfGmB0",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-1f1439b50e91eec80cfc"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M805F1RZEZ3NGDN7Y0T9W7F2",
+      "title": "Así nació La Ganga: el origen que empezó como un meme",
+      "date": "20261122-170545",
+      "source": "https://clips.kick.com/clips/dd/clip_01M805F1RZEZ3NGDN7Y0T9W7F2/playlist.m3u8",
+      "score": 8,
+      "views": 15,
+      "youtube": "https://youtube.com/shorts/ciODLILE55E",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-1f1439b50e91eec80cfc"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7Y0DVTVRC4JERFHT2B230B7",
+      "title": "Westcol y la ganga en pleno concierto con el público",
+      "date": "20261122-170545",
+      "source": "https://clips.kick.com/clips/a4/clip_01M7Y0DVTVRC4JERFHT2B230B7/playlist.m3u8",
+      "score": 7,
+      "views": 18,
+      "youtube": "https://youtube.com/shorts/QuL4_ZaibFE",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-1f1439b50e91eec80cfc"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7XP2N8CWAYQPBA1GA5WRWKY",
+      "title": "La ganga arma un tribunal en el carro para dar consejos",
+      "date": "20261122-170545",
+      "source": "https://clips.kick.com/clips/d0/clip_01M7XP2N8CWAYQPBA1GA5WRWKY/playlist.m3u8",
+      "score": 7,
+      "views": 16,
+      "youtube": "https://youtube.com/shorts/lU-02SkP1uE",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-1f1439b50e91eec80cfc"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7ZGBB1A4935QDEVQFCQZ8RT",
+      "title": "Westcol habla sobre un evento importante en Panamá",
+      "date": "20261122-170545",
+      "source": "https://clips.kick.com/clips/d9/clip_01M7ZGBB1A4935QDEVQFCQZ8RT/playlist.m3u8",
+      "score": 6,
+      "views": 17,
+      "youtube": "https://youtube.com/shorts/869uTl6-hEc",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-1f1439b50e91eec80cfc"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M802ETB2EJT38KXV4SQ10J6K",
+      "title": "Westcol explica los próximos proyectos grandes de la ganga",
+      "date": "20261122-170545",
+      "source": "https://clips.kick.com/clips/ff/clip_01M802ETB2EJT38KXV4SQ10J6K/playlist.m3u8",
+      "score": 6,
+      "views": 16,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-1f1439b50e91eec80cfc"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7ZW0M7QGVGMCSBJXHC1R89R",
+      "title": "Westcol y su grupo paseando al aire libre",
+      "date": "20261122-170545",
+      "source": "https://clips.kick.com/clips/29/clip_01M7ZW0M7QGVGMCSBJXHC1R89R/playlist.m3u8",
+      "score": 6,
+      "views": 16,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-1f1439b50e91eec80cfc"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M7XTHEG4V2SRQ2YNCVKVVNH4",
+      "title": "Westcol recorriendo las instalaciones de noche",
+      "date": "20261122-170545",
+      "source": "https://clips.kick.com/clips/48/clip_01M7XTHEG4V2SRQ2YNCVKVVNH4/playlist.m3u8",
+      "score": 6,
+      "views": 16,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-1f1439b50e91eec80cfc"
     }
   ]
 }
