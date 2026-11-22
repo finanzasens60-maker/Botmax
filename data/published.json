@@ -2071,6 +2071,66 @@
       "youtube": null,
       "pendiente": true,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-1f1439b50e91eec80cfc"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261122-170545-westcol_01",
+      "title": "Leandro confiesa lo que le gusta de Katy Cardona",
+      "date": "20261122-185641",
+      "youtube": "https://youtube.com/shorts/OKI5gbZvY8c",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261122-170545"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261122-170545-westcol_02",
+      "title": "Momento caótico cuando un miembro de la ganga termina en el suelo",
+      "date": "20261122-185641",
+      "youtube": "https://youtube.com/shorts/27g-d-UMJ-U",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261122-170545"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261122-170545-westcol_03",
+      "title": "Así nació La Ganga: el origen que empezó como un meme",
+      "date": "20261122-185641",
+      "youtube": "https://youtube.com/shorts/ZWAOlxrbbH0",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261122-170545"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261122-170545-westcol_01",
+      "title": "Leandro confiesa lo que le gusta de Katy Cardona",
+      "date": "20261122-185641",
+      "ts": 1795373987,
+      "tiktok": "v_inbox_file~v2.7711072123708426258",
+      "caption": "Leandro confiesa lo que le gusta de Katy Cardona #Westcol #KatyCardona #Leandro #LaGanga #Humor #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261122-170545-westcol_02",
+      "title": "Momento caótico cuando un miembro de la ganga termina en el suelo",
+      "date": "20261122-185641",
+      "ts": 1795374048,
+      "tiktok": "v_inbox_file~v2.7711071875027486728",
+      "caption": "Momento caótico cuando un miembro de la ganga termina en el suelo #westcol #caidas #humor #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261122-170545-westcol_03",
+      "title": "Así nació La Ganga: el origen que empezó como un meme",
+      "date": "20261122-185641",
+      "ts": 1795374089,
+      "tiktok": "v_inbox_file~v2.7711072818432002066",
+      "caption": "Así nació La Ganga: el origen que empezó como un meme #Westcol #LaGanga #Historia #Colombia #Piscina #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261122-170545-westcol_04",
+      "title": "Westcol y la ganga en pleno concierto con el público",
+      "date": "20261122-185641",
+      "ts": 1795374127,
+      "tiktok": "v_inbox_file~v2.7711072999809501202",
+      "caption": "Westcol y la ganga en pleno concierto con el público #westcol #concierto #laganga #GTA6 #fyp"
     }
   ]
 }
