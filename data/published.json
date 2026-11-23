@@ -2784,6 +2784,82 @@
       "views": 5,
       "youtube": "https://youtube.com/shorts/7dQxEFf7oUU",
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-fc487b37604798740cff"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261123-173039-westcol_01",
+      "title": "¡Se fueron de lado! Accidente en cuatrimoto",
+      "date": "20261123-191027",
+      "youtube": "https://youtube.com/shorts/JnpLBM243Ss",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261123-173039"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261123-173039-westcol_02",
+      "title": "¿Casi se accidentan en la ruta de motos?",
+      "date": "20261123-191027",
+      "youtube": "https://youtube.com/shorts/KwtsRR7gRko",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261123-173039"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261123-173039-westcol_03",
+      "title": "La blanquita manejando minimoto en la trocha",
+      "date": "20261123-191027",
+      "youtube": "https://youtube.com/shorts/VyZz9X7Lj3M",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261123-173039"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261123-173039-westcol_04",
+      "title": "Planeando cómo grabar al grupo para la presentación",
+      "date": "20261123-191027",
+      "youtube": "https://youtube.com/shorts/inplPPGJx8E",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261123-173039"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261123-135118-westcol_01",
+      "title": "Un seguidor tumbo a Westcol mientras andaba en minimoto",
+      "date": "20261123-191027",
+      "youtube": "https://youtube.com/shorts/gANYQzjGMKw",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261123-135118"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261123-173039-westcol_01",
+      "title": "¡Se fueron de lado! Accidente en cuatrimoto",
+      "date": "20261123-191027",
+      "ts": 1795461255,
+      "tiktok": "v_inbox_file~v2.7711446986926639122",
+      "caption": "¡Se fueron de lado! Accidente en cuatrimoto #Westcol #accidente #cuatrimoto #fails #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261123-173039-westcol_02",
+      "title": "¿Casi se accidentan en la ruta de motos?",
+      "date": "20261123-191027",
+      "ts": 1795461292,
+      "tiktok": "v_inbox_file~v2.7711447177331001351",
+      "caption": "¿Casi se accidentan en la ruta de motos? #westcol #laganga #motos #trocha #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261123-173039-westcol_03",
+      "title": "La blanquita manejando minimoto en la trocha",
+      "date": "20261123-191027",
+      "ts": 1795461342,
+      "tiktok": "v_inbox_file~v2.7711447177331197959",
+      "caption": "La blanquita manejando minimoto en la trocha #westcol #laganga #motos #pitbike #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261123-173039-westcol_04",
+      "title": "Planeando cómo grabar al grupo para la presentación",
+      "date": "20261123-191027",
+      "ts": 1795461396,
+      "tiktok": "v_inbox_file~v2.7711447603854018567",
+      "caption": "Planeando cómo grabar al grupo para la presentación #westcol #laganga #humor #streamer #GTA6 #fyp"
     }
   ]
 }
