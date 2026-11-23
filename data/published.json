@@ -2869,6 +2869,30 @@
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-740c50c8a307699363ff",
       "instagram": null
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M84Z32DZY48X91YVT4JX2HVY",
+      "title": "Leandro se vueltea con la cuatrimoto en pleno directo",
+      "date": "20261123-211424",
+      "source": "https://clips.kick.com/clips/6a/clip_01M84Z32DZY48X91YVT4JX2HVY/playlist.m3u8",
+      "score": 9,
+      "views": 4,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-6700c0918774f9b7db9a"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M82MMN94HYFZ1PAZNFBNZYWD",
+      "title": "El momento de la caída en cuatrimoto en la ruta",
+      "date": "20261123-211424",
+      "source": "https://clips.kick.com/clips/cb/clip_01M82MMN94HYFZ1PAZNFBNZYWD/playlist.m3u8",
+      "score": 7,
+      "views": 6,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-6700c0918774f9b7db9a"
     }
   ]
 }
