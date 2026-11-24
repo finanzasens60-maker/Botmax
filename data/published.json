@@ -1,53 +1,6 @@
 {
   "items": [
     {
-      "key": "5599bea854578e9d",
-      "title": "Grand Theft Auto 6 releases this week. Where to find it in Topeka - The Topeka Capital-Journal",
-      "video_title": "¡CUIDADO! GTA 6 NO SE ESTRENA ESTA SEMANA, TE CUENTO LA VERDAD",
-      "date": "20261118-190435",
-      "youtube": "https://youtube.com/shorts/YtrFzqyLAwA",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261118-190435"
-    },
-    {
-      "type": "long",
-      "theme": "Trucos",
-      "key": "long-20261118-221815",
-      "title": "Los mejores trucos y códigos confirmados de GTA seis",
-      "video_title": "Los mejores trucos y códigos confirmados de GTA seis",
-      "date": "20261118-221815",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/largo-20261118-221815"
-    },
-    {
-      "key": "43dc038267b3a1ed",
-      "title": "'GTA 6' officially launches tomorrow: Early reviews, pricing and everything else you need to know about the most anticipated game of the year - Yahoo Tech",
-      "video_title": "¿GTA 6 SALE MAÑANA? Todo lo que debes saber antes del estreno",
-      "date": "20261119-013244",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261119-013244"
-    },
-    {
-      "type": "long",
-      "theme": "Trucos",
-      "key": "long-20261119-130700",
-      "title": "Trucos y Atajos Confirmados para Jugar Mejor en GTA Seis",
-      "video_title": "Trucos y Atajos Confirmados para Jugar Mejor en GTA Seis",
-      "date": "20261119-130700",
-      "youtube": "https://youtu.be/PB7sXSYBMPw",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/largo-20261119-130700"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-125038-1",
-      "title": "Westcol encuentra a su amigo durmiendo en plena calle",
-      "video_title": "Westcol encuentra a su amigo durmiendo en plena calle",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip1.mp4"
-    },
-    {
       "type": "live",
       "key": "mejores-20261119-125038-2",
       "title": "¡Salud con la ganga en directo!",
@@ -3294,6 +3247,63 @@
       "youtube": "https://youtube.com/shorts/bvuC-7Ethn8",
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-2fcbe02f7cd75d322675",
       "instagram": null
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M876T0SG2XYGYKPHQSC9Y3ET",
+      "title": "Wilito se cae de la moto en plena ruta",
+      "date": "20261124-211743",
+      "source": "https://clips.kick.com/clips/5a/clip_01M876T0SG2XYGYKPHQSC9Y3ET/playlist.m3u8",
+      "score": 9,
+      "views": 7,
+      "youtube": "https://youtube.com/shorts/IEWyUBQ1ogI",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-f544f4d01196350bacfa"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M858635ZSR9RGNA37BPK4XQF",
+      "title": "¡Casi se nos mata! El accidente de Leandro en cuatrimoto",
+      "date": "20261124-211743",
+      "source": "https://clips.kick.com/clips/e9/clip_01M858635ZSR9RGNA37BPK4XQF/playlist.m3u8",
+      "score": 9,
+      "views": 4,
+      "youtube": "https://youtube.com/shorts/mmX_rGv-vME",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-f544f4d01196350bacfa"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M8574AJ2TN6D5V5RWN5XCC85",
+      "title": "La extraña situación de Leandro en la cama con la ganga",
+      "date": "20261124-211743",
+      "source": "https://clips.kick.com/clips/cc/clip_01M8574AJ2TN6D5V5RWN5XCC85/playlist.m3u8",
+      "score": 8,
+      "views": 4,
+      "youtube": "https://youtube.com/shorts/eEpgMuy82UA",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-f544f4d01196350bacfa"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M82PT5RD2G8BW7E5R6QFNTFC",
+      "title": "La ganga se despide tras 70 horas de directo",
+      "date": "20261124-211743",
+      "source": "https://clips.kick.com/clips/c2/clip_01M82PT5RD2G8BW7E5R6QFNTFC/playlist.m3u8",
+      "score": 7,
+      "views": 6,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-f544f4d01196350bacfa"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M85TV2TZYP2A6RJRB7M4AQ2E",
+      "title": "Westcol y la ganga en el campo: ¡No me lo recuerdes!",
+      "date": "20261124-211743",
+      "source": "https://clips.kick.com/clips/6b/clip_01M85TV2TZYP2A6RJRB7M4AQ2E/playlist.m3u8",
+      "score": 7,
+      "views": 3,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-f544f4d01196350bacfa"
     }
   ]
 }
