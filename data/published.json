@@ -1,14 +1,6 @@
 {
   "items": [
     {
-      "key": "782e71df39a5d950",
-      "title": "GTA VI usa FSR 4 en Xbox Series S y escala de 720p a 1080p con ray tracing - DiarioBitcoin",
-      "video_title": "GTA VI usa FSR 4 en Xbox Series S y escala de 720p a 1080p con ray tra",
-      "date": "20261118-142527",
-      "youtube": "https://youtube.com/shorts/qTAE-7ClP5A",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261118-142527"
-    },
-    {
       "key": "5599bea854578e9d",
       "title": "Grand Theft Auto 6 releases this week. Where to find it in Topeka - The Topeka Capital-Journal",
       "video_title": "¡CUIDADO! GTA 6 NO SE ESTRENA ESTA SEMANA, TE CUENTO LA VERDAD",
@@ -3293,6 +3285,15 @@
       "views": 3,
       "youtube": "https://youtube.com/shorts/L0q8eKViuQg",
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-7590a059e6783c406cef"
+    },
+    {
+      "key": "eec218e0746392e1",
+      "title": "\"Gracias por su pasión\": Sony anuncia que GTA VI es el mayor lanzamiento de la historia de PlayStation - BioBioChile",
+      "video_title": "¡GTA 6 rompe todos los récords de PlayStation!",
+      "date": "20261124-210250",
+      "youtube": "https://youtube.com/shorts/bvuC-7Ethn8",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-2fcbe02f7cd75d322675",
+      "instagram": null
     }
   ]
 }
