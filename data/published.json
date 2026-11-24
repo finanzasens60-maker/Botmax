@@ -2,61 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "mejores-20261119-125038-2",
-      "title": "¡Salud con la ganga en directo!",
-      "video_title": "¡Salud con la ganga en directo!",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip2.mp4"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-125038-3",
-      "title": "Westcol se vuelve loco con el árbol italiano",
-      "video_title": "Westcol se vuelve loco con el árbol italiano",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip3.mp4"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-125038-4",
-      "title": "El reto extremo de Westcol en la calle",
-      "video_title": "El reto extremo de Westcol en la calle",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip4.mp4"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-125038-5",
-      "title": "Westcol presume su piquete y se defiende de trampas",
-      "video_title": "Westcol presume su piquete y se defiende de trampas",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip5.mp4"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-125038-6",
-      "title": "El conteo regresivo que casi termina mal",
-      "video_title": "El conteo regresivo que casi termina mal",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip6.mp4"
-    },
-    {
-      "type": "live",
       "key": "mejores-20261119-125038-7",
       "title": "Se armó la batalla campal con Westcol",
       "video_title": "Se armó la batalla campal con Westcol",
@@ -3304,6 +3249,50 @@
       "youtube": null,
       "pendiente": true,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-f544f4d01196350bacfa"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-211743-westcol_01",
+      "title": "Wilito se cae de la moto en plena ruta",
+      "date": "20261124-220541",
+      "youtube": "https://youtube.com/shorts/BA-FqCNIGek",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-211743"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-211743-westcol_01",
+      "title": "Wilito se cae de la moto en plena ruta",
+      "date": "20261124-220541",
+      "ts": 1795558242,
+      "tiktok": "v_inbox_file~v2.7711863255228205076",
+      "caption": "Wilito se cae de la moto en plena ruta #westcol #wilito #fail #accidentemoto #momentosgraciosos #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-211743-westcol_02",
+      "title": "¡Casi se nos mata! El accidente de Leandro en cuatrimoto",
+      "date": "20261124-220541",
+      "ts": 1795558304,
+      "tiktok": "v_inbox_file~v2.7711863667041552404",
+      "caption": "¡Casi se nos mata! El accidente de Leandro en cuatrimoto #westcol #leandro #accidente #fail #momentosdivertidos #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-211743-westcol_03",
+      "title": "La extraña situación de Leandro en la cama con la ganga",
+      "date": "20261124-220541",
+      "ts": 1795558361,
+      "tiktok": "v_inbox_file~v2.7711863867865008180",
+      "caption": "La extraña situación de Leandro en la cama con la ganga #westcol #leandro #laganga #momentosrandom #streamers #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-211743-westcol_04",
+      "title": "La ganga se despide tras 70 horas de directo",
+      "date": "20261124-220541",
+      "ts": 1795558404,
+      "tiktok": "v_inbox_file~v2.7711864005605902357",
+      "caption": "La ganga se despide tras 70 horas de directo #westcol #laganga #streamer #final #GTA6 #fyp"
     }
   ]
 }
