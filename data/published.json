@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "mejores-20261119-125038-7",
-      "title": "Se armó la batalla campal con Westcol",
-      "video_title": "Se armó la batalla campal con Westcol",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip7.mp4"
-    },
-    {
-      "type": "live",
       "key": "mejores-20261119-125038-8",
       "title": "Westcol explota de la risa con tremenda locura",
       "video_title": "Westcol explota de la risa con tremenda locura",
@@ -3293,6 +3282,16 @@
       "ts": 1795558404,
       "tiktok": "v_inbox_file~v2.7711864005605902357",
       "caption": "La ganga se despide tras 70 horas de directo #westcol #laganga #streamer #final #GTA6 #fyp"
+    },
+    {
+      "type": "ranking",
+      "key": "ranking-20261124",
+      "title": "¡LO MÁS VIRAL DE GTA SEIS HOY! 😱",
+      "video_title": "¡LO MÁS VIRAL DE GTA SEIS HOY! 😱",
+      "date": "20261124-232453",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-5f698dafdfe23672c0d7",
+      "instagram": null
     }
   ]
 }
