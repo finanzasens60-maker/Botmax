@@ -3114,6 +3114,78 @@
       "youtube": null,
       "pendiente": true,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-58680129e437ce3fe295"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M84TG1F20HCY5Z2A2BR58Q2F",
+      "title": "Listos para arrancar el paseo en motos",
+      "date": "20261124-093357",
+      "source": "https://clips.kick.com/clips/10/clip_01M84TG1F20HCY5Z2A2BR58Q2F/playlist.m3u8",
+      "score": 7,
+      "views": 5,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-35d2efe0cde1f24f59c5"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M82XR0ERVR9DPR8V24699FKB",
+      "title": "Ruta extrema en mini motos por la trocha",
+      "date": "20261124-093357",
+      "source": "https://clips.kick.com/clips/0b/clip_01M82XR0ERVR9DPR8V24699FKB/playlist.m3u8",
+      "score": 6,
+      "views": 8,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-35d2efe0cde1f24f59c5"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M82N199TZ9564V820230HRYH",
+      "title": "Toda la ganga rodando en mini motos",
+      "date": "20261124-093357",
+      "source": "https://clips.kick.com/clips/18/clip_01M82N199TZ9564V820230HRYH/playlist.m3u8",
+      "score": 6,
+      "views": 6,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-35d2efe0cde1f24f59c5"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M85QQN7CA8QAZBF7G6BXM5ZK",
+      "title": "Manejando mini motos en la trocha",
+      "date": "20261124-093357",
+      "source": "https://clips.kick.com/clips/c2/clip_01M85QQN7CA8QAZBF7G6BXM5ZK/playlist.m3u8",
+      "score": 6,
+      "views": 5,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-35d2efe0cde1f24f59c5"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M85W5CJSC9GA23BSTZ3NJM0R",
+      "title": "Caravana de mini motos y cuatrimotos",
+      "date": "20261124-093357",
+      "source": "https://clips.kick.com/clips/90/clip_01M85W5CJSC9GA23BSTZ3NJM0R/playlist.m3u8",
+      "score": 6,
+      "views": 4,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-35d2efe0cde1f24f59c5"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M84SA48ZGXTRQNM8PXQ01PXX",
+      "title": "Westcol se emociona en medio de la ruta en cuatrimoto",
+      "date": "20261124-093357",
+      "source": "https://clips.kick.com/clips/f0/clip_01M84SA48ZGXTRQNM8PXQ01PXX/playlist.m3u8",
+      "score": 6,
+      "views": 3,
+      "youtube": null,
+      "pendiente": true,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-35d2efe0cde1f24f59c5"
     }
   ]
 }
