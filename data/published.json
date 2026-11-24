@@ -1,14 +1,6 @@
 {
   "items": [
     {
-      "key": "a65999d35f6d2d6b",
-      "title": "GTA VI llega a la NBA: Miami Heat transforma su estadio en Vice City para enfrentar a Milwaukee Bucks - Diario Panorama",
-      "video_title": "GTA VI llega a la NBA: Miami Heat transforma su estadio en Vice City p",
-      "date": "20261118-025958",
-      "youtube": "https://youtube.com/shorts/E68_w0-4wdU",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261118-025958"
-    },
-    {
       "key": "782e71df39a5d950",
       "title": "GTA VI usa FSR 4 en Xbox Series S y escala de 720p a 1080p con ray tracing - DiarioBitcoin",
       "video_title": "GTA VI usa FSR 4 en Xbox Series S y escala de 720p a 1080p con ray tra",
@@ -3268,6 +3260,39 @@
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-f3626c6a5d76a65d9a66",
       "instagram": null,
       "type": "tip"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M842ZFZC67KA6XXHN8D03XNK",
+      "title": "El desmadre en la habitación con la ganga",
+      "date": "20261124-172139",
+      "source": "https://clips.kick.com/clips/67/clip_01M842ZFZC67KA6XXHN8D03XNK/playlist.m3u8",
+      "score": 7,
+      "views": 3,
+      "youtube": "https://youtube.com/shorts/yqefIukQcOM",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-7590a059e6783c406cef"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M83PJ1C029H0XMCXGXY20XY6",
+      "title": "La ganga posando para las fotos afuera",
+      "date": "20261124-172139",
+      "source": "https://clips.kick.com/clips/94/clip_01M83PJ1C029H0XMCXGXY20XY6/playlist.m3u8",
+      "score": 7,
+      "views": 3,
+      "youtube": "https://youtube.com/shorts/PxOuY3UOGk4",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-7590a059e6783c406cef"
+    },
+    {
+      "type": "live",
+      "key": "kick-clip_01M845FRF22H9JFMJ7V2F610WQ",
+      "title": "La ganga reunida afuera analizando la situación",
+      "date": "20261124-172139",
+      "source": "https://clips.kick.com/clips/99/clip_01M845FRF22H9JFMJ7V2F610WQ/playlist.m3u8",
+      "score": 6,
+      "views": 3,
+      "youtube": "https://youtube.com/shorts/L0q8eKViuQg",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-7590a059e6783c406cef"
     }
   ]
 }
