@@ -1,17 +1,6 @@
 {
   "items": [
     {
-      "type": "live",
-      "key": "mejores-20261119-125038-15",
-      "title": "La anécdota más loca contada por Westcol",
-      "video_title": "La anécdota más loca contada por Westcol",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip15.mp4"
-    },
-    {
       "key": "28d9c859aae2442a",
       "title": "GTA 6's Digital Release Has GameStop CEO Defending Physical Games, For Obvious Reasons - GameSpot",
       "video_title": "GameStop defiende los juegos físicos por GTA 6",
@@ -3287,6 +3276,16 @@
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-b0957bac965c11152bb3",
       "instagram": null
+    },
+    {
+      "key": "2ed2528624f8fe99",
+      "title": "¡El INCREÍBLE Easter Egg de los X-MEN en GTA 6!",
+      "video_title": "¡El INCREÍBLE Easter Egg de los X-MEN en GTA 6!",
+      "date": "20261125-173340",
+      "youtube": "https://youtube.com/shorts/8fVC6J-Q05g",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-cf6327ab4fefb1909157",
+      "instagram": null,
+      "type": "tip"
     }
   ]
 }
