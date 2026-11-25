@@ -1,0 +1,59 @@
+name: Unir clips en uno solo
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release donde están los clips (ej. directo-20261125-010016)"
+        required: true
+      clips:
+        description: "Clips a unir, en orden y separados por espacio (ej. clip2.mp4 clip3.mp4)"
+        required: true
+      titulo:
+        description: "Título del video unido"
+        required: true
+      issue:
+        description: "Pedido donde dejar el link (opcional)"
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  unir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar ffmpeg
+        run: which ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+      - name: Unir
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.inputs.tag }}
+          CLIPS: ${{ github.event.inputs.clips }}
+          TITULO: ${{ github.event.inputs.titulo }}
+        run: |
+          mkdir -p out/rel out/unido
+          for c in $CLIPS; do gh release download "$TAG" -p "$c" -D out/rel; done
+          args=""; filtro=""; n=0
+          for c in $CLIPS; do args="$args -i out/rel/$c"; filtro="$filtro[$n:v][$n:a]"; n=$((n+1)); done
+          ffmpeg -y -loglevel error $args -filter_complex "${filtro}concat=n=$n:v=1:a=1[v][a]" -map "[v]" -map "[a]" \
+            -c:v libx264 -preset veryfast -crf 21 -c:a aac -b:a 160k -movflags +faststart out/unido/clip_unido.mp4
+          printf 'TÍTULO:\n%s\n\nDESCRIPCIÓN:\n%s\n\n#GTA6 #Shorts\n' "$TITULO" "$TITULO" > out/unido/clip_unido_publicar.txt
+          STAMP=$(date -u +%Y%m%d-%H%M%S)
+          gh release create "directo-$STAMP" out/unido/clip_unido.mp4 out/unido/clip_unido_publicar.txt \
+            --title "$TITULO" --notes "Clips unidos de $TAG: $CLIPS" --draft
+      - name: Link para compartir
+        env:
+          TODOS: "1"
+          ENCABEZADO: "🔗 Video unido listo para compartir y descargar:"
+        run: |
+          rm -rf out/rel
+          python scripts/compartir_externo.py
+      - name: Dejar el link en el pedido
+        if: github.event.inputs.issue != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh issue comment "${{ github.event.inputs.issue }}" --body-file out/externo.md
