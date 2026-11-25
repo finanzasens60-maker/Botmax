@@ -2,50 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "mejores-20261119-125038-8",
-      "title": "Westcol explota de la risa con tremenda locura",
-      "video_title": "Westcol explota de la risa con tremenda locura",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip8.mp4"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-125038-9",
-      "title": "Westcol pierde el reto frente a toda la gente",
-      "video_title": "Westcol pierde el reto frente a toda la gente",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip9.mp4"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-125038-10",
-      "title": "Westcol cuenta cómo se escapaba a escondidas",
-      "video_title": "Westcol cuenta cómo se escapaba a escondidas",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip10.mp4"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-125038-11",
-      "title": "Westcol celebra la locura de la noche",
-      "video_title": "Westcol celebra la locura de la noche",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip11.mp4"
-    },
-    {
-      "type": "live",
       "key": "mejores-20261119-125038-12",
       "title": "Susto y golpe en plena calle con Westcol",
       "video_title": "Susto y golpe en plena calle con Westcol",
@@ -3292,6 +3248,50 @@
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-5f698dafdfe23672c0d7",
       "instagram": null
+    },
+    {
+      "type": "live",
+      "key": "live-20261125-010016-1",
+      "title": "¡Nos emborrachamos corriendo todo el mapa de GTA 6!",
+      "video_title": "¡Nos emborrachamos corriendo todo el mapa de GTA 6!",
+      "date": "20261125-010016",
+      "source": "https://kick.com/tedysincontrol/videos/74132c9b-67ad-437c-ab2c-e0b5bc826664",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-20bb7ec454188fd53cae",
+      "file": "out/20261125-010016-directo-tedysincontrol/clip1.mp4"
+    },
+    {
+      "type": "live",
+      "key": "live-20261125-010016-2",
+      "title": "Encontramos un misterioso punto rojo en el mapa de GTA 6",
+      "video_title": "Encontramos un misterioso punto rojo en el mapa de GTA 6",
+      "date": "20261125-010016",
+      "source": "https://kick.com/tedysincontrol/videos/74132c9b-67ad-437c-ab2c-e0b5bc826664",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-20bb7ec454188fd53cae",
+      "file": "out/20261125-010016-directo-tedysincontrol/clip2.mp4"
+    },
+    {
+      "type": "live",
+      "key": "live-20261125-010016-3",
+      "title": "¡Descubrimos el primer secreto del mapa en GTA 6!",
+      "video_title": "¡Descubrimos el primer secreto del mapa en GTA 6!",
+      "date": "20261125-010016",
+      "source": "https://kick.com/tedysincontrol/videos/74132c9b-67ad-437c-ab2c-e0b5bc826664",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-20bb7ec454188fd53cae",
+      "file": "out/20261125-010016-directo-tedysincontrol/clip3.mp4"
+    },
+    {
+      "type": "live",
+      "key": "live-20261125-010016-4",
+      "title": "¡Casi se le sale el corazón pensando que vio a Pie Grande!",
+      "video_title": "¡Casi se le sale el corazón pensando que vio a Pie Grande!",
+      "date": "20261125-010016",
+      "source": "https://kick.com/tedysincontrol/videos/74132c9b-67ad-437c-ab2c-e0b5bc826664",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-20bb7ec454188fd53cae",
+      "file": "out/20261125-010016-directo-tedysincontrol/clip4.mp4"
     }
   ]
 }
