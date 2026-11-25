@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "mejores-20261119-125038-12",
-      "title": "Susto y golpe en plena calle con Westcol",
-      "video_title": "Susto y golpe en plena calle con Westcol",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip12.mp4"
-    },
-    {
-      "type": "live",
       "key": "mejores-20261119-125038-13",
       "title": "Westcol relaja el ambiente con su combo",
       "video_title": "Westcol relaja el ambiente con su combo",
@@ -3292,6 +3281,15 @@
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-20bb7ec454188fd53cae",
       "file": "out/20261125-010016-directo-tedysincontrol/clip4.mp4"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-211743-westcol_05",
+      "title": "Westcol y la ganga en el campo: ¡No me lo recuerdes!",
+      "date": "20261125-012508",
+      "ts": 1795570226,
+      "tiktok": "v_inbox_file~v2.7711914992237086727",
+      "caption": "Westcol y la ganga en el campo: ¡No me lo recuerdes! #westcol #laganga #aventura #risas #GTA6 #fyp"
     }
   ]
 }
