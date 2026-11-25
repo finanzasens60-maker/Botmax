@@ -6,6 +6,7 @@ Escribe out/externo.md.
 """
 from __future__ import annotations
 
+import os
 import re
 import subprocess
 from pathlib import Path
@@ -38,11 +39,11 @@ def titulo(video: Path) -> str:
 def main() -> None:
     resumen = Path("out/live_summary.md").read_text(encoding="utf-8") if Path("out/live_summary.md").exists() else ""
     links = re.findall(r"https://litter\.catbox\.moe/\S+", resumen)
-    lines = ["✅ ¡Listo! Tu pedido fue aprobado y ya está procesado.", ""]
+    lines = [os.environ.get("ENCABEZADO") or "✅ ¡Listo! Tu pedido fue aprobado y ya está procesado.", ""]
     if links:  # el resumen ya creó sus links para compartir
         lines += [f"- Descargar video {i}: {u.rstrip(').,')}" for i, u in enumerate(dict.fromkeys(links), 1)]
     else:
-        videos = sorted(Path("out").rglob("clip*.mp4"), key=lambda p: p.stat().st_mtime)[:MAX]
+        videos = sorted([p for p in Path("out").rglob("*.mp4") if p.name.startswith(("clip", "westcol", "video", "kick", "parte", "resumen")) or os.environ.get("TODOS")], key=lambda p: p.stat().st_mtime)[:MAX]
         for v in videos:
             u = litterbox(v)
             if u:
