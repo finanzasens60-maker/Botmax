@@ -1,14 +1,6 @@
 {
   "items": [
     {
-      "key": "32802596304686e5",
-      "title": "Los actores de Jason y Lucía por fin rompen el silencio y hablan de su experiencia protagonizando GTA 6 - IGN España",
-      "video_title": "¡Por fin! Los actores de Jason y Lucía rompen el silencio sobre GTA 6",
-      "date": "20261120-142601",
-      "youtube": "https://youtube.com/shorts/lU-xSytaq4I",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261120-142601"
-    },
-    {
       "key": "02d7cea4160454b2",
       "title": "Todas las misiones de GTA 6: guía de la historia, lista de capítulos y recorrido completo - Clarin.com",
       "video_title": "¡Se filtran las misiones del Capítulo 1 de GTA 6!",
@@ -3269,6 +3261,15 @@
       "date": "20261125-190027",
       "youtube": "https://youtube.com/shorts/KIh5WMBedRQ",
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-134031"
+    },
+    {
+      "key": "ec1634afe80a76a7",
+      "title": "Cómo desbloquear el portátil en el apartamento de Vice City y conseguir un Porche Rosa (Growler) en el Capítulo 3 de GTA 6 - VidaExtra",
+      "video_title": "Cómo conseguir el Porche Rosa y trucos clave en GTA 6",
+      "date": "20261125-210538",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-f460bcb24f71a5ada262",
+      "instagram": null
     }
   ]
 }
