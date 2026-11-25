@@ -1,0 +1,37 @@
+name: Link de descarga para compartir (72 h)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release con los videos (ej. directo-20261125-010203)"
+        required: true
+      issue:
+        description: "Pedido donde dejar los links (opcional)"
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  link:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bajar los videos del Release y crear links (Litterbox, 72 h)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.inputs.tag }}
+          TODOS: "1"
+          ENCABEZADO: "🔗 Links para compartir y descargar (duran 72 horas):"
+        run: |
+          mkdir -p out/rel
+          gh release download "$TAG" -p "*.mp4" -p "*.txt" -D out/rel
+          python scripts/compartir_externo.py
+      - name: Dejar los links en el pedido
+        if: github.event.inputs.issue != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh issue comment "${{ github.event.inputs.issue }}" --body-file out/externo.md
