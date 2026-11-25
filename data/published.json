@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "mejores-20261119-125038-14",
-      "title": "Westcol amenaza con llamar a sus panitas",
-      "video_title": "Westcol amenaza con llamar a sus panitas",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip14.mp4"
-    },
-    {
-      "type": "live",
       "key": "mejores-20261119-125038-15",
       "title": "La anécdota más loca contada por Westcol",
       "video_title": "La anécdota más loca contada por Westcol",
@@ -3289,6 +3278,15 @@
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-2ae014a56ecc24149b03",
       "instagram": null,
       "type": "tip"
+    },
+    {
+      "key": "c4c10b556f483d27",
+      "title": "Where To Find the Piccia Dragon Gate Furia In GTA 6—Fastest Cars Location & Stats - Insider Gaming",
+      "video_title": "¿Dónde están los autos más rápidos de GTA 6? Te lo contamos",
+      "date": "20261125-143216",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-b0957bac965c11152bb3",
+      "instagram": null
     }
   ]
 }
