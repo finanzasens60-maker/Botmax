@@ -14,17 +14,39 @@ from pathlib import Path
 MAX = 15
 
 
+def _curl(args: list[str]) -> str:
+    return subprocess.run(["curl", "-sS", "--retry", "2", "--max-time", "1500", *args],
+                          capture_output=True, text=True, timeout=1600).stdout.strip()
+
+
 def litterbox(video: Path) -> str | None:
+    """Sube el video y devuelve un link público de descarga. Prueba varios servicios gratis, sin cuenta."""
     if video.stat().st_size > 990_000_000:
         return None
-    try:
-        out = subprocess.run(["curl", "-sS", "--retry", "2", "-F", "reqtype=fileupload", "-F", "time=72h",
-                              "-F", f"fileToUpload=@{video}", "https://litterbox.catbox.moe/resources/internals/api.php"],
-                             capture_output=True, text=True, timeout=1800).stdout.strip()
-        return out if out.startswith("http") else None
-    except Exception as exc:  # noqa: BLE001
-        print(f"[externo] no pude subir {video.name}: {exc}")
-        return None
+    intentos = [
+        ("litterbox", lambda: _curl(["-F", "reqtype=fileupload", "-F", "time=72h", "-F", f"fileToUpload=@{video}",
+                                      "https://litterbox.catbox.moe/resources/internals/api.php"])),
+        ("gofile", lambda: _gofile(video)),
+        ("catbox", lambda: _curl(["-F", "reqtype=fileupload", "-F", f"fileToUpload=@{video}",
+                                   "https://catbox.moe/user/api.php"])),
+    ]
+    for nombre, fn in intentos:
+        try:
+            out = fn() or ""
+        except Exception as exc:  # noqa: BLE001
+            out = f"error: {exc}"
+        if out.startswith("http"):
+            print(f"[externo] {video.name} -> {nombre}: {out}")
+            return out
+        print(f"[externo] {nombre} no funcionó para {video.name}: {out[:160]}")
+    return None
+
+
+def _gofile(video: Path) -> str | None:
+    import json
+    raw = _curl(["-F", f"file=@{video}", "https://upload.gofile.io/uploadfile"])
+    data = json.loads(raw or "{}")
+    return (data.get("data") or {}).get("downloadPage") or raw
 
 
 def titulo(video: Path) -> str:
@@ -51,7 +73,7 @@ def main() -> None:
     if len(lines) == 2:
         lines.append("No pude crear los links de descarga esta vez; el dueño del bot te los puede pasar.")
     else:
-        lines += ["", "Los links duran **72 horas**: descárgalos antes de que venzan."]
+        lines += ["", "Descárgalos pronto: los links son temporales."]
     Path("out/externo.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines))
 
