@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "mejores-20261119-125038-13",
-      "title": "Westcol relaja el ambiente con su combo",
-      "video_title": "Westcol relaja el ambiente con su combo",
-      "date": "20261119-125038",
-      "source": "https://kick.com/westcol/videos/9cff602d-f92c-4d60-a284-68fc53435708",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-125038",
-      "file": "out/20261119-125038-mejores-westcol/clip13.mp4"
-    },
-    {
-      "type": "live",
       "key": "mejores-20261119-125038-14",
       "title": "Westcol amenaza con llamar a sus panitas",
       "video_title": "Westcol amenaza con llamar a sus panitas",
@@ -3290,6 +3279,16 @@
       "ts": 1795570226,
       "tiktok": "v_inbox_file~v2.7711914992237086727",
       "caption": "Westcol y la ganga en el campo: ¡No me lo recuerdes! #westcol #laganga #aventura #risas #GTA6 #fyp"
+    },
+    {
+      "key": "536ff5fed0dfacf8",
+      "title": "Dónde encontrar a Pennywise en GTA 6 (Easter Egg)",
+      "video_title": "Dónde encontrar a Pennywise en GTA 6 (Easter Egg)",
+      "date": "20261125-013934",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-2ae014a56ecc24149b03",
+      "instagram": null,
+      "type": "tip"
     }
   ]
 }
