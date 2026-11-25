@@ -1,14 +1,6 @@
 {
   "items": [
     {
-      "key": "02d7cea4160454b2",
-      "title": "Todas las misiones de GTA 6: guía de la historia, lista de capítulos y recorrido completo - Clarin.com",
-      "video_title": "¡Se filtran las misiones del Capítulo 1 de GTA 6!",
-      "date": "20261120-173801",
-      "youtube": "https://youtube.com/shorts/uPe5SiGMNuA",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261120-173801"
-    },
-    {
       "type": "live",
       "key": "kick-clip_01M7NQWH26A9QZYHFCVV209A3E",
       "title": "¡Si te llama tu mujer rompemos el celular!",
@@ -3269,6 +3261,16 @@
       "date": "20261125-210538",
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-f460bcb24f71a5ada262",
+      "instagram": null
+    },
+    {
+      "type": "ranking",
+      "key": "ranking-20261125",
+      "title": "¡Lo más VIRAL de GTA seis hoy no tiene sentido!",
+      "video_title": "¡Lo más VIRAL de GTA seis hoy no tiene sentido!",
+      "date": "20261125-232525",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-fc7779723993c2d0abf8",
       "instagram": null
     }
   ]
