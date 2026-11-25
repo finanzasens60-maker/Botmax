@@ -1,95 +1,6 @@
 {
   "items": [
     {
-      "key": "28d9c859aae2442a",
-      "title": "GTA 6's Digital Release Has GameStop CEO Defending Physical Games, For Obvious Reasons - GameSpot",
-      "video_title": "GameStop defiende los juegos físicos por GTA 6",
-      "date": "20261119-142731",
-      "youtube": "https://youtube.com/shorts/qIiTavdjOfw",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261119-142731"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-142145-1",
-      "title": "Westcol y su ansiedad por explorar el mapa de GTA 6",
-      "video_title": "Westcol y su ansiedad por explorar el mapa de GTA 6",
-      "date": "20261119-142145",
-      "source": "https://kick.com/westcol/videos/0a8a11bd-54f3-4ac9-830e-8a187025b241",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-142145",
-      "file": "out/20261119-142145-mejores-westcol/clip1.mp4"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-142145-2",
-      "title": "Westcol siente miedo jugando GTA 6 por primera vez",
-      "video_title": "Westcol siente miedo jugando GTA 6 por primera vez",
-      "date": "20261119-142145",
-      "source": "https://kick.com/westcol/videos/0a8a11bd-54f3-4ac9-830e-8a187025b241",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-142145",
-      "file": "out/20261119-142145-mejores-westcol/clip2.mp4"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-142145-3",
-      "title": "Westcol planea un desastre en GTA 6",
-      "video_title": "Westcol planea un desastre en GTA 6",
-      "date": "20261119-142145",
-      "source": "https://kick.com/westcol/videos/0a8a11bd-54f3-4ac9-830e-8a187025b241",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-142145",
-      "file": "out/20261119-142145-mejores-westcol/clip3.mp4"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-142145-4",
-      "title": "Westcol emocionado como un niño con GTA 6",
-      "video_title": "Westcol emocionado como un niño con GTA 6",
-      "date": "20261119-142145",
-      "source": "https://kick.com/westcol/videos/0a8a11bd-54f3-4ac9-830e-8a187025b241",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-142145",
-      "file": "out/20261119-142145-mejores-westcol/clip4.mp4"
-    },
-    {
-      "type": "live",
-      "key": "mejores-20261119-142145-5",
-      "title": "La reacción de Westcol a los gráficos de GTA 6",
-      "video_title": "La reacción de Westcol a los gráficos de GTA 6",
-      "date": "20261119-142145",
-      "source": "https://kick.com/westcol/videos/0a8a11bd-54f3-4ac9-830e-8a187025b241",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/mejores-20261119-142145",
-      "file": "out/20261119-142145-mejores-westcol/clip5.mp4"
-    },
-    {
-      "key": "7d9a02b7be555a88",
-      "title": "Rockstar Left Extra Space In GTA 6's Massive Map For Good Reason - Here's Why - SlashGear",
-      "video_title": "Por qué el mapa de GTA 6 tiene espacio extra",
-      "date": "20261119-190843",
-      "youtube": "https://youtube.com/shorts/93xEYOne8iU",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261119-190843"
-    },
-    {
-      "type": "long",
-      "theme": "Secretos",
-      "key": "long-20261119-213018",
-      "title": "¡7 Secretos e Easter Eggs Increíbles de GTA 6 que Nadie Notó!",
-      "video_title": "¡7 Secretos e Easter Eggs Increíbles de GTA 6 que Nadie Notó!",
-      "date": "20261119-213018",
-      "youtube": "https://youtu.be/QHD5gniinEQ",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/largo-20261119-213018"
-    },
-    {
-      "key": "7c2a18ad664a4673",
-      "title": "Michigan gamers explain why they're taking time off work for GTA 6 - Michigan Public",
-      "video_title": "¿Pedirías VACACIONES para jugar GTA 6? ¡La locura ya empezó!",
-      "date": "20261120-012814",
-      "youtube": "https://youtube.com/shorts/qQrwCPZVn8o",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261120-012814"
-    },
-    {
       "key": "32802596304686e5",
       "title": "Los actores de Jason y Lucía por fin rompen el silencio y hablan de su experiencia protagonizando GTA 6 - IGN España",
       "video_title": "¡Por fin! Los actores de Jason y Lucía rompen el silencio sobre GTA 6",
@@ -3286,6 +3197,78 @@
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-cf6327ab4fefb1909157",
       "instagram": null,
       "type": "tip"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-211743-westcol_02",
+      "title": "¡Casi se nos mata! El accidente de Leandro en cuatrimoto",
+      "date": "20261125-190027",
+      "youtube": "https://youtube.com/shorts/d0RVEdyDFTw",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-211743"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-211743-westcol_03",
+      "title": "La extraña situación de Leandro en la cama con la ganga",
+      "date": "20261125-190027",
+      "youtube": "https://youtube.com/shorts/ePIS5P977Oo",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-211743"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-211743-westcol_04",
+      "title": "La ganga se despide tras 70 horas de directo",
+      "date": "20261125-190027",
+      "youtube": "https://youtube.com/shorts/p-O-tustgto",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-211743"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-211743-westcol_05",
+      "title": "Westcol y la ganga en el campo: ¡No me lo recuerdes!",
+      "date": "20261125-190027",
+      "youtube": "https://youtube.com/shorts/YsviTtcbBFw",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-211743"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-172139-westcol_01",
+      "title": "El desmadre en la habitación con la ganga",
+      "date": "20261125-190027",
+      "youtube": "https://youtube.com/shorts/a6jLcBKl8ts",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-172139"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-172139-westcol_02",
+      "title": "La ganga posando para las fotos afuera",
+      "date": "20261125-190027",
+      "youtube": "https://youtube.com/shorts/ErR4cfHaYjA",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-172139"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-172139-westcol_03",
+      "title": "La ganga reunida afuera analizando la situación",
+      "date": "20261125-190027",
+      "youtube": "https://youtube.com/shorts/aHIb7i0jXsA",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-172139"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-134031-westcol_01",
+      "title": "La reacción épica de la ganga ante un momento insólito",
+      "date": "20261125-190027",
+      "youtube": "https://youtube.com/shorts/y-ZYxAcvI_w",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-134031"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-134031-westcol_02",
+      "title": "El accidente en cuatrimoto que sorprendió a todos",
+      "date": "20261125-190027",
+      "youtube": "https://youtube.com/shorts/KIh5WMBedRQ",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-134031"
     }
   ]
 }
