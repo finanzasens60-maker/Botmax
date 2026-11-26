@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "kick-clip_01M7P51VWGF6PTCZH7NYJ6QCSR",
-      "title": "Esta mujer le llamó la atención a Westcol",
-      "date": "20261120-183849",
-      "source": "https://clips.kick.com/clips/7c/clip_01M7P51VWGF6PTCZH7NYJ6QCSR/playlist.m3u8",
-      "score": 6,
-      "views": 67,
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/kick-westcol-20261120-183849"
-    },
-    {
-      "type": "live",
       "key": "kick-clip_01M7PQ4A2X50JQA0GKRC3XENS9",
       "title": "Regañan a Rey en frente de la cámara",
       "date": "20261120-183849",
@@ -3259,6 +3248,16 @@
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-512d7d19f2ff58a13e28",
       "instagram": null
+    },
+    {
+      "key": "d466044dc2a4ff93",
+      "title": "Cómo silbar en GTA 6 para distraer enemigos (Truco útil)",
+      "video_title": "Cómo silbar en GTA 6 para distraer enemigos (Truco útil)",
+      "date": "20261126-173647",
+      "youtube": "https://youtube.com/shorts/o7WKh6yxCYw",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-9ab090bf5f9a81b5026f",
+      "instagram": null,
+      "type": "tip"
     }
   ]
 }
