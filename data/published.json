@@ -2,102 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "kick-clip_01M7PQ4A2X50JQA0GKRC3XENS9",
-      "title": "Regañan a Rey en frente de la cámara",
-      "date": "20261120-183849",
-      "source": "https://clips.kick.com/clips/12/clip_01M7PQ4A2X50JQA0GKRC3XENS9/playlist.m3u8",
-      "score": 6,
-      "views": 39,
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/kick-westcol-20261120-183849"
-    },
-    {
-      "type": "live",
-      "key": "kick-clip_01M7NT4WTT4MABASCY3JT4PN8C",
-      "title": "Jelly vs Mazza: Comprando físico y músculo",
-      "date": "20261120-183849",
-      "source": "https://clips.kick.com/clips/6c/clip_01M7NT4WTT4MABASCY3JT4PN8C/playlist.m3u8",
-      "score": 6,
-      "views": 39,
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/kick-westcol-20261120-183849"
-    },
-    {
-      "type": "live",
-      "key": "kick-clip_01M7NSFSCXPCJ1BXE952YJMSQT",
-      "title": "Cuando llegaba diciembre de niño en casa",
-      "date": "20261120-183849",
-      "source": "https://clips.kick.com/clips/72/clip_01M7NSFSCXPCJ1BXE952YJMSQT/playlist.m3u8",
-      "score": 6,
-      "views": 30,
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/kick-westcol-20261120-183849"
-    },
-    {
-      "type": "live",
-      "key": "kick-clip_01M7P6FYPBSJ4MGCX69MJTMNC9",
-      "title": "¡No lo creo! La insólita situación en la piscina",
-      "date": "20261120-183849",
-      "source": "https://clips.kick.com/clips/2d/clip_01M7P6FYPBSJ4MGCX69MJTMNC9/playlist.m3u8",
-      "score": 6,
-      "views": 26,
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/kick-westcol-20261120-183849"
-    },
-    {
-      "key": "3aa778c45fa9098f",
-      "title": "GTA 6 sets record with $3.79 billion in 1st-day sales",
-      "video_title": "¡GTA 6 rompe récord histórico con ventas millonarias en su primer día!",
-      "date": "20261120-205833",
-      "youtube": "https://youtube.com/shorts/-D_xRu6O1pA",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261120-205833"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-190022-1",
-      "title": "¡Pensamos que había muerto en GTA 6! 😱",
-      "video_title": "¡Pensamos que había muerto en GTA 6! 😱",
-      "date": "20261120-190022",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-190022",
-      "file": "out/20261120-190022-directo-garydavid/clip1.mp4"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-190022-2",
-      "title": "Pánico total durante la fuga en GTA 6 🚀",
-      "video_title": "Pánico total durante la fuga en GTA 6 🚀",
-      "date": "20261120-190022",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-190022",
-      "file": "out/20261120-190022-directo-garydavid/clip2.mp4"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-190022-3",
-      "title": "¡Qué demonios pasó aquí! Glitch en GTA 6 🤯",
-      "video_title": "¡Qué demonios pasó aquí! Glitch en GTA 6 🤯",
-      "date": "20261120-190022",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-190022",
-      "file": "out/20261120-190022-directo-garydavid/clip3.mp4"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-190022-4",
-      "title": "Se le cambia la cámara y entra en pánico 💥",
-      "video_title": "Se le cambia la cámara y entra en pánico 💥",
-      "date": "20261120-190022",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-190022",
-      "file": "out/20261120-190022-directo-garydavid/clip4.mp4"
-    },
-    {
-      "type": "live",
       "key": "live-20261120-190022-5",
       "title": "¡Corre que nos atrapan! Escape épico en GTA 6 🔥",
       "video_title": "¡Corre que nos atrapan! Escape épico en GTA 6 🔥",
@@ -3258,6 +3162,78 @@
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-9ab090bf5f9a81b5026f",
       "instagram": null,
       "type": "tip"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-134031-westcol_03",
+      "title": "Diversión y baile con la ganga en el exterior",
+      "date": "20261126-190812",
+      "youtube": "https://youtube.com/shorts/Epa-7g-FOXQ",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-134031"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-134031-westcol_04",
+      "title": "Carrera de motos con la ganga por el campo",
+      "date": "20261126-190812",
+      "youtube": "https://youtube.com/shorts/p4Hw3W71-Y4",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-134031"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-134031-westcol_05",
+      "title": "Bromas y descontrol en la habitación con la ganga",
+      "date": "20261126-190812",
+      "youtube": "https://youtube.com/shorts/IVpgFjMruYY",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-134031"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-134031-westcol_06",
+      "title": "¡Si te caes te levantas y te subes otra vez!",
+      "date": "20261126-190812",
+      "youtube": "https://youtube.com/shorts/NxZjPgzwG9Q",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-134031"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-093357-westcol_01",
+      "title": "Listos para arrancar el paseo en motos",
+      "date": "20261126-190812",
+      "youtube": "https://youtube.com/shorts/3HAiXYV7MOs",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-093357"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-093357-westcol_02",
+      "title": "Ruta extrema en mini motos por la trocha",
+      "date": "20261126-190812",
+      "youtube": "https://youtube.com/shorts/-TB8Ywgshs8",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-093357"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-093357-westcol_03",
+      "title": "Toda la ganga rodando en mini motos",
+      "date": "20261126-190812",
+      "youtube": "https://youtube.com/shorts/FOLdHh9pSB0",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-093357"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-093357-westcol_04",
+      "title": "Manejando mini motos en la trocha",
+      "date": "20261126-190812",
+      "youtube": "https://youtube.com/shorts/rU3celDLHiw",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-093357"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-093357-westcol_05",
+      "title": "Caravana de mini motos y cuatrimotos",
+      "date": "20261126-190812",
+      "youtube": "https://youtube.com/shorts/a1PgZFgzoLQ",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-093357"
     }
   ]
 }
