@@ -2,50 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "kick-clip_01M7NQWH26A9QZYHFCVV209A3E",
-      "title": "¡Si te llama tu mujer rompemos el celular!",
-      "date": "20261120-183849",
-      "source": "https://clips.kick.com/clips/15/clip_01M7NQWH26A9QZYHFCVV209A3E/playlist.m3u8",
-      "score": 8,
-      "views": 62,
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/kick-westcol-20261120-183849"
-    },
-    {
-      "type": "live",
-      "key": "kick-clip_01M7P7PMMTH3PY3WSRD0PTANS2",
-      "title": "Preguntando edades a las invitadas en la casa de Westcol",
-      "date": "20261120-183849",
-      "source": "https://clips.kick.com/clips/3d/clip_01M7P7PMMTH3PY3WSRD0PTANS2/playlist.m3u8",
-      "score": 7,
-      "views": 2275,
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/kick-westcol-20261120-183849"
-    },
-    {
-      "type": "live",
-      "key": "kick-clip_01M7PQ8BPME97XP8X2D03SBCW6",
-      "title": "¿Le hicieron una canción en el piano para enamorarla?",
-      "date": "20261120-183849",
-      "source": "https://clips.kick.com/clips/83/clip_01M7PQ8BPME97XP8X2D03SBCW6/playlist.m3u8",
-      "score": 7,
-      "views": 178,
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/kick-westcol-20261120-183849"
-    },
-    {
-      "type": "live",
-      "key": "kick-clip_01M7NZDNVJW0MR658W45WNCTVK",
-      "title": "Chanty tira un facto sólido en pleno directo",
-      "date": "20261120-183849",
-      "source": "https://clips.kick.com/clips/dd/clip_01M7NZDNVJW0MR658W45WNCTVK/playlist.m3u8",
-      "score": 7,
-      "views": 57,
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/kick-westcol-20261120-183849"
-    },
-    {
-      "type": "live",
       "key": "kick-clip_01M7NYD47VAEHPHQZQABMDED5B",
       "title": "¿Quién se levanta a cuidar al bebé?",
       "date": "20261120-183849",
@@ -3272,6 +3228,42 @@
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-fc7779723993c2d0abf8",
       "instagram": null
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-172139-westcol_01",
+      "title": "El desmadre en la habitación con la ganga",
+      "date": "20261126-012536",
+      "ts": 1795656556,
+      "tiktok": "v_inbox_file~v2.7712285657288312838",
+      "caption": "El desmadre en la habitación con la ganga #westcol #clips #humor #stream #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-172139-westcol_02",
+      "title": "La ganga posando para las fotos afuera",
+      "date": "20261126-012536",
+      "ts": 1795656596,
+      "tiktok": "v_inbox_file~v2.7712285871894153222",
+      "caption": "La ganga posando para las fotos afuera #westcol #laganga #momentos #streamer #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-172139-westcol_03",
+      "title": "La ganga reunida afuera analizando la situación",
+      "date": "20261126-012536",
+      "ts": 1795656651,
+      "tiktok": "v_inbox_file~v2.7712286376837842945",
+      "caption": "La ganga reunida afuera analizando la situación #westcol #laganga #directo #twitch #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-134031-westcol_01",
+      "title": "La reacción épica de la ganga ante un momento insólito",
+      "date": "20261126-012536",
+      "ts": 1795656688,
+      "tiktok": "v_inbox_file~v2.7712286536729790465",
+      "caption": "La reacción épica de la ganga ante un momento insólito #westcol #laganga #clips #viral #GTA6 #fyp"
     }
   ]
 }
