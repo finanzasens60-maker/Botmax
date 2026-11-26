@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "live-20261120-190022-6",
-      "title": "¡Reacción épica en GTA 6! ¿Qué acaba de pasar? 😂",
-      "video_title": "¡Reacción épica en GTA 6! ¿Qué acaba de pasar? 😂",
-      "date": "20261120-190022",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-190022",
-      "file": "out/20261120-190022-directo-garydavid/clip6.mp4"
-    },
-    {
-      "type": "live",
       "key": "live-20261120-190022-7",
       "title": "¡Me robé la patrulla de policía en GTA 6! 🚗💨",
       "video_title": "¡Me robé la patrulla de policía en GTA 6! 🚗💨",
@@ -3232,6 +3221,16 @@
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-24fdd18e5dcc7f40968c",
       "instagram": null
+    },
+    {
+      "type": "long",
+      "theme": "Trucos",
+      "key": "long-20261126-213257",
+      "title": "Trucos y secretos de GTA seis que debes conocer ahora",
+      "video_title": "Trucos y secretos de GTA seis que debes conocer ahora",
+      "date": "20261126-213257",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-adb95467bd0af889c3e8"
     }
   ]
 }
