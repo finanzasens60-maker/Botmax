@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "kick-clip_01M7NYD47VAEHPHQZQABMDED5B",
-      "title": "¿Quién se levanta a cuidar al bebé?",
-      "date": "20261120-183849",
-      "source": "https://clips.kick.com/clips/14/clip_01M7NYD47VAEHPHQZQABMDED5B/playlist.m3u8",
-      "score": 7,
-      "views": 29,
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/kick-westcol-20261120-183849"
-    },
-    {
-      "type": "live",
       "key": "kick-clip_01M7PJMBMH88R7ANH54Z8N78F8",
       "title": "¡Pidieron beso en plena presentación!",
       "date": "20261120-183849",
@@ -3264,6 +3253,16 @@
       "ts": 1795656688,
       "tiktok": "v_inbox_file~v2.7712286536729790465",
       "caption": "La reacción épica de la ganga ante un momento insólito #westcol #laganga #clips #viral #GTA6 #fyp"
+    },
+    {
+      "key": "9aa56634949074dc",
+      "title": "Cómo encontrar la trampa de Saw en GTA 6",
+      "video_title": "Cómo encontrar la trampa de Saw en GTA 6",
+      "date": "20261126-014223",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-bb77c0b9a88cf7609acb",
+      "instagram": null,
+      "type": "tip"
     }
   ]
 }
