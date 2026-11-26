@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "kick-clip_01M7RSVBE774W72R5KJJ6QDYCX",
-      "title": "¡Caos total en el directo de GTA en la vida real!",
-      "date": "20261120-183849",
-      "source": "https://clips.kick.com/clips/ed/clip_01M7RSVBE774W72R5KJJ6QDYCX/playlist.m3u8",
-      "score": 6,
-      "views": 207,
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/kick-westcol-20261120-183849"
-    },
-    {
-      "type": "live",
       "key": "kick-clip_01M7P51VWGF6PTCZH7NYJ6QCSR",
       "title": "Esta mujer le llamó la atención a Westcol",
       "date": "20261120-183849",
@@ -3261,6 +3250,15 @@
       "ts": 1795666467,
       "tiktok": "v_inbox_file~v2.7712328085349386248",
       "caption": "El accidente en cuatrimoto que sorprendió a todos #accidentes #westcol #humor #laganga #GTA6 #fyp"
+    },
+    {
+      "key": "aa4c77396a8ce72f",
+      "title": "Guía completa de la historia de GTA 6: todas las misiones del capítulo 2 - El paraíso perdido - Diario AS",
+      "video_title": "Guía completa de misiones del capítulo 2 de GTA 6",
+      "date": "20261126-143038",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-512d7d19f2ff58a13e28",
+      "instagram": null
     }
   ]
 }
