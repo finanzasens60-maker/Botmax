@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "kick-clip_01M7PJMBMH88R7ANH54Z8N78F8",
-      "title": "¡Pidieron beso en plena presentación!",
-      "date": "20261120-183849",
-      "source": "https://clips.kick.com/clips/6d/clip_01M7PJMBMH88R7ANH54Z8N78F8/playlist.m3u8",
-      "score": 6,
-      "views": 713,
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/kick-westcol-20261120-183849"
-    },
-    {
-      "type": "live",
       "key": "kick-clip_01M7RSVBE774W72R5KJJ6QDYCX",
       "title": "¡Caos total en el directo de GTA en la vida real!",
       "date": "20261120-183849",
@@ -3263,6 +3252,15 @@
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-bb77c0b9a88cf7609acb",
       "instagram": null,
       "type": "tip"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-134031-westcol_02",
+      "title": "El accidente en cuatrimoto que sorprendió a todos",
+      "date": "20261126-041054",
+      "ts": 1795666467,
+      "tiktok": "v_inbox_file~v2.7712328085349386248",
+      "caption": "El accidente en cuatrimoto que sorprendió a todos #accidentes #westcol #humor #laganga #GTA6 #fyp"
     }
   ]
 }
