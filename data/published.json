@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "live-20261120-190022-5",
-      "title": "¡Corre que nos atrapan! Escape épico en GTA 6 🔥",
-      "video_title": "¡Corre que nos atrapan! Escape épico en GTA 6 🔥",
-      "date": "20261120-190022",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-190022",
-      "file": "out/20261120-190022-directo-garydavid/clip5.mp4"
-    },
-    {
-      "type": "live",
       "key": "live-20261120-190022-6",
       "title": "¡Reacción épica en GTA 6! ¿Qué acaba de pasar? 😂",
       "video_title": "¡Reacción épica en GTA 6! ¿Qué acaba de pasar? 😂",
@@ -3234,6 +3223,15 @@
       "date": "20261126-190812",
       "youtube": "https://youtube.com/shorts/a1PgZFgzoLQ",
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-093357"
+    },
+    {
+      "key": "5c6bf6200af50f85",
+      "title": "No disc, no problem: GTA 6 is the biggest physical game launch since 2019 - The Game Business",
+      "video_title": "¡GTA 6 rompe récord de ventas físicas en Reino Unido sin traer disco!",
+      "date": "20261126-210247",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-24fdd18e5dcc7f40968c",
+      "instagram": null
     }
   ]
 }
