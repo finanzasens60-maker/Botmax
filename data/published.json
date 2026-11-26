@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "live-20261120-190022-7",
-      "title": "¡Me robé la patrulla de policía en GTA 6! 🚗💨",
-      "video_title": "¡Me robé la patrulla de policía en GTA 6! 🚗💨",
-      "date": "20261120-190022",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-190022",
-      "file": "out/20261120-190022-directo-garydavid/clip7.mp4"
-    },
-    {
-      "type": "live",
       "key": "live-20261120-190022-8",
       "title": "¡Salimos con vida de milagro! Momentos GTA 6 🤣",
       "video_title": "¡Salimos con vida de milagro! Momentos GTA 6 🤣",
@@ -3231,6 +3220,16 @@
       "date": "20261126-213257",
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-adb95467bd0af889c3e8"
+    },
+    {
+      "type": "ranking",
+      "key": "ranking-20261126",
+      "title": "¡LO MÁS VIRAL DE GTA SEIS HOY! Momentos épicos y gritos",
+      "video_title": "¡LO MÁS VIRAL DE GTA SEIS HOY! Momentos épicos y gritos",
+      "date": "20261126-232815",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-ca33509b2400ac5965c3",
+      "instagram": null
     }
   ]
 }
