@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "live-20261120-200018-5",
-      "title": "Localizando al objetivo de la misión en GTA 6",
-      "video_title": "Localizando al objetivo de la misión en GTA 6",
-      "date": "20261120-200018",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-200018",
-      "file": "out/20261120-200018-directo-garydavid/clip5.mp4"
-    },
-    {
-      "type": "live",
       "key": "live-20261120-200018-6",
       "title": "¡Casi lo atrapan en pleno directo de GTA 6!",
       "video_title": "¡Casi lo atrapan en pleno directo de GTA 6!",
@@ -3221,6 +3210,15 @@
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-5c94676c42e7d0d30d1f",
       "instagram": null,
       "type": "tip"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-093357-westcol_01",
+      "title": "Listos para arrancar el paseo en motos",
+      "date": "20261127-041448",
+      "ts": 1795753210,
+      "tiktok": "v_inbox_file~v2.7712700487086426119",
+      "caption": "Listos para arrancar el paseo en motos #Westcol #Motos #LaGanga #GTA6 #fyp"
     }
   ]
 }
