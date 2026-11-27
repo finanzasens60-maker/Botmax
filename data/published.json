@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "live-20261120-200018-4",
-      "title": "¡No te vas a creer lo que acaba de pasar en GTA 6!",
-      "video_title": "¡No te vas a creer lo que acaba de pasar en GTA 6!",
-      "date": "20261120-200018",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-200018",
-      "file": "out/20261120-200018-directo-garydavid/clip4.mp4"
-    },
-    {
-      "type": "live",
       "key": "live-20261120-200018-5",
       "title": "Localizando al objetivo de la misión en GTA 6",
       "video_title": "Localizando al objetivo de la misión en GTA 6",
@@ -3222,6 +3211,16 @@
       "ts": 1795743240,
       "tiktok": "v_inbox_file~v2.7712658037955643399",
       "caption": "¡Si te caes te levantas y te subes otra vez! #Westcol #LaGanga #MiniMoto #Humor #GTA6 #fyp"
+    },
+    {
+      "key": "437153a559799fd2",
+      "title": "Cómo usar un loro parlante para encontrar dinero secreto en GTA 6",
+      "video_title": "Cómo usar un loro parlante para encontrar dinero secreto en GTA 6",
+      "date": "20261127-014554",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-5c94676c42e7d0d30d1f",
+      "instagram": null,
+      "type": "tip"
     }
   ]
 }
