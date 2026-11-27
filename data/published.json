@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "live-20261120-200018-7",
-      "title": "Momento confuso durante la partida de GTA 6",
-      "video_title": "Momento confuso durante la partida de GTA 6",
-      "date": "20261120-200018",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-200018",
-      "file": "out/20261120-200018-directo-garydavid/clip7.mp4"
-    },
-    {
-      "type": "live",
       "key": "live-20261120-200018-8",
       "title": "¿Buscando pistas en GTA 6?",
       "video_title": "¿Buscando pistas en GTA 6?",
@@ -3217,6 +3206,16 @@
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-11c96781bd62219e85e8",
       "instagram": null
+    },
+    {
+      "key": "91cc431ca46a2d33",
+      "title": "¡Los primeros MODS de GTA 6 en PS5 ya están aquí!",
+      "video_title": "¡Los primeros MODS de GTA 6 en PS5 ya están aquí!",
+      "date": "20261127-173932",
+      "youtube": "https://youtube.com/shorts/3kYk5LlYY_Q",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-2599c96be2b154e8f9cb",
+      "instagram": null,
+      "type": "tip"
     }
   ]
 }
