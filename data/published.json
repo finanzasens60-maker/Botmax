@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "live-20261120-200018-6",
-      "title": "¡Casi lo atrapan en pleno directo de GTA 6!",
-      "video_title": "¡Casi lo atrapan en pleno directo de GTA 6!",
-      "date": "20261120-200018",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-200018",
-      "file": "out/20261120-200018-directo-garydavid/clip6.mp4"
-    },
-    {
-      "type": "live",
       "key": "live-20261120-200018-7",
       "title": "Momento confuso durante la partida de GTA 6",
       "video_title": "Momento confuso durante la partida de GTA 6",
@@ -3219,6 +3208,15 @@
       "ts": 1795753210,
       "tiktok": "v_inbox_file~v2.7712700487086426119",
       "caption": "Listos para arrancar el paseo en motos #Westcol #Motos #LaGanga #GTA6 #fyp"
+    },
+    {
+      "key": "81d213d8539c9d6e",
+      "title": "Where To Find Principe Burnished Alvino In GTA 6—Fastest Motorcycles Location & Stats - Insider Gaming",
+      "video_title": "Dónde encontrar la moto más rápida y secretos en GTA 6",
+      "date": "20261127-142745",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-11c96781bd62219e85e8",
+      "instagram": null
     }
   ]
 }
