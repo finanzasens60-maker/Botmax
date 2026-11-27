@@ -1,105 +1,6 @@
 {
   "items": [
     {
-      "type": "live",
-      "key": "live-20261120-200018-8",
-      "title": "¿Buscando pistas en GTA 6?",
-      "video_title": "¿Buscando pistas en GTA 6?",
-      "date": "20261120-200018",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-200018",
-      "file": "out/20261120-200018-directo-garydavid/clip8.mp4"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-210015-1",
-      "title": "Problemas y negociaciones de bandas en GTA 6",
-      "video_title": "Problemas y negociaciones de bandas en GTA 6",
-      "date": "20261120-210015",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-210015",
-      "file": "out/20261120-210015-directo-garydavid/clip1.mp4"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-210015-2",
-      "title": "¡Reacción intensa contra Gregory Collins en GTA 6!",
-      "video_title": "¡Reacción intensa contra Gregory Collins en GTA 6!",
-      "date": "20261120-210015",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-210015",
-      "file": "out/20261120-210015-directo-garydavid/clip2.mp4"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-210015-3",
-      "title": "¡El caos se apodera del directo de GTA 6!",
-      "video_title": "¡El caos se apodera del directo de GTA 6!",
-      "date": "20261120-210015",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-210015",
-      "file": "out/20261120-210015-directo-garydavid/clip3.mp4"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-210015-4",
-      "title": "Analizando el plan y la preparación en GTA 6",
-      "video_title": "Analizando el plan y la preparación en GTA 6",
-      "date": "20261120-210015",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-210015",
-      "file": "out/20261120-210015-directo-garydavid/clip4.mp4"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-210015-5",
-      "title": "¡Nos persiguen en pleno streaming de GTA 6!",
-      "video_title": "¡Nos persiguen en pleno streaming de GTA 6!",
-      "date": "20261120-210015",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-210015",
-      "file": "out/20261120-210015-directo-garydavid/clip5.mp4"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-210015-6",
-      "title": "¡Acción destructiva durante la partida de GTA 6!",
-      "video_title": "¡Acción destructiva durante la partida de GTA 6!",
-      "date": "20261120-210015",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-210015",
-      "file": "out/20261120-210015-directo-garydavid/clip6.mp4"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-210015-7",
-      "title": "Buscando el vehículo perdido en GTA 6",
-      "video_title": "Buscando el vehículo perdido en GTA 6",
-      "date": "20261120-210015",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-210015",
-      "file": "out/20261120-210015-directo-garydavid/clip7.mp4"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-210015-8",
-      "title": "Hablando del próximo gran trabajo en GTA 6",
-      "video_title": "Hablando del próximo gran trabajo en GTA 6",
-      "date": "20261120-210015",
-      "source": "https://kick.com/garydavid",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-210015",
-      "file": "out/20261120-210015-directo-garydavid/clip8.mp4"
-    },
-    {
       "key": "3cb3e8058fd8a2aa",
       "title": "¡Cómo tener DINERO INFINITO en GTA 6 antes del parche!",
       "video_title": "¡Cómo tener DINERO INFINITO en GTA 6 antes del parche!",
@@ -3216,6 +3117,78 @@
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-2599c96be2b154e8f9cb",
       "instagram": null,
       "type": "tip"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-093357-westcol_06",
+      "title": "Westcol se emociona en medio de la ruta en cuatrimoto",
+      "date": "20261127-190607",
+      "youtube": "https://youtube.com/shorts/7LgVBcNJEEE",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-093357"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-052741-westcol_01",
+      "title": "Casi se voltean en el cuatrimoto en plena trocha",
+      "date": "20261127-190607",
+      "youtube": "https://youtube.com/shorts/Q40gaKQo0wA",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-052741"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-052741-westcol_02",
+      "title": "Terminaron volcados en la trocha por buñuelos",
+      "date": "20261127-190607",
+      "youtube": "https://youtube.com/shorts/zEXQ_JFITKQ",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-052741"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-052741-westcol_03",
+      "title": "Wilito se dio durísimo al caerse de la mini moto",
+      "date": "20261127-190607",
+      "youtube": "https://youtube.com/shorts/lCk2NV2dmqc",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-052741"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-052741-westcol_04",
+      "title": "La ganga rodando junta por el camino destapado",
+      "date": "20261127-190607",
+      "youtube": "https://youtube.com/shorts/4qYRsJVNVJE",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-052741"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-052741-westcol_05",
+      "title": "Se cayó una cuatrimoto a la zanja en plena rodada",
+      "date": "20261127-190607",
+      "youtube": "https://youtube.com/shorts/8ztCaKkD2mw",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-052741"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-052741-westcol_06",
+      "title": "Se volcó la cuatrimoto en plena ruta con la ganga",
+      "date": "20261127-190607",
+      "youtube": "https://youtube.com/shorts/4Rm89Mf9X7U",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-052741"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-052741-westcol_07",
+      "title": "La ganga de Westcol recorriendo las trochas en moto",
+      "date": "20261127-190607",
+      "youtube": "https://youtube.com/shorts/BQXlImwxrDM",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-052741"
+    },
+    {
+      "type": "cola",
+      "key": "cola-kick-westcol-20261124-052741-westcol_08",
+      "title": "La ganga dominando los caminos destapados en moto",
+      "date": "20261127-190607",
+      "youtube": "https://youtube.com/shorts/vIw3tJDSeNA",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/kick-westcol-20261124-052741"
     }
   ]
 }
