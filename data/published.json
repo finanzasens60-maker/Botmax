@@ -1,16 +1,6 @@
 {
   "items": [
     {
-      "key": "95158917b0ff1abe",
-      "title": "¡Guía con los 61 TRUCOS de GTA 6 y cómo usarlos!",
-      "video_title": "¡Guía con los 61 TRUCOS de GTA 6 y cómo usarlos!",
-      "date": "20261120-231925",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261120-231925",
-      "instagram": null,
-      "type": "tip"
-    },
-    {
       "key": "bff2f5e91cc23729",
       "title": "Dónde encontrar los 10 AUTOS MÁS RÁPIDOS en GTA 6",
       "video_title": "Dónde encontrar los 10 AUTOS MÁS RÁPIDOS en GTA 6",
@@ -3187,6 +3177,16 @@
       "date": "20261127-210535",
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-c77aef35ae67fd7c893a",
+      "instagram": null
+    },
+    {
+      "type": "ranking",
+      "key": "ranking-20261127",
+      "title": "¡LO MÁS VIRAL DE GTA SEIS HOY! ¿EL NÚMERO UNO ES REAL?",
+      "video_title": "¡LO MÁS VIRAL DE GTA SEIS HOY! ¿EL NÚMERO UNO ES REAL?",
+      "date": "20261127-232535",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-7de978213dc1589abc9c",
       "instagram": null
     }
   ]
