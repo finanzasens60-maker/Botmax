@@ -1,48 +1,6 @@
 {
   "items": [
     {
-      "key": "7135ac28119934d0",
-      "title": "Cómo cambiar entre Jason y Lucia en GTA 6",
-      "video_title": "Cómo cambiar entre Jason y Lucia en GTA 6",
-      "date": "20261120-232936",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261120-232936",
-      "instagram": null,
-      "type": "tip"
-    },
-    {
-      "key": "e324ef330b2dd303",
-      "title": "Cómo activar TRUCOS de dinero y autos en PS5 y Xbox para GTA 6",
-      "video_title": "Cómo activar TRUCOS de dinero y autos en PS5 y Xbox para GTA 6",
-      "date": "20261120-233508",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261120-233508",
-      "instagram": null,
-      "type": "tip"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-223717-1",
-      "title": "¡Escopetazo en pleno tiroteo en GTA VI!",
-      "video_title": "¡Escopetazo en pleno tiroteo en GTA VI!",
-      "date": "20261120-223717",
-      "source": "https://kick.com/tedysincontrol",
-      "youtube": "https://youtube.com/shorts/PLDWzqx54j4",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-223717",
-      "file": "out/20261120-223717-directo-tedysincontrol/clip1.mp4"
-    },
-    {
-      "type": "live",
-      "key": "live-20261120-223717-2",
-      "title": "¡Nos llenan la casa de plomo en GTA VI! 😱",
-      "video_title": "¡Nos llenan la casa de plomo en GTA VI! 😱",
-      "date": "20261120-223717",
-      "source": "https://kick.com/tedysincontrol",
-      "youtube": "https://youtube.com/shorts/eFcZNRsXpB8",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-223717",
-      "file": "out/20261120-223717-directo-tedysincontrol/clip2.mp4"
-    },
-    {
       "type": "live",
       "key": "live-20261120-223717-3",
       "title": "¡Llevando a Lucia a su trabajo en GTA VI! 😂",
@@ -3188,6 +3146,42 @@
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-6273c50ac97d7e9f9983",
       "instagram": null,
       "type": "tip"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-093357-westcol_02",
+      "title": "Ruta extrema en mini motos por la trocha",
+      "date": "20261128-040337",
+      "ts": 1795838822,
+      "tiktok": "v_inbox_file~v2.7713068496317630485",
+      "caption": "Ruta extrema en mini motos por la trocha #Westcol #Motos #LaGanga #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-093357-westcol_03",
+      "title": "Toda la ganga rodando en mini motos",
+      "date": "20261128-040337",
+      "ts": 1795838873,
+      "tiktok": "v_inbox_file~v2.7713068873079097396",
+      "caption": "Toda la ganga rodando en mini motos #Westcol #Motos #LaGanga #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-093357-westcol_04",
+      "title": "Manejando mini motos en la trocha",
+      "date": "20261128-040337",
+      "ts": 1795838918,
+      "tiktok": "v_inbox_file~v2.7713068873079294004",
+      "caption": "Manejando mini motos en la trocha #Westcol #Motos #LaGanga #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-093357-westcol_05",
+      "title": "Caravana de mini motos y cuatrimotos",
+      "date": "20261128-040337",
+      "ts": 1795838963,
+      "tiktok": "v_inbox_file~v2.7713069025856817172",
+      "caption": "Caravana de mini motos y cuatrimotos #Westcol #Motos #Cuatrimoto #GTA6 #fyp"
     }
   ]
 }
