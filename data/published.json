@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "live-20261120-223717-3",
-      "title": "¡Llevando a Lucia a su trabajo en GTA VI! 😂",
-      "video_title": "¡Llevando a Lucia a su trabajo en GTA VI! 😂",
-      "date": "20261120-223717",
-      "source": "https://kick.com/tedysincontrol",
-      "youtube": "https://youtube.com/shorts/qIhflxzUDcE",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-223717",
-      "file": "out/20261120-223717-directo-tedysincontrol/clip3.mp4"
-    },
-    {
-      "type": "live",
       "key": "live-20261120-223717-4",
       "title": "¡Lucia trabaja al lado de la policía en GTA 6!",
       "video_title": "¡Lucia trabaja al lado de la policía en GTA 6!",
@@ -3182,6 +3171,15 @@
       "ts": 1795838963,
       "tiktok": "v_inbox_file~v2.7713069025856817172",
       "caption": "Caravana de mini motos y cuatrimotos #Westcol #Motos #Cuatrimoto #GTA6 #fyp"
+    },
+    {
+      "type": "tiktok",
+      "key": "tt-kick-westcol-20261124-093357-westcol_06",
+      "title": "Westcol se emociona en medio de la ruta en cuatrimoto",
+      "date": "20261128-072318",
+      "ts": 1795850830,
+      "tiktok": "v_inbox_file~v2.7713119800973608981",
+      "caption": "Westcol se emociona en medio de la ruta en cuatrimoto #Westcol #LaGanga #Cuatrimoto #Directo #GTA6 #fyp"
     }
   ]
 }
