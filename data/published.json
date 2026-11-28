@@ -1,16 +1,6 @@
 {
   "items": [
     {
-      "key": "bff2f5e91cc23729",
-      "title": "Dónde encontrar los 10 AUTOS MÁS RÁPIDOS en GTA 6",
-      "video_title": "Dónde encontrar los 10 AUTOS MÁS RÁPIDOS en GTA 6",
-      "date": "20261120-232451",
-      "youtube": null,
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/video-20261120-232451",
-      "instagram": null,
-      "type": "tip"
-    },
-    {
       "key": "7135ac28119934d0",
       "title": "Cómo cambiar entre Jason y Lucia en GTA 6",
       "video_title": "Cómo cambiar entre Jason y Lucia en GTA 6",
@@ -3188,6 +3178,16 @@
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-7de978213dc1589abc9c",
       "instagram": null
+    },
+    {
+      "key": "164f4456fdcdea77",
+      "title": "¡El escalofriante secreto del NPC atrapado en GTA 6!",
+      "video_title": "¡El escalofriante secreto del NPC atrapado en GTA 6!",
+      "date": "20261128-013800",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-6273c50ac97d7e9f9983",
+      "instagram": null,
+      "type": "tip"
     }
   ]
 }
