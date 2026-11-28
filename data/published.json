@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "live-20261120-223717-5",
-      "title": "¡Los cerdos se comieron a nuestro socio en GTA 6! 😱",
-      "video_title": "¡Los cerdos se comieron a nuestro socio en GTA 6! 😱",
-      "date": "20261120-223717",
-      "source": "https://kick.com/tedysincontrol",
-      "youtube": "https://youtube.com/shorts/LlK1fAgJCRc",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-223717",
-      "file": "out/20261120-223717-directo-tedysincontrol/clip5.mp4"
-    },
-    {
-      "type": "live",
       "key": "live-20261120-223717-6",
       "title": "¡Se comieron al parcero en GTA VI!",
       "video_title": "¡Se comieron al parcero en GTA VI!",
@@ -3178,6 +3167,16 @@
       "youtube": null,
       "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-324e0456ec85489eefc0",
       "instagram": null
+    },
+    {
+      "key": "930dde91c00e9f03",
+      "title": "Cómo encontrar al jefe secreto de Satanás en GTA 6",
+      "video_title": "Cómo encontrar al jefe secreto de Satanás en GTA 6",
+      "date": "20261128-173236",
+      "youtube": "https://youtube.com/shorts/-NqGM_FvWNU",
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-010061a4b7963c1b63e1",
+      "instagram": null,
+      "type": "tip"
     }
   ]
 }
