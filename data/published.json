@@ -2,17 +2,6 @@
   "items": [
     {
       "type": "live",
-      "key": "live-20261120-223717-4",
-      "title": "¡Lucia trabaja al lado de la policía en GTA 6!",
-      "video_title": "¡Lucia trabaja al lado de la policía en GTA 6!",
-      "date": "20261120-223717",
-      "source": "https://kick.com/tedysincontrol",
-      "youtube": "https://youtube.com/shorts/YV810Yl-Lw0",
-      "release": "https://github.com/finanzasens60-maker/gta6-bot/releases/tag/directo-20261120-223717",
-      "file": "out/20261120-223717-directo-tedysincontrol/clip4.mp4"
-    },
-    {
-      "type": "live",
       "key": "live-20261120-223717-5",
       "title": "¡Los cerdos se comieron a nuestro socio en GTA 6! 😱",
       "video_title": "¡Los cerdos se comieron a nuestro socio en GTA 6! 😱",
@@ -3180,6 +3169,15 @@
       "ts": 1795850830,
       "tiktok": "v_inbox_file~v2.7713119800973608981",
       "caption": "Westcol se emociona en medio de la ruta en cuatrimoto #Westcol #LaGanga #Cuatrimoto #Directo #GTA6 #fyp"
+    },
+    {
+      "key": "023d380cdd89de11",
+      "title": "Everything you need to know about unofficial GTA 6 PC ports — including how they're happening so fast, how Rockstar is dealing with them, and what this might mean for the official release - TechRadar",
+      "video_title": "Lo que se sabe de los puertos no oficiales de GTA 6 en PC",
+      "date": "20261128-141612",
+      "youtube": null,
+      "release": "https://github.com/finanzasens60-maker/Botmax/releases/tag/untagged-324e0456ec85489eefc0",
+      "instagram": null
     }
   ]
 }
